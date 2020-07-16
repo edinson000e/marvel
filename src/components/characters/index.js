@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useStateValue } from "../../store";
-import { getCharacters } from "../../actions";
-const Characters = () => {
-  let contextType = useStateValue();
 
+import { getCharacters } from "../../actions";
+
+const Characters = () => {
+  const [{ characters }, dispatch] = useStateValue();
+  console.log("characters", characters);
   useEffect(() => {
-    const [{}, dispatch] = contextType;
     getCharacters(dispatch);
   }, []);
 
