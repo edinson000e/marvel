@@ -6,15 +6,22 @@ import * as serviceWorker from "./serviceWorker";
 import { StateProvider } from "./store";
 import { mainReducer } from "./reducers";
 import { initialState } from "./store/initialState";
+import { debugContextDevtool } from "react-context-devtool";
+const container = document.getElementById("root");
+
 ReactDOM.render(
   <React.StrictMode>
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <App />
     </StateProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  container
 );
 
+debugContextDevtool(container, {
+  debugContext: true,
+  disable: process.env.NODE_ENV === "dev"
+});
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
