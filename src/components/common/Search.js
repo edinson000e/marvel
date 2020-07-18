@@ -8,6 +8,21 @@ const Button = styled.button`
   background-color: red;
 `;
 
+const Form = styled.form`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  height: 1rem;
+  border-radius: 10rem;
+`;
+
 export const Search = () => {
-  return <Button type="submit">icono</Button>;
+  return (
+    <Form>
+      <Button type="submit">i</Button>;
+    </Form>
+  );
 };
