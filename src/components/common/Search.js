@@ -19,17 +19,20 @@ const Form = styled.form`
   padding: 1rem;
   height: 1rem;
   border-radius: 10rem;
+  width: ${p => (p.open ? "30rem" : "2rem")};
+  cursor: ${p => (p.open ? "auto" : "pointer")};
 `;
 
 const Input = styled.input`
   font-size: 14px;
   line-height: 1;
   background-color: transparent;
-  margin-left: ${props => (props.open ? "1rem" : "0rem")};
+  width: 100%;
+  margin-left: ${p => (p.open ? "0rem" : "0rem")};
   border: none;
   color: red;
   transition: margin 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  width: 100%;
+
   &:focus,
   &:active {
     outline: none;
@@ -45,7 +48,7 @@ export const Search = () => {
   const inputFocus = useRef();
   const [input, setInput] = useState("");
   return (
-    <Form ref={formRef}>
+    <Form open={open} ref={formRef}>
       <Input
         ref={inputFocus}
         value={input}
