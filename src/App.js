@@ -11,15 +11,19 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Characteres from "./components/characters";
 import LightTheme from "./themes/light";
 import DarkTheme from "./themes/dark";
-
+import { Cont } from "./components/common";
 const GlobalStyle = createGlobalStyle`
 	body{
 		background: ${p => p.theme.bodyBackgroundColor};
 		min-height: 100vh;
 		margin: 0;
 		color: ${p => p.theme.bodyFontColor};
-		font-family: 'Kaushan Script'
+		font-family: 'Kaushan Script';
+    
 	}
+
+ 
+ 
 `;
 
 function App() {
@@ -34,14 +38,19 @@ function App() {
       }}
     >
       <GlobalStyle />
+      <Cont>
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => <Characteres {...props} />}
+            />
 
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" render={props => <Characteres {...props} />} />
-
-          <Redirect from="*" to="/" />
-        </Switch>
-      </BrowserRouter>
+            <Redirect from="*" to="/" />
+          </Switch>
+        </BrowserRouter>
+      </Cont>
     </ThemeProvider>
   );
 }
