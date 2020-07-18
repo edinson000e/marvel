@@ -7,8 +7,16 @@ const StyledContainer = styled.div`
   border-radius: 8px;
   background-image: url(${p => p.src});
   height: 50vh;
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
+  transition: transform 1s;
+  :hover {
+    background-size: 115% 115%;
+    background-position: center;
+    filter: grayscale(50%);
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+  }
 `;
 
 const Title = styled.h2`

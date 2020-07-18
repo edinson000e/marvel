@@ -14,7 +14,7 @@ import DarkTheme from "./themes/dark";
 import { Cont } from "./components/common";
 const GlobalStyle = createGlobalStyle`
 	body{
-		background: ${p => p.theme.bodyBackgroundColor};
+		background: white;
 		min-height: 100vh;
 		margin: 0;
 		color: ${p => p.theme.bodyFontColor};
