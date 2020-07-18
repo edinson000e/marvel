@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Characteres from "./components/characters";
-import history from "./store/browserHistory";
 import LightTheme from "./themes/light";
 import DarkTheme from "./themes/dark";
 
@@ -35,6 +34,7 @@ function App() {
       }}
     >
       <GlobalStyle />
+
       <BrowserRouter>
         <Switch>
           <Route exact path="/" render={props => <Characteres {...props} />} />
