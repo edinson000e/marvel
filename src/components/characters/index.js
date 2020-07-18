@@ -22,7 +22,7 @@ const Characters = () => {
             return (
               <Card
                 key={index}
-                title="The Benefits of Green Apples"
+                title={value.name}
                 photo={value.thumbnail.path + "." + value.thumbnail.extension}
                 description={value.description}
               />

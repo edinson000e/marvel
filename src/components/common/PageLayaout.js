@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Header } from "./Header";
 const Content = styled.main`
   margin: auto auto auto auto;
-  padding: 100px;
+  /*padding: 100px;*/
   box-sizing: border-box;
   font-family: "Open Sans";
 

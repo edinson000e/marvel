@@ -3,8 +3,8 @@ import styled from "styled-components";
 const Grid = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
-  grid-column-gap: 50px;
-  grid-row-gap: 50px;
+  grid-column-gap: 25px;
+  grid-row-gap: 25px;
 `;
 
 const Row = styled.div`

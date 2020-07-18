@@ -2,16 +2,22 @@ import styled from "styled-components";
 
 const Cont = styled.div`
   margin: 0 auto;
-  width: 100%;
+  width: 1010px;
   background: ${p => p.theme.bodyBackgroundColor};
+
+  @media (min-width: 768px) {
+    width: 750px;
+  }
   @media (min-width: 992px) {
-    max-width: 1000px;
+    width: 970px;
   }
+
   @media (min-width: 1200px) {
-    max-width: 1130px;
+    width: 1170px;
   }
+
   @media (min-width: 1600px) {
-    max-width: 1704px;
+    width: 1250px;
   }
 `;
 

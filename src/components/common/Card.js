@@ -2,21 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledContainer = styled.div`
-  background: red;
-  border: 1px solid white;
   border-radius: 8px;
   background-image: url(${p => p.src});
-  height: 50vh;
+  height: auto;
+  min-height: 380px;
+  max-width: 300px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   transition: transform 1s;
   display: flex;
   align-items: flex-end;
 
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.7), 0 3px 1px 0 rgba(0, 0, 0, 0.7);
+  opacity: 1;
   :hover {
     background-size: 115% 115%;
     background-position: center;
-    filter: grayscale(50%);
+    filter: grayscale(80%);
     transform: scale(1.1);
     -webkit-transform: scale(1.1);
   }
@@ -45,7 +47,7 @@ const Text = styled.div`
     rgba(0, 0, 0, 0.72),
     rgba(0, 0, 0)
   );
-
+  border-radius: inherit;
   width: 100%;
   padding: 10vh 20px 1vh 20px;
 `;
