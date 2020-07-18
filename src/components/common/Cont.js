@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Cont = styled.div`
   margin: 0 auto;
   width: 100%;
-
+  background: ${p => p.theme.bodyBackgroundColor};
   @media (min-width: 992px) {
     max-width: 1000px;
   }
