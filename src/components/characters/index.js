@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useStateValue } from "../../store";
 
 import { getCharacters } from "../../actions";
-import { PageLayout } from "../common";
+import { PageLayout, Card, Grid } from "../common";
 const Characters = () => {
   const [{ characters }, dispatch] = useStateValue();
   console.log("characters", characters);
@@ -12,7 +12,23 @@ const Characters = () => {
 
   return (
     <PageLayout>
-      <div> component characters </div>
+      <Grid>
+        {characters.results.length > 0 &&
+          characters.results.map((value, index) => {
+            console.log(
+              "url",
+              value.thumbnail.path + "." + value.thumbnail.extension
+            );
+            return (
+              <Card
+                key={index}
+                title="The Benefits of Green Apples"
+                photo={value.thumbnail.path + "." + value.thumbnail.extension}
+                description={value.description}
+              />
+            );
+          })}
+      </Grid>
     </PageLayout>
   );
 };
