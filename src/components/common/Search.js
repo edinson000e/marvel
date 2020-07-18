@@ -16,7 +16,7 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background: green;
+  background: white;
   padding: 1rem;
   height: 1rem;
   border-radius: 10rem;
