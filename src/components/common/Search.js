@@ -19,7 +19,7 @@ const Form = styled.form`
   padding: 1rem;
   height: 1rem;
   border-radius: 10rem;
-  width: ${p => (p.open ? "30rem" : "2rem")};
+  width: ${p => (p.open ? "20rem" : "2rem")};
   cursor: ${p => (p.open ? "auto" : "pointer")};
 `;
 
@@ -47,8 +47,16 @@ export const Search = () => {
   const formRef = useRef();
   const inputFocus = useRef();
   const [input, setInput] = useState("");
+
   return (
-    <Form open={open} ref={formRef}>
+    <Form
+      open={open}
+      ref={formRef}
+      onClick={() => {
+        setOpen(true);
+        inputFocus.current.focus();
+      }}
+    >
       <Input
         ref={inputFocus}
         value={input}
@@ -56,7 +64,7 @@ export const Search = () => {
         placeholder="Buscar super heroe..."
       />
       <Button type="submit" open={open}>
-        i
+        ic
       </Button>
     </Form>
   );
