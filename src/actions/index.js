@@ -12,6 +12,7 @@ export const getCharacters = dispatch => {
   const request = fetchGet("/v1/public/characters");
   dispatch(loadingListCharacters());
   request.then(result => {
+    console.log("result", result);
     dispatch(saveCharacters(result.data));
   });
 };

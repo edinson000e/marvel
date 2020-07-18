@@ -21,9 +21,6 @@ const GlobalStyle = createGlobalStyle`
 		font-family: 'Kaushan Script';
     
 	}
-
- 
- 
 `;
 
 function App() {
