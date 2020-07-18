@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Logo } from "./Logo";
+import { Search } from "./Search";
 import LogoSrc from "../../assets/marvel.svg";
 
 const HeaderWrapper = styled.header`
@@ -14,12 +15,14 @@ const HeaderWrapper = styled.header`
   padding: 20px;
   background: white;
   box-shadow: 0px 0px 8px 0px ${props => props.theme.shadow};
+  justify-content: space-between;
 `;
 
 export function Header({}) {
   return (
     <HeaderWrapper>
       <Logo src={LogoSrc} />
+      <Search />
     </HeaderWrapper>
   );
 }
