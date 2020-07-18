@@ -10,6 +10,9 @@ const StyledContainer = styled.div`
   background-size: 100% 100%;
   background-repeat: no-repeat;
   transition: transform 1s;
+  display: flex;
+  align-items: flex-end;
+
   :hover {
     background-size: 115% 115%;
     background-position: center;
@@ -21,7 +24,8 @@ const StyledContainer = styled.div`
 
 const Title = styled.h2`
   color: #fff;
-  font-weight: 300;
+  font-weight: bold;
+
   @media (max-width: 500px) {
     font-size: 1rem;
   }
@@ -32,9 +36,25 @@ const StyledPhoto = styled.img`
   height: 100%;
   object-fit: cover;
 `;
-const Card = ({ title, photo, actions }) => (
+
+const Text = styled.div`
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.04),
+    rgba(0, 0, 0, 0.72),
+    rgba(0, 0, 0)
+  );
+
+  width: 100%;
+  padding: 10vh 20px 1vh 20px;
+`;
+
+const Card = ({ title, photo, description, actions }) => (
   <StyledContainer src={photo}>
-    <Title>{title}</Title>
+    <Text>
+      <Title>{title}</Title>
+    </Text>
   </StyledContainer>
 );
 
