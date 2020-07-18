@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import styled from "styled-components";
 import { Logo } from "./Logo";
 import { Search } from "./Search";
@@ -19,10 +19,16 @@ const HeaderWrapper = styled.header`
 `;
 
 export function Header({}) {
+  const [logo, setlogo] = useState(true);
+  const memoizedHandleClick = useCallback(e => {
+    console.log("e", e);
+    setlogo(!e);
+  }, []);
+
   return (
     <HeaderWrapper>
-      <Logo src={LogoSrc} />
-      <Search />
+      <Logo src={LogoSrc} logo={logo} />
+      <Search onClick={e => memoizedHandleClick(e)} />
     </HeaderWrapper>
   );
 }
