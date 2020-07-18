@@ -56,6 +56,13 @@ export const Search = () => {
         setOpen(true);
         inputFocus.current.focus();
       }}
+      onFocus={() => {
+        setOpen(true);
+        inputFocus.current.focus();
+      }}
+      onBlur={() => {
+        setOpen(false);
+      }}
     >
       <Input
         ref={inputFocus}
