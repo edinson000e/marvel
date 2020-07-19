@@ -19,7 +19,7 @@ const Overlay = styled.div`
 `;
 
 const Dialog = styled.div`
-  background: white;
+  flex-direction: column;
   border-radius: 5px;
   padding: 20px;
   position: absolute;

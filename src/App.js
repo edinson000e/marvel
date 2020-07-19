@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import {
   Router,
@@ -12,9 +12,11 @@ import Characteres from "./components/characters";
 import LightTheme from "./themes/light";
 import DarkTheme from "./themes/dark";
 import { Cont } from "./components/common";
+import { useStateValue } from "./store";
+import { initRefModal } from "./actions/modal";
 const GlobalStyle = createGlobalStyle`
 	body{
-		background: white;
+		background: ${p => p.theme.bodyBackgroundColor};
 		min-height: 100vh;
 		margin: 0;
 		color: ${p => p.theme.bodyFontColor};
@@ -24,7 +26,14 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  const modalRef = useRef();
   const [theme, setTheme] = useState(LightTheme);
+  const [state, dispatch] = useStateValue();
+  useEffect(() => {
+    console.log("entre en efect app", modalRef.current);
+    dispatch(initRefModal(modalRef.current));
+  }, []);
+
   return (
     <ThemeProvider
       theme={{
@@ -48,6 +57,7 @@ function App() {
           </Switch>
         </BrowserRouter>
       </Cont>
+      <div ref={modalRef} />
     </ThemeProvider>
   );
 }

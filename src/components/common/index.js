@@ -4,3 +4,4 @@ export * from "./Cont";
 export * from "./Card";
 export * from "./Grid";
 export * from "./Modal";
+export * from "./DetailsCharacter";
