@@ -1,4 +1,8 @@
 import charactersReducer from "./charactersReducer";
-export const mainReducer = ({ characters }, action) => {
-  return { characters: charactersReducer(characters, action) };
+import modalReducer from "./modalReducer";
+export const mainReducer = ({ characters, modal }, action) => {
+  return {
+    characters: charactersReducer(characters, action),
+    modal: modalReducer(modal, action)
+  };
 };
