@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useStateValue } from "../../store";
 
 import { getCharacters } from "../../actions";
-import { PageLayout, Card, Grid } from "../common";
+import { PageLayout, Card, Grid, Modal } from "../common";
 const Characters = () => {
-  const [{ characters }, dispatch] = useStateValue();
-  console.log("characters", characters);
+  const [{ characters, modal }, dispatch] = useStateValue();
+
   useEffect(() => {
     getCharacters(dispatch);
   }, []);
@@ -29,6 +29,7 @@ const Characters = () => {
             );
           })}
       </Grid>
+      <Modal />
     </PageLayout>
   );
 };

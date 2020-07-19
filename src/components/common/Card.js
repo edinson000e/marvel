@@ -24,10 +24,9 @@ const StyledContainer = styled.div`
   }
 `;
 
-const Title = styled.h2`
-  color: #fff;
+export const Title = styled.h2`
+  color: ${p => (p.dark ? "#000" : "#fff")};
   font-weight: bold;
-
   @media (max-width: 500px) {
     font-size: 1rem;
   }
