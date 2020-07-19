@@ -1,4 +1,5 @@
-import { charactersConstants } from "../contansts/characters.contansts";
+import { charactersConstants } from "../constants/characters.constants";
+import { characterConstants } from "../constants/character.constants";
 import { fetchGet, apiUrl } from "../api";
 import { openModal } from "./modal";
 export const saveCharacters = data => {
@@ -7,6 +8,10 @@ export const saveCharacters = data => {
 
 export const loadingListCharacters = data => {
   return { type: charactersConstants.LOADING_LIST, data };
+};
+
+export const SelectCharacter = data => {
+  return { type: characterConstants.SELECT_CHARACTER, data };
 };
 
 export const getCharacters = dispatch => {
@@ -25,6 +30,7 @@ export const getDetailsCharacter = async (url, title, dispatch) => {
     const request = await fetchGet(url);
     const json = await request;
     console.log("josn", json);
+    dispatch(SelectCharacter(json.data));
   } catch (e) {
     console.error(e);
   }

@@ -1,4 +1,4 @@
-import { modalConstants } from "../contansts/modal.contansts";
+import { modalConstants } from "../constants/modal.constants";
 
 export const initRefModal = data => {
   return { type: modalConstants.REFMODAL, data };

@@ -1,4 +1,4 @@
-import { modalConstants } from "../contansts/modal.contansts";
+import { modalConstants } from "../constants/modal.constants";
 import { initialStateModal } from "../store/initialState/modal";
 export default function(state, action) {
   switch (action.type) {

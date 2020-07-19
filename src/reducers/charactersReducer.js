@@ -1,4 +1,4 @@
-import { charactersConstants } from "../contansts/characters.contansts";
+import { charactersConstants } from "../constants/characters.constants";
 
 const charactersReducer = (state, action) => {
   switch (action.type) {
