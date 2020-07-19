@@ -26,7 +26,13 @@ export default function(state, action) {
 
       return newObject;
     case modalConstants.HIDDENMODAL:
-      return initialStateModal;
+      let initialHidden = { ...initialStateModal };
+      delete initialHidden.ref;
+      return {
+        ...state,
+        ...initialHidden
+      };
+
     case modalConstants.LOADING:
       return {
         ...state,

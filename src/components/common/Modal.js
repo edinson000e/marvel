@@ -5,11 +5,12 @@ import { useStateValue } from "../../store";
 import { Title } from "./Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { closeModal } from "../../actions/modal";
 const fadeIn = keyframes`from { opacity: 0; }`;
 
 const Overlay = styled.div`
-  animation: ${fadeIn} 200ms ease-out;
-  position: absolute;
+  animation: ${fadeIn} 1ms ease-out;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -42,18 +43,29 @@ const Header = styled.div`
 `;
 
 export function Modal({ onClose, children, ...props }) {
-  const [{ modal }] = useStateValue();
+  const [{ modal }, dispatch] = useStateValue();
 
-  return modal.ref
+  useEffect(() => {
+    console.log("modal.modal", modal.modal);
+    if (modal.modal) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [modal.modal]);
+  return modal.ref && modal.modal
     ? ReactDOM.createPortal(
         <Overlay>
           <Dialog {...props}>
             <Header>
-              <Title dark>Spider-man</Title>
+              <Title dark>{modal.title}</Title>
 
               <FontAwesomeIcon
                 icon={faTimes}
-                onClick={onClose}
+                onClick={() => {
+                  if (onClose) onClose();
+                  dispatch(closeModal());
+                }}
                 size="lg"
                 color="#9c9c9c"
               />

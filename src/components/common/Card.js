@@ -51,8 +51,8 @@ const Text = styled.div`
   padding: 10vh 20px 1vh 20px;
 `;
 
-const Card = ({ title, photo, description, actions }) => (
-  <StyledContainer src={photo}>
+const Card = ({ title, photo, description, onClick }) => (
+  <StyledContainer src={photo} onClick={onClick}>
     <Text>
       <Title>{title}</Title>
     </Text>
