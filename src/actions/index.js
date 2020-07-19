@@ -23,7 +23,7 @@ export const getCharacters = dispatch => {
 };
 
 export const getDetailsCharacter = async (url, title, dispatch) => {
-  dispatch(openModal(title));
+  dispatch(openModal({ title }));
 
   console.log("rul", url);
   try {

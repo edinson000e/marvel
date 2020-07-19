@@ -4,7 +4,7 @@ import { useStateValue } from "../../store";
 import { getCharacters, getDetailsCharacter } from "../../actions";
 import { openModal } from "../../actions/modal";
 import { PageLayout, Card, Grid, Modal, DetailsCharacter } from "../common";
-
+import SelectCharacter from "./selectCharacter";
 const Characters = () => {
   const [{ characters, modal }, dispatch] = useStateValue();
 
@@ -17,7 +17,6 @@ const Characters = () => {
       <Grid>
         {characters.results.length > 0 &&
           characters.results.map((value, index) => {
-            console.log("result", value);
             let title = value.name;
             return (
               <Card
@@ -37,7 +36,7 @@ const Characters = () => {
           })}
       </Grid>
       <Modal>
-        <DetailsCharacter />
+        <SelectCharacter />
       </Modal>
     </PageLayout>
   );

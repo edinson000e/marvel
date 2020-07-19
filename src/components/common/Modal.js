@@ -42,11 +42,13 @@ const Header = styled.div`
   display: flex;
 `;
 
+const Body = styled.div`
+  overflow-y: auto;
+`;
 export function Modal({ onClose, children, ...props }) {
   const [{ modal }, dispatch] = useStateValue();
 
   useEffect(() => {
-    console.log("modal.modal", modal.modal);
     if (modal.modal) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
     return () => {
@@ -70,8 +72,7 @@ export function Modal({ onClose, children, ...props }) {
                 color="#9c9c9c"
               />
             </Header>
-
-            {children}
+            <Body>{children}</Body>
           </Dialog>
         </Overlay>,
         modal.ref

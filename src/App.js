@@ -30,7 +30,6 @@ function App() {
   const [theme, setTheme] = useState(LightTheme);
   const [state, dispatch] = useStateValue();
   useEffect(() => {
-    console.log("entre en efect app", modalRef.current);
     dispatch(initRefModal(modalRef.current));
   }, []);
 
