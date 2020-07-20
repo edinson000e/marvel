@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useStateValue } from "../../store";
 
-import { getCharacters, getDetailsCharacter } from "../../actions";
-import { openModal } from "../../actions/modal";
+import {
+  getCharacters,
+  getDetailsCharacter,
+  resetSelectCharacter
+} from "../../actions";
+
 import { PageLayout, Card, Grid, Modal, DetailsCharacter } from "../common";
 import SelectCharacter from "./selectCharacter";
 const Characters = () => {
@@ -35,7 +39,7 @@ const Characters = () => {
             );
           })}
       </Grid>
-      <Modal>
+      <Modal onClose={() => dispatch(resetSelectCharacter())}>
         <SelectCharacter />
       </Modal>
     </PageLayout>

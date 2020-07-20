@@ -14,6 +14,14 @@ export const SelectCharacter = data => {
   return { type: characterConstants.SELECT_CHARACTER, data };
 };
 
+export const DataSelectCharacter = data => {
+  console.log("entre en dataSelect");
+  return { type: characterConstants.DATA_SELECT_CHARACTER, data };
+};
+
+export const resetSelectCharacter = () => {
+  return { type: characterConstants.RESET_SELECT_CHARACTER };
+};
 export const getCharacters = dispatch => {
   const request = fetchGet(apiUrl + "/v1/public/characters");
   dispatch(loadingListCharacters());

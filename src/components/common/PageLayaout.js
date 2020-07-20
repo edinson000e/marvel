@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Header, MarginMain } from "./Header";
 const Content = styled.main`
-  margin: 60px auto;
+  margin: 60px auto 0px auto;
   /*padding: 100px;*/
+  padding-bottom: 60px;
   box-sizing: border-box;
   font-family: "Open Sans";
 

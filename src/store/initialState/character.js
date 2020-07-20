@@ -4,5 +4,6 @@ export const initialStateCharacter = {
   offset: 0,
   results: [],
   total: 0,
-  isFetching: false
+  isFetching: false,
+  dataSelect: {}
 };

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { DetailsCharacter } from "../common";
+import React, { useEffect } from "react";
+import { DetailsCharacter, StyledLinkButton } from "../common";
 import { useStateValue } from "../../store";
+import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
+import { closeModal } from "../../actions/modal";
+import SelectContainerRef from "./selectContainerRef";
 
 const SelectCharacter = () => {
   const [{ character }, dispatch] = useStateValue();
   useEffect(() => {
     console.log("characater", character);
-    return () => {};
   }, [character]);
 
   const suspensionPoints = (text, limit) => {
@@ -21,20 +23,29 @@ const SelectCharacter = () => {
   };
 
   return (
-    <div>
+    <SelectContainerRef>
       {character.results.length > 0 &&
         character.results.map((value, index) => {
           return (
-            <DetailsCharacter
+            <StyledLinkButton
               key={index}
-              title={value.title}
-              url={value.thumbnail.path + "." + value.thumbnail.extension}
-              description={suspensionPoints(value.description, 150)}
-            />
+              to={`/commics/${value.id}`}
+              onClick={() => {
+                dispatch(resetSelectCharacter());
+                dispatch(closeModal());
+                dispatch(DataSelectCharacter(value));
+              }}
+            >
+              <DetailsCharacter
+                title={value.title}
+                url={value.thumbnail.path + "." + value.thumbnail.extension}
+                description={suspensionPoints(value.description, 150)}
+              />
+            </StyledLinkButton>
           );
         })}
       {character.isFetching && <p> cargando </p>}
-    </div>
+    </SelectContainerRef>
   );
 };
 

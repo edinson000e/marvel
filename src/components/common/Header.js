@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { Logo } from "./Logo";
 import { Search } from "./Search";
 import LogoSrc from "../../assets/marvel.svg";
-
+import { StyledLinkButton } from "./Link";
 export const MarginMain = css`
   width: 1010px;
   @media (min-width: 768px) {
@@ -46,7 +46,9 @@ export function Header({}) {
   return (
     <HeaderWrapper>
       <ContainerHeader>
-        <Logo src={LogoSrc} logo={logo} />
+        <StyledLinkButton to="/">
+          <Logo src={LogoSrc} logo={logo} />
+        </StyledLinkButton>
         <Search onClick={e => memoizedHandleClick(e)} />
       </ContainerHeader>
     </HeaderWrapper>

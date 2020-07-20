@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Characteres from "./components/characters";
+import { DetailsCharacter } from "./components/characters/detailsCharacter";
 import LightTheme from "./themes/light";
 import DarkTheme from "./themes/dark";
 import { Cont } from "./components/common";
@@ -50,6 +51,12 @@ function App() {
               exact
               path="/"
               render={props => <Characteres {...props} />}
+            />
+
+            <Route
+              exact
+              path="/commics/:id"
+              render={props => <DetailsCharacter {...props} />}
             />
 
             <Redirect from="*" to="/" />
