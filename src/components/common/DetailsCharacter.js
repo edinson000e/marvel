@@ -8,6 +8,14 @@ const Details = styled.div`
   position: relative;
 
   margin: 20px 0px;
+
+  :hover {
+    background: #f2f2f2;
+  }
+
+  :hover img {
+    filter: grayscale(60%);
+  }
 `;
 
 const StyledPhoto = styled.img`

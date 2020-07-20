@@ -13,7 +13,8 @@ const StyledContainer = styled.div`
   display: flex;
   align-items: flex-end;
 
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.7), 0 3px 1px 0 rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.7), 0 3px 0px 0 rgba(0, 0, 0, 0.7);
+
   opacity: 1;
   :hover {
     background-size: 115% 115%;

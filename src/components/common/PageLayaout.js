@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Header } from "./Header";
+import { Header, MarginMain } from "./Header";
 const Content = styled.main`
-  margin: auto auto auto auto;
+  margin: 60px auto;
   /*padding: 100px;*/
   box-sizing: border-box;
   font-family: "Open Sans";
@@ -15,6 +15,7 @@ const Content = styled.main`
   h6 {
     font-family: "Kaushan Script";
   }
+  ${MarginMain}
 `;
 
 export function PageLayout({ children }) {
