@@ -108,9 +108,10 @@ export const Paginator = ({ refElement, pag, data, all }) => {
 
   const button_number_function = () => {
     const button_number = [];
+    let valuePagActive = parseInt(pag);
+
+    if (!valuePagActive) valuePagActive = 1;
     for (let i = parseInt(paginas) - 5; i < parseInt(paginas); i++) {
-      console.log("\n \n parseInt(pag)", parseInt(pag));
-      console.log("i + 1", i + 1);
       button_number.push(
         <StyledLinkButton
           key={i}
@@ -118,7 +119,7 @@ export const Paginator = ({ refElement, pag, data, all }) => {
           onClick={() => {
             window.scrollTo(0, refElement.offsetTop);
           }}
-          isActive={parseInt(pag) === i + 1}
+          isActive={valuePagActive === i + 1}
         >
           {i + 1}
         </StyledLinkButton>
