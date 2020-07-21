@@ -14,7 +14,7 @@ const Content = styled.main`
   h4,
   h5,
   h6 {
-    font-family: "Kaushan Script";
+    font-family: "Roboto Condensed";
   }
   ${MarginMain}
 `;

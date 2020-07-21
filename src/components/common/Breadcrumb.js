@@ -11,13 +11,12 @@ const BreadcrumbLi = styled.li`
   display: inline;
   font-size: 18px;
   & + li:before {
-    content: "/";
+    content: ">";
     padding: 8px;
     color: black;
   }
   a {
-    color: #0275d8;
-    text-decoration: none;
+    color: #ee4327;
     text-transform: capitalize;
   }
   a:hover {
@@ -29,7 +28,10 @@ const BreadcrumbLi = styled.li`
 const Breadcrumb = ({ actions }) => (
   <BreadcrumbContainer>
     <BreadcrumbLi>
-      <StyledLinkButton to={"/"}>home</StyledLinkButton>
+      <StyledLinkButton to={"/"}>
+        home
+        {/*<FontAwesomeIcon icon={faHome} size="lg" color="#ee4327" />*/}
+      </StyledLinkButton>
     </BreadcrumbLi>
     {actions.map(({ path, text }, index) => {
       console.log("index", index);

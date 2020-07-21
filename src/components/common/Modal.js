@@ -29,10 +29,14 @@ const Dialog = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1;
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   height: 500px;
   display: flex;
   background: #fff;
+  @media (max-width: 599px) {
+    width: 82vw;
+    height: 60vh;
+  }
 `;
 
 const Header = styled.div`

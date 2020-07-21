@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback } from "react";
 import styled from "styled-components";
-
+import { Breadcrumb } from "./Breadcrumb";
 const DetailsCommics = styled.div`
   display: flex;
   flex-direction: row;
@@ -9,7 +9,7 @@ const DetailsCommics = styled.div`
 `;
 
 const Details = styled(DetailsCommics)`
-  margin: 20px 0px;
+  margin: 20px 20px 20px 0;
   :hover {
     background: #f2f2f2;
   }
@@ -19,7 +19,7 @@ const Details = styled(DetailsCommics)`
   }
 `;
 const StyledPhoto = styled.img`
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: cover;
   border-radius: 3px;
@@ -29,13 +29,16 @@ const StyledPhoto = styled.img`
   overflow: hidden;
 `;
 
+const StyledPhotoContainer = styled(StyledPhoto)`
+  margin: 0px;
+`;
 const Title = styled.h4`
   color: ${p => (p.dark ? "#000" : "#fff")};
   font-weight: bold;
   text-transform: capitalize;
-  @media (max-width: 500px) {
+  /*@media (max-width: 500px) {
     font-size: 0.5rem;
-  }
+  }*/
 `;
 
 const TitleDescription = styled.h1`
@@ -45,7 +48,6 @@ const TitleDescription = styled.h1`
 
 const ContainerImage = styled.div`
   flex: 25%;
-  margin-right: 1.6rem;
   justify-content: center;
   border-radius: 4px;
   order: -1;
@@ -54,10 +56,19 @@ const ContainerImage = styled.div`
 `;
 
 const ContainerImageDetails = styled(ContainerImage)`
-  flex: 50%;
+  /*
+  justify-content: flex-start;
+*/
+  flex: inherit;
+  width: 40%;
+  margin-top: 3rem;
 `;
 const ContainerDescription = styled.div`
-  flex: 75%;
+  width: 60%;
+
+  h4 {
+    font-family: "Open Sans";
+  }
 `;
 
 const Date = styled.div`
@@ -68,6 +79,26 @@ const Date = styled.div`
 
 const Description = styled.p`
   font-weight: 300;
+  text-align: justify;
+`;
+
+const DescriptionContainer = styled(Description)`
+  position: absolute;
+  background: white;
+`;
+const ContainerPrincipal = styled.div`
+  background: #eeeeee;
+
+  position: absolute;
+  left: 0px;
+  width: 100%;
+
+  > div {
+    z-index: 1;
+    width: 1250px;
+    margin: auto;
+    justify-content: flex-end;
+  }
 `;
 
 export function DetailsCharacter({ url, title, description, action }) {
@@ -91,25 +122,33 @@ export function CommonDetailsCharacter({
   title,
   description,
   subTitle,
-  action
+  actions
 }) {
   return (
-    <DetailsCommics>
-      <ContainerImageDetails>
-        <StyledPhoto src={url} />
-      </ContainerImageDetails>
+    <>
+      <ContainerPrincipal>
+        <DetailsCommics>
+          <ContainerDescription>
+            <Breadcrumb actions={actions} />
+            <TitleDescription dark>{title}</TitleDescription>
 
-      <ContainerDescription>
-        <TitleDescription dark>{title}</TitleDescription>
-        {subTitle &&
-          subTitle.length > 0 &&
-          subTitle.map((value, index) => (
-            <Title dark key={index}>
-              {value.item} : {value.name.toString()}
-            </Title>
-          ))}
-        <Description>{description}</Description>
-      </ContainerDescription>
-    </DetailsCommics>
+            {subTitle &&
+              subTitle.length > 0 &&
+              subTitle.map((value, index) => (
+                <Title dark key={index}>
+                  {value.item} : {value.name.toString()}
+                </Title>
+              ))}
+
+            <DescriptionContainer>{description}</DescriptionContainer>
+          </ContainerDescription>
+        </DetailsCommics>
+      </ContainerPrincipal>
+      <DetailsCommics>
+        <ContainerImageDetails>
+          <StyledPhotoContainer src={url} />
+        </ContainerImageDetails>
+      </DetailsCommics>
+    </>
   );
 }

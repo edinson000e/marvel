@@ -51,11 +51,11 @@ export const DetailsCharacter = props => {
       });
       setcreator(role);
     }
-    document.body.style.overflow = "hidden";
+    /* document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = "unset";
-    };
+    };*/
   }, []);
   return (
     <PageLayout>
@@ -63,14 +63,6 @@ export const DetailsCharacter = props => {
         "Loading"
       ) : (
         <>
-          <Breadcrumb
-            actions={[
-              {
-                path: "/",
-                text: character.dataSelect.title
-              }
-            ]}
-          />
           <CommonDetailsCharacter
             title={character.dataSelect.title}
             url={
@@ -80,6 +72,12 @@ export const DetailsCharacter = props => {
             }
             subTitle={creator}
             description={character.dataSelect.description}
+            actions={[
+              {
+                path: "/",
+                text: character.dataSelect.title
+              }
+            ]}
           />
         </>
       )}

@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 		min-height: 100vh;
 		margin: 0;
 		color: ${p => p.theme.bodyFontColor};
-		font-family: 'Kaushan Script';
+		font-family: 'Open Sans';
     
 	}
 `;
