@@ -47,6 +47,11 @@ export const Paginator = ({ refElement, pag, data, all }) => {
         else setpaginas(paginasNew + 4);
       }
     }
+    console.log("entro a use efect ", Math.ceil(listAll / 20));
+    console.log("entro a use efect ", parseInt(pag));
+    if (Math.ceil(listAll / 20) === parseInt(pag)) {
+      setpaginas(Math.ceil(listAll / 20));
+    }
   }, [all, pag]);
   const btnCurrent = pag && parseInt(pag) && parseInt(pag) > 1 && (
     <StyledLinkButton
@@ -76,7 +81,7 @@ export const Paginator = ({ refElement, pag, data, all }) => {
   const button_number_start_function = () => {
     const button_number = [];
     if (parseInt(paginas) > 30) {
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 2; i++) {
         button_number.push(
           <StyledLinkButton
             key={i}
@@ -122,7 +127,7 @@ export const Paginator = ({ refElement, pag, data, all }) => {
   const button_number_end_function = () => {
     const button_number = [];
 
-    if (parseInt(pag) + 15 < Math.ceil(listAllPaginator / 20))
+    if (parseInt(pag) + 15 < Math.ceil(listAllPaginator / 20)) {
       button_number.push(
         <FontAwesomeIcon
           icon={faEllipsisH}
@@ -131,22 +136,23 @@ export const Paginator = ({ refElement, pag, data, all }) => {
           style={{ margin: "0px 1rem" }}
         />
       );
-    for (
-      let i = Math.ceil(listAllPaginator / 20) - 3;
-      i < Math.ceil(listAllPaginator / 20);
-      i++
-    ) {
-      button_number.push(
-        <StyledLinkButton
-          key={i}
-          to={`/p=${i + 1}`}
-          onClick={() => {
-            window.scrollTo(0, refElement.offsetTop);
-          }}
-        >
-          {i + 1}
-        </StyledLinkButton>
-      );
+      for (
+        let i = Math.ceil(listAllPaginator / 20) - 2;
+        i < Math.ceil(listAllPaginator / 20);
+        i++
+      ) {
+        button_number.push(
+          <StyledLinkButton
+            key={i}
+            to={`/p=${i + 1}`}
+            onClick={() => {
+              window.scrollTo(0, refElement.offsetTop);
+            }}
+          >
+            {i + 1}
+          </StyledLinkButton>
+        );
+      }
     }
     return button_number;
   };
