@@ -11,9 +11,7 @@ export const fetchGet = url => {
     .then(data => {
       return data;
     })
-    .catch(error => {
-      console.log("The error is:", error.message, "in fetchLoginUser");
-    });
+    .catch(error => {});
 };
 export const fetchGetParam = url => {
   return fetch(
@@ -26,7 +24,5 @@ export const fetchGetParam = url => {
     .then(data => {
       return data;
     })
-    .catch(error => {
-      console.log("The error is:", error.message, "in fetchLoginUser");
-    });
+    .catch(error => {});
 };

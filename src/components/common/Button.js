@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 const largeStyles = ({ large }) => {
-  console.log("large", large);
   if (large) {
     return css`
       padding: 10px;

@@ -11,9 +11,6 @@ import SelectContainerRef from "./selectContainerRef";
 
 const SelectCharacter = () => {
   const [{ character }, dispatch] = useStateValue();
-  useEffect(() => {
-    console.log("characater", character);
-  }, [character]);
 
   const suspensionPoints = (text, limit) => {
     let points = "...";
@@ -26,8 +23,6 @@ const SelectCharacter = () => {
     return text;
   };
 
-  let test = true;
-  console.log("character.isFetching", character.isFetching);
   return (
     <SelectContainerRef>
       {character.isFetching ? (

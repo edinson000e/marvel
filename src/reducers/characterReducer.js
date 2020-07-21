@@ -28,7 +28,6 @@ const charactersReducer = (state, action) => {
       };
 
     case characterConstants.DATA_SELECT_CHARACTER:
-      console.log("characterConstants.DATA_SELECT_CHARACTER", action.data);
       return {
         ...state,
         dataSelect: action.data

@@ -46,7 +46,6 @@ const ContainerHeader = styled.div`
 export function Header({}) {
   const [logo, setlogo] = useState(true);
   const memoizedHandleClick = useCallback(e => {
-    console.log("e", e);
     setlogo(!e);
   }, []);
 

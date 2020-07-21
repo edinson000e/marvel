@@ -8,7 +8,6 @@ export default function(state, action) {
         ref: action.data
       };
     case modalConstants.SHOWMODAL:
-      console.log("me llamaron modal Const");
       let send = state.send;
 
       if (typeof action.data.send !== "undefined") send = action.data.send;

@@ -29,7 +29,6 @@ export const DetailsCharacter = props => {
       character.dataSelect.creators.items &&
       character.dataSelect.creators.items.length > 0
     ) {
-      console.log("hago entro acaa en roles");
       if (role.length === 0) {
         var today = new Date(character.dataSelect.dates[0].date);
 
