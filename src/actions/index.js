@@ -10,6 +10,10 @@ export const errorCharacters = data => {
   return { type: charactersConstants.ERROR_LIST, data };
 };
 
+export const errorCharacterSelect = data => {
+  return { type: characterConstants.ERROR_SELECT, data };
+};
+
 export const loadingListCharacters = data => {
   return { type: charactersConstants.LOADING_LIST, data };
 };
@@ -61,9 +65,11 @@ export const searchCommic = (dispatch, comicId) => {
   const request = fetchGet(apiUrl + `/v1/public/comics/${id}`);
   request
     .then(result => {
+      console.log("result", result);
       dispatch(DataSelectCharacter(result.data.results[0]));
     })
     .catch(e => {
+      dispatch(errorCharacterSelect());
       console.log("ocurrio algun error");
     });
 };

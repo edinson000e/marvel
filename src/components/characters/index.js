@@ -7,11 +7,8 @@ import {
   PageLayout,
   Card,
   Grid,
-  Spinner,
-  ContainerSpinner,
-  TitleDescription,
-  StyledLinkButton,
-  Button
+  ContainerLoading,
+  ContainerError
 } from "../common";
 
 import { Container } from "../common/Search";
@@ -38,9 +35,7 @@ const Characters = props => {
     <PageLayout>
       {!error && !characters.error ? (
         characters.isFeching ? (
-          <ContainerSpinner>
-            <Spinner />
-          </ContainerSpinner>
+          <ContainerLoading />
         ) : (
           <>
             <Grid>
@@ -75,19 +70,15 @@ const Characters = props => {
           </>
         )
       ) : (
-        <ContainerSpinner>
-          <Container>
-            <TitleDescription dark>
-              {characters.error
-                ? " Sorry! We couldn't find any results."
-                : "There was a search error."}
-            </TitleDescription>
-            <h2>Please try again</h2>
-            <StyledLinkButton to={"/"} onClick={() => seterror(false)}>
-              <Button type="button">Back to home page</Button>
-            </StyledLinkButton>
-          </Container>
-        </ContainerSpinner>
+        <ContainerError
+          title={
+            characters.error
+              ? " Sorry! We couldn't find any results."
+              : "There was a search error."
+          }
+          subTitle="Please try again"
+          onClick={() => seterror(false)}
+        />
       )}
     </PageLayout>
   );

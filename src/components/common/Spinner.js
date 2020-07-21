@@ -1,4 +1,6 @@
 import styled, { keyframes } from "styled-components";
+import React from "react";
+
 const rotation = keyframes`
     from{
         transform: rotate(0deg);
@@ -26,4 +28,13 @@ const ContainerSpinner = styled.div`
   align-items: inherit;
   justify-content: center;
 `;
-export { Spinner, ContainerSpinner };
+
+const ContainerLoading = () => {
+  return (
+    <ContainerSpinner>
+      <Spinner />
+    </ContainerSpinner>
+  );
+};
+
+export { Spinner, ContainerSpinner, ContainerLoading };

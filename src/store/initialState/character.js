@@ -5,5 +5,6 @@ export const initialStateCharacter = {
   results: [],
   total: 0,
   isFetching: false,
-  dataSelect: {}
+  dataSelect: {},
+  errorSelect: false
 };

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { PageLayout, CommonDetailsCharacter, Breadcrumb } from "../common";
+import {
+  PageLayout,
+  CommonDetailsCharacter,
+  ContainerLoading,
+  ContainerError
+} from "../common";
 import { useStateValue } from "../../store";
 import { searchCommic } from "../../actions";
 let options = {
@@ -11,6 +16,10 @@ export const DetailsCharacter = props => {
   const [{ character }, dispatch] = useStateValue();
 
   const [creator, setcreator] = useState([]);
+  const [error, seterror] = useState(false);
+  const is_numeric = value => {
+    return !isNaN(parseFloat(value)) && isFinite(value);
+  };
   useEffect(() => {
     let role = [];
 
@@ -48,32 +57,48 @@ export const DetailsCharacter = props => {
       });
       setcreator(role);
     } else {
-      searchCommic(dispatch, props.match.params.id);
+      if (is_numeric(props.match.params.id))
+        searchCommic(dispatch, props.match.params.id);
+      else {
+        seterror(true);
+      }
     }
   }, [character]);
   return (
     <PageLayout>
-      {Object.entries(character.dataSelect).length === 0 ? (
-        "Loading"
-      ) : (
-        <>
-          <CommonDetailsCharacter
-            title={character.dataSelect.title}
-            url={
-              character.dataSelect.thumbnail.path +
-              "." +
-              character.dataSelect.thumbnail.extension
-            }
-            subTitle={creator}
-            description={character.dataSelect.description}
-            actions={[
-              {
-                path: "/",
-                text: character.dataSelect.title
+      {!error && !character.errorSelect ? (
+        Object.entries(character.dataSelect).length === 0 ? (
+          <ContainerLoading />
+        ) : (
+          <>
+            <CommonDetailsCharacter
+              title={character.dataSelect.title}
+              url={
+                character.dataSelect.thumbnail.path +
+                "." +
+                character.dataSelect.thumbnail.extension
               }
-            ]}
-          />
-        </>
+              subTitle={creator}
+              description={character.dataSelect.description}
+              actions={[
+                {
+                  path: "/",
+                  text: character.dataSelect.title
+                }
+              ]}
+            />
+          </>
+        )
+      ) : (
+        <ContainerError
+          title={
+            character.errorSelect
+              ? " Sorry! We couldn't find any results."
+              : "There was a search error."
+          }
+          subTitle="Please try again"
+          onClick={() => seterror(false)}
+        />
       )}
     </PageLayout>
   );

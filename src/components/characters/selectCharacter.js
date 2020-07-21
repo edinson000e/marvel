@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import {
   DetailsCharacter,
   StyledLinkButton,
-  Spinner,
-  ContainerSpinner
+  ContainerLoading
 } from "../common";
 import { useStateValue } from "../../store";
 import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
@@ -32,9 +31,7 @@ const SelectCharacter = () => {
   return (
     <SelectContainerRef>
       {character.isFetching ? (
-        <ContainerSpinner>
-          <Spinner />
-        </ContainerSpinner>
+        <ContainerLoading />
       ) : (
         character.results.length > 0 &&
         character.results.map((value, index) => {

@@ -16,7 +16,15 @@ const charactersReducer = (state, action) => {
     case characterConstants.LOADING_LIST_CHARACTER:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        errorSelect: false
+      };
+
+    case characterConstants.ERROR_SELECT:
+      return {
+        ...state,
+        isFetching: false,
+        errorSelect: true
       };
 
     case characterConstants.DATA_SELECT_CHARACTER:

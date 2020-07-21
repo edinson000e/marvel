@@ -9,3 +9,4 @@ export * from "./Link";
 export * from "./Breadcrumb";
 export * from "./Spinner";
 export * from "./Button";
+export * from "./Error";
