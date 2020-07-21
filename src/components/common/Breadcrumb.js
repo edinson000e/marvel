@@ -34,10 +34,8 @@ const Breadcrumb = ({ actions }) => (
       </StyledLinkButton>
     </BreadcrumbLi>
     {actions.map(({ path, text }, index) => {
-      console.log("index", index);
-      console.log("actions.length", actions.length);
       return (
-        <BreadcrumbLi>
+        <BreadcrumbLi key={index}>
           {index === actions.length - 1 ? (
             text
           ) : (

@@ -15,7 +15,6 @@ export const SelectCharacter = data => {
 };
 
 export const DataSelectCharacter = data => {
-  console.log("entre en dataSelect");
   return { type: characterConstants.DATA_SELECT_CHARACTER, data };
 };
 
@@ -30,10 +29,17 @@ export const getCharacters = dispatch => {
   });
 };
 
+export const searchCommic = (dispatch, comicId) => {
+  let id = parseInt(comicId);
+  const request = fetchGet(apiUrl + `/v1/public/comics/${id}`);
+  request.then(result => {
+    dispatch(DataSelectCharacter(result.data.results[0]));
+  });
+};
+
 export const getDetailsCharacter = async (url, title, dispatch) => {
   dispatch(openModal({ title }));
 
-  console.log("rul", url);
   try {
     const request = await fetchGet(url);
     const json = await request;

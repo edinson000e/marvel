@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PageLayout, CommonDetailsCharacter, Breadcrumb } from "../common";
 import { useStateValue } from "../../store";
-
+import { searchCommic } from "../../actions";
 let options = {
   year: "numeric",
   month: "long",
@@ -12,10 +12,6 @@ export const DetailsCharacter = props => {
 
   const [creator, setcreator] = useState([]);
   useEffect(() => {
-    /*console.log("props.match.params.id", props.match.params.id);
-       console.log("character", character);
-     */
-
     let role = [];
 
     if (
@@ -24,6 +20,7 @@ export const DetailsCharacter = props => {
       character.dataSelect.creators.items &&
       character.dataSelect.creators.items.length > 0
     ) {
+      console.log("hago entro acaa en roles");
       if (role.length === 0) {
         var today = new Date(character.dataSelect.dates[0].date);
 
@@ -50,13 +47,10 @@ export const DetailsCharacter = props => {
         }
       });
       setcreator(role);
+    } else {
+      searchCommic(dispatch, props.match.params.id);
     }
-    /* document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };*/
-  }, []);
+  }, [character]);
   return (
     <PageLayout>
       {Object.entries(character.dataSelect).length === 0 ? (
