@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   PageLayout,
-  CommonDetailsCharacter,
+  ContainerLoading,
   Breadcrumb,
   TitleDescription,
   Grid,
@@ -31,7 +31,9 @@ const Search = props => {
     <PageLayout>
       <Container>
         <Breadcrumb actions={actions} />
-        {search.complete && search.count === 0 ? (
+        {search.isFetching ? (
+          <ContainerLoading />
+        ) : search.complete && search.count === 0 ? (
           <>
             <TitleDescription dark>
               Sorry! We couldn't find any results to "{props.match.params.id}"{" "}

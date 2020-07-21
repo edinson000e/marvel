@@ -13,6 +13,13 @@ const searchsReducer = (state, action) => {
         isFetching: false,
         complete: true
       };
+
+    case searchConstants.LOADING_SEARCH:
+      return {
+        isFetching: true,
+        errorSearch: false
+      };
+
     case searchConstants.RESET:
       return initialStateSearch;
     default:
