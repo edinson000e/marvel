@@ -21,10 +21,12 @@ const Form = styled.form`
   height: 0.6rem;
   border-radius: 10rem;
   width: 20rem;
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     right: 0;
     padding: 1rem;
-    width: ${p => (p.open ? "100%" : "2rem")};
+
+    position: absolute;
+    width: ${p => (p.open ? "90%" : "2rem")};
     cursor: ${p => (p.open ? "auto" : "pointer")};
   }
   @media (min-width: 768px) {

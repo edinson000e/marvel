@@ -27,6 +27,9 @@ const HeaderWrapper = styled.header`
   box-sizing: border-box;
   top: 0;
   padding: 20px;
+  @media (max-width: 768px) {
+    padding: 1px 0px;
+  }
   box-shadow: 0px 0px 8px 0px ${props => props.theme.shadow};
 `;
 
@@ -36,6 +39,9 @@ const ContainerHeader = styled.div`
   justify-content: space-between;
   ${MarginMain}
   margin: auto;
+  @media (max-width: 767px) {
+    justify-content: center;
+  }
 `;
 export function Header({}) {
   const [logo, setlogo] = useState(true);
