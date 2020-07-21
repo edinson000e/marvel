@@ -1,13 +1,24 @@
 import React, { useState, useContext, useCallback } from "react";
 import styled from "styled-components";
 import { Breadcrumb } from "./Breadcrumb";
+
+import { MarginMain } from "./Header";
 const DetailsCommics = styled.div`
   display: flex;
   flex-direction: row;
   pointer-events: all;
   position: relative;
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
+const Container = styled.div`
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+`;
 const Details = styled(DetailsCommics)`
   margin: 20px 20px 20px 0;
   :hover {
@@ -16,6 +27,13 @@ const Details = styled(DetailsCommics)`
 
   :hover img {
     filter: grayscale(60%);
+  }
+  @media (max-width: 767px) {
+    border-bottom: 1px solid #dcdacb;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    padding: 8px;
   }
 `;
 const StyledPhoto = styled.img`
@@ -27,6 +45,9 @@ const StyledPhoto = styled.img`
   transition: opacity linear 100ms;
   margin: auto;
   overflow: hidden;
+  @media (max-width: 767px) {
+    width: 50%;
+  }
 `;
 
 const StyledPhotoContainer = styled(StyledPhoto)`
@@ -62,12 +83,19 @@ const ContainerImageDetails = styled(ContainerImage)`
   flex: inherit;
   width: 40%;
   margin-top: 3rem;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 const ContainerDescription = styled.div`
   width: 60%;
 
   h4 {
     font-family: "Open Sans";
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
   }
 `;
 
@@ -83,8 +111,10 @@ const Description = styled.p`
 `;
 
 const DescriptionContainer = styled(Description)`
-  position: absolute;
-  background: white;
+  @media (min-width: 768px) {
+    position: absolute;
+    background: white;
+  }
 `;
 const ContainerPrincipal = styled.div`
   background: #eeeeee;
@@ -95,9 +125,15 @@ const ContainerPrincipal = styled.div`
 
   > div {
     z-index: 1;
-    width: 1250px;
+
+    ${MarginMain}
     margin: auto;
     justify-content: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    position: relative;
+    background: #fff;
   }
 `;
 
@@ -125,7 +161,7 @@ export function CommonDetailsCharacter({
   actions
 }) {
   return (
-    <>
+    <Container>
       <ContainerPrincipal>
         <DetailsCommics>
           <ContainerDescription>
@@ -149,6 +185,6 @@ export function CommonDetailsCharacter({
           <StyledPhotoContainer src={url} />
         </ContainerImageDetails>
       </DetailsCommics>
-    </>
+    </Container>
   );
 }
