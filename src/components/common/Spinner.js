@@ -24,5 +24,6 @@ const ContainerSpinner = styled.div`
   display: flex;
   height: -webkit-fill-available;
   align-items: inherit;
+  justify-content: center;
 `;
 export { Spinner, ContainerSpinner };

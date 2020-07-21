@@ -10,7 +10,14 @@ const charactersReducer = (state, action) => {
     case charactersConstants.LOADING_LIST:
       return {
         ...state,
-        isFeching: true
+        isFeching: true,
+        error: false
+      };
+    case charactersConstants.ERROR_LIST:
+      return {
+        ...state,
+        isFeching: false,
+        error: true
       };
 
     default:
