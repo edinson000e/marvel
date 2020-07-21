@@ -58,6 +58,13 @@ function App() {
               path="/search/q=:id"
               render={props => <Search {...props} />}
             />
+
+            <Route
+              exact
+              path="/p=:pag"
+              render={props => <Characteres {...props} />}
+            />
+
             <Redirect from="*" to="/" />
           </Switch>
         </BrowserRouter>

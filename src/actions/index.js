@@ -1,6 +1,6 @@
 import { charactersConstants } from "../constants/characters.constants";
 import { characterConstants } from "../constants/character.constants";
-import { fetchGet, apiUrl } from "../api";
+import { fetchGet, apiUrl, fetchGetParam } from "../api";
 import { openModal } from "./modal";
 export const saveCharacters = data => {
   return { type: charactersConstants.SAVE_LIST, data };
@@ -21,8 +21,15 @@ export const DataSelectCharacter = data => {
 export const resetSelectCharacter = () => {
   return { type: characterConstants.RESET_SELECT_CHARACTER };
 };
-export const getCharacters = dispatch => {
-  const request = fetchGet(apiUrl + "/v1/public/characters");
+export const getCharacters = (dispatch, limit, offset) => {
+  console.log(
+    "rsdfdsfdsf",
+    `/v1/public/characters?limit=${limit}&offset=${offset}`
+  );
+  const request = fetchGetParam(
+    apiUrl + `/v1/public/characters?limit=${limit}&offset=${offset}`
+  );
+
   dispatch(loadingListCharacters());
   request.then(result => {
     dispatch(saveCharacters(result.data));

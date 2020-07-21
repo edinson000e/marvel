@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useStateValue } from "../../store";
 
 import {
@@ -9,37 +9,64 @@ import {
 
 import { PageLayout, Card, Grid, Modal, DetailsCharacter } from "../common";
 import ModalDetails from "./modalDetails";
-const Characters = () => {
-  const [{ characters, modal }, dispatch] = useStateValue();
-
+import { Paginator } from "../common/Paginator";
+const Characters = props => {
+  const [{ characters, modal, pagination }, dispatch] = useStateValue();
+  const [error, seterror] = useState(false);
+  const is_numeric = value => {
+    return !isNaN(parseFloat(value)) && isFinite(value);
+  };
+  let pagNumber = props.match.params.pag;
   useEffect(() => {
-    getCharacters(dispatch);
-  }, []);
+    console.log("pagNumber", pagNumber);
 
+    if (!pagNumber) {
+      pagNumber = 1;
+    }
+    if (is_numeric(pagNumber)) {
+      pagination.offset =
+        parseInt(pagination.pagLimit) * (parseInt(pagNumber) - 1);
+      getCharacters(dispatch, pagination.pagLimit, pagination.offset);
+    } else seterror(true);
+  }, [pagNumber]);
+  const Ref = useRef();
   return (
     <PageLayout>
-      <Grid>
-        {characters.results.length > 0 &&
-          characters.results.map((value, index) => {
-            let title = value.name;
-            return (
-              <Card
-                key={index}
-                title={value.name}
-                photo={value.thumbnail.path + "." + value.thumbnail.extension}
-                description={value.description}
-                onClick={() => {
-                  getDetailsCharacter(
-                    value.comics.collectionURI,
-                    title,
-                    dispatch
-                  );
-                }}
-              />
-            );
-          })}
-      </Grid>
-      <ModalDetails />
+      {!error ? (
+        <>
+          <Grid>
+            {characters.results.length > 0 &&
+              characters.results.map((value, index) => {
+                let title = value.name;
+                return (
+                  <Card
+                    key={index}
+                    title={value.name}
+                    photo={
+                      value.thumbnail.path + "." + value.thumbnail.extension
+                    }
+                    description={value.description}
+                    onClick={() => {
+                      getDetailsCharacter(
+                        value.comics.collectionURI,
+                        title,
+                        dispatch
+                      );
+                    }}
+                  />
+                );
+              })}
+          </Grid>
+          <ModalDetails />
+          <Paginator
+            refElement={Ref}
+            pag={props.match.params.pag}
+            all={characters.total}
+          ></Paginator>
+        </>
+      ) : (
+        <p> error</p>
+      )}
     </PageLayout>
   );
 };

@@ -65,7 +65,7 @@ const Search = props => {
                   );
                 })}
             </Grid>
-            <Modal />{" "}
+            <Modal />
           </>
         )}
       </Container>

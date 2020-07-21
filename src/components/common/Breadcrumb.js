@@ -28,10 +28,7 @@ const BreadcrumbLi = styled.li`
 const Breadcrumb = ({ actions }) => (
   <BreadcrumbContainer>
     <BreadcrumbLi>
-      <StyledLinkButton to={"/"}>
-        home
-        {/*<FontAwesomeIcon icon={faHome} size="lg" color="#ee4327" />*/}
-      </StyledLinkButton>
+      <StyledLinkButton to={"/"}>home</StyledLinkButton>
     </BreadcrumbLi>
     {actions.map(({ path, text }, index) => {
       return (
