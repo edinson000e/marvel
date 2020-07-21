@@ -1,8 +1,8 @@
 import { searchConstants } from "../constants/search.constants";
-
+import { initialStateSearch } from "../store/initialState/search";
 const searchsReducer = (state, action) => {
   switch (action.type) {
-    case searchConstants.SAVE_LIST:
+    case searchConstants.RESULT:
       return {
         ...state,
         count: action.data.count,
@@ -13,6 +13,8 @@ const searchsReducer = (state, action) => {
         isFetching: false,
         complete: true
       };
+    case searchConstants.RESET:
+      return initialStateSearch;
     default:
       return state;
   }

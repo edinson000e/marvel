@@ -8,7 +8,7 @@ import {
 } from "../../actions";
 
 import { PageLayout, Card, Grid, Modal, DetailsCharacter } from "../common";
-import SelectCharacter from "./selectCharacter";
+import ModalDetails from "./modalDetails";
 const Characters = () => {
   const [{ characters, modal }, dispatch] = useStateValue();
 
@@ -39,9 +39,7 @@ const Characters = () => {
             );
           })}
       </Grid>
-      <Modal onClose={() => dispatch(resetSelectCharacter())}>
-        <SelectCharacter />
-      </Modal>
+      <ModalDetails />
     </PageLayout>
   );
 };
