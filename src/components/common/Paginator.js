@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDoubleRight,
+  faAngleDoubleLeft,
+  faAngleLeft,
+  faAngleRight
+} from "@fortawesome/free-solid-svg-icons";
 
 import { StyledLinkButton } from "../common";
 const Container = styled.ul`
-  display: inline-flex;
   justify-content: center;
-
   align-items: center;
+  display: flex;
+  margin: 4vh;
   a {
     color: black;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
     transition: background-color 0.3s;
-    border: 1px solid #ddd;
-    margin: 0 4px;
+    margin: 0px 4px;
   }
   a .active {
     background-color: #4caf50;
@@ -25,6 +29,15 @@ const Container = styled.ul`
   }
   a:hover:not(.active) {
     background-color: #ddd;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0px;
+
+    a {
+      color: black;
+      padding: 4px 5px;
+    }
   }
 `;
 
@@ -40,15 +53,14 @@ export const Paginator = ({ refElement, pag, data, all }) => {
 
     if (!paginasNew) paginasNew = 1;
     if (listAll > 0 && Math.ceil(listAll / 20) !== paginasNew) {
-      if (paginasNew <= 5) {
-        setpaginas(9);
+      if (paginasNew <= 3) {
+        setpaginas(5);
       } else {
-        if (paginasNew + 4 > validate) setpaginas(Math.ceil(listAll / 20));
-        else setpaginas(paginasNew + 4);
+        if (paginasNew + 2 > validate) setpaginas(Math.ceil(listAll / 20));
+        else setpaginas(paginasNew + 2);
       }
     }
-    console.log("entro a use efect ", Math.ceil(listAll / 20));
-    console.log("entro a use efect ", parseInt(pag));
+
     if (Math.ceil(listAll / 20) === parseInt(pag)) {
       setpaginas(Math.ceil(listAll / 20));
     }
@@ -60,47 +72,35 @@ export const Paginator = ({ refElement, pag, data, all }) => {
         window.scrollTo(0, refElement.offsetTop);
       }}
     >
-      {" "}
-      &laquo;
+      <FontAwesomeIcon icon={faAngleLeft} size="lg" color="#ee4327" />
     </StyledLinkButton>
   );
 
   const btnSiguiente =
     !parseInt(paginas) ||
-    (Math.ceil(listAllPaginator / 20) > parseInt(paginas) + 4 && (
+    (Math.ceil(listAllPaginator / 20) > parseInt(paginas) + 2 && (
       <StyledLinkButton
         to={`/p=${parseInt(pag) + 1}`}
         onClick={() => {
           window.scrollTo(0, refElement.offsetTop);
         }}
       >
-        &raquo;
+        <FontAwesomeIcon icon={faAngleRight} size="lg" color="#ee4327" />
       </StyledLinkButton>
     ));
 
   const button_number_start_function = () => {
     const button_number = [];
     if (parseInt(paginas) > 30) {
-      for (let i = 0; i < 2; i++) {
-        button_number.push(
-          <StyledLinkButton
-            key={i}
-            to={`/p=${i + 1}`}
-            onClick={() => {
-              window.scrollTo(0, refElement.offsetTop);
-            }}
-          >
-            {i + 1}
-          </StyledLinkButton>
-        );
-      }
-      button_number.push(
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          size="lg"
-          color="#ee4327"
-          style={{ margin: "0px 1rem" }}
-        />
+      return (
+        <StyledLinkButton
+          to={`/p=1`}
+          onClick={() => {
+            window.scrollTo(0, refElement.offsetTop);
+          }}
+        >
+          <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" color="#ee4327" />
+        </StyledLinkButton>
       );
     }
     return button_number;
@@ -108,7 +108,9 @@ export const Paginator = ({ refElement, pag, data, all }) => {
 
   const button_number_function = () => {
     const button_number = [];
-    for (let i = parseInt(paginas) - 9; i < parseInt(paginas); i++) {
+    for (let i = parseInt(paginas) - 5; i < parseInt(paginas); i++) {
+      console.log("\n \n parseInt(pag)", parseInt(pag));
+      console.log("i + 1", i + 1);
       button_number.push(
         <StyledLinkButton
           key={i}
@@ -116,6 +118,7 @@ export const Paginator = ({ refElement, pag, data, all }) => {
           onClick={() => {
             window.scrollTo(0, refElement.offsetTop);
           }}
+          isActive={parseInt(pag) === i + 1}
         >
           {i + 1}
         </StyledLinkButton>
@@ -125,48 +128,37 @@ export const Paginator = ({ refElement, pag, data, all }) => {
   };
 
   const button_number_end_function = () => {
-    const button_number = [];
-
     if (parseInt(pag) + 15 < Math.ceil(listAllPaginator / 20)) {
-      button_number.push(
-        <FontAwesomeIcon
-          icon={faEllipsisH}
-          size="lg"
-          color="#ee4327"
-          style={{ margin: "0px 1rem" }}
-        />
+      return (
+        <StyledLinkButton
+          to={`/p=${Math.ceil(listAllPaginator / 20)}`}
+          onClick={() => {
+            window.scrollTo(0, refElement.offsetTop);
+          }}
+          disabled
+        >
+          <FontAwesomeIcon
+            icon={faAngleDoubleRight}
+            size="lg"
+            color="#ee4327"
+          />
+        </StyledLinkButton>
       );
-      for (
-        let i = Math.ceil(listAllPaginator / 20) - 2;
-        i < Math.ceil(listAllPaginator / 20);
-        i++
-      ) {
-        button_number.push(
-          <StyledLinkButton
-            key={i}
-            to={`/p=${i + 1}`}
-            onClick={() => {
-              window.scrollTo(0, refElement.offsetTop);
-            }}
-          >
-            {i + 1}
-          </StyledLinkButton>
-        );
-      }
     }
-    return button_number;
+    return null;
   };
 
   return (
     <Container>
       {Math.ceil(listAllPaginator / 20) > 1 && (
         <>
-          {btnCurrent}
           {button_number_start_function()}
+          {btnCurrent}
+
           {button_number_function()}
 
-          {button_number_end_function()}
           {btnSiguiente}
+          {button_number_end_function()}
         </>
       )}
     </Container>

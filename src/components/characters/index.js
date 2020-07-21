@@ -11,7 +11,7 @@ import { PageLayout, Card, Grid, Modal, DetailsCharacter } from "../common";
 import ModalDetails from "./modalDetails";
 import { Paginator } from "../common/Paginator";
 const Characters = props => {
-  const [{ characters, modal, pagination }, dispatch] = useStateValue();
+  const [{ characters, modal }, dispatch] = useStateValue();
   const [error, seterror] = useState(false);
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
@@ -24,9 +24,9 @@ const Characters = props => {
       pagNumber = 1;
     }
     if (is_numeric(pagNumber)) {
-      pagination.offset =
-        parseInt(pagination.pagLimit) * (parseInt(pagNumber) - 1);
-      getCharacters(dispatch, pagination.pagLimit, pagination.offset);
+      let offset = parseInt(20) * (parseInt(pagNumber) - 1);
+      console.log("pagination.offset", offset);
+      getCharacters(dispatch, 20, offset);
     } else seterror(true);
   }, [pagNumber]);
   const Ref = useRef();
