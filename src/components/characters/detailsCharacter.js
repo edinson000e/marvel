@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   PageLayout,
   CommonDetailsCharacter,
@@ -14,7 +14,7 @@ let options = {
 };
 export const DetailsCharacter = props => {
   const [{ character }, dispatch] = useStateValue();
-
+  const Ref = useRef();
   const [creator, setcreator] = useState([]);
   const [error, seterror] = useState(false);
   const is_numeric = value => {
@@ -22,7 +22,7 @@ export const DetailsCharacter = props => {
   };
   useEffect(() => {
     let role = [];
-
+    window.scrollTo(0, Ref);
     if (
       character.dataSelect &&
       character.dataSelect.creators &&
@@ -65,7 +65,7 @@ export const DetailsCharacter = props => {
     }
   }, [character]);
   return (
-    <PageLayout>
+    <PageLayout ref={Ref}>
       {!error && !character.errorSelect ? (
         Object.entries(character.dataSelect).length === 0 ? (
           <ContainerLoading />
