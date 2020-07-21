@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PageLayout, CommonDetailsCharacter } from "../common";
+import { PageLayout, CommonDetailsCharacter, Breadcrumb } from "../common";
 import { useStateValue } from "../../store";
 
 let options = {
@@ -62,16 +62,26 @@ export const DetailsCharacter = props => {
       {Object.entries(character.dataSelect).length === 0 ? (
         "Loading"
       ) : (
-        <CommonDetailsCharacter
-          title={character.dataSelect.title}
-          url={
-            character.dataSelect.thumbnail.path +
-            "." +
-            character.dataSelect.thumbnail.extension
-          }
-          subTitle={creator}
-          description={character.dataSelect.description}
-        />
+        <>
+          <Breadcrumb
+            actions={[
+              {
+                path: "/",
+                text: character.dataSelect.title
+              }
+            ]}
+          />
+          <CommonDetailsCharacter
+            title={character.dataSelect.title}
+            url={
+              character.dataSelect.thumbnail.path +
+              "." +
+              character.dataSelect.thumbnail.extension
+            }
+            subTitle={creator}
+            description={character.dataSelect.description}
+          />
+        </>
       )}
     </PageLayout>
   );

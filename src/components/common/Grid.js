@@ -5,6 +5,7 @@ const Grid = styled.div`
   grid-template-columns: auto auto auto auto;
   grid-column-gap: 25px;
   grid-row-gap: 25px;
+  margin-top: 60px;
 `;
 
 const Row = styled.div`

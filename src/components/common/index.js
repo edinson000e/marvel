@@ -6,3 +6,4 @@ export * from "./Grid";
 export * from "./Modal";
 export * from "./DetailsCharacter";
 export * from "./Link";
+export * from "./Breadcrumb";
