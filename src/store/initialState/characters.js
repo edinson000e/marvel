@@ -4,5 +4,5 @@ export const initialStateCharacters = {
   offset: 0,
   results: [],
   total: 0,
-  isFeching: false
+  isFeching: true
 };

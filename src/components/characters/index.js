@@ -7,7 +7,15 @@ import {
   resetSelectCharacter
 } from "../../actions";
 
-import { PageLayout, Card, Grid, Modal, DetailsCharacter } from "../common";
+import {
+  PageLayout,
+  Card,
+  Grid,
+  Modal,
+  DetailsCharacter,
+  Spinner,
+  ContainerSpinner
+} from "../common";
 import ModalDetails from "./modalDetails";
 import { Paginator } from "../common/Paginator";
 const Characters = props => {
@@ -30,9 +38,14 @@ const Characters = props => {
     } else seterror(true);
   }, [pagNumber]);
   const Ref = useRef();
+  let test = true;
   return (
     <PageLayout>
-      {!error ? (
+      {characters.isFeching ? (
+        <ContainerSpinner>
+          <Spinner />
+        </ContainerSpinner>
+      ) : !error ? (
         <>
           <Grid>
             {characters.results.length > 0 &&
