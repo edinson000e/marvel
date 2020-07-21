@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 const Button = styled.button`
@@ -11,6 +12,13 @@ const Button = styled.button`
   cursor: ${p => (p.open ? "pointer" : "none")};
 `;
 
+export const Container = styled.div`
+  h2 {
+    font-family: "Open Sans" !important;
+    font-weight: 300;
+    text-align: center;
+  }
+`;
 const Form = styled.form`
   display: flex;
   position: relative;
@@ -63,9 +71,12 @@ export const Search = ({ onClick }) => {
   const formRef = useRef();
   const inputFocus = useRef();
   const [input, setInput] = useState("");
+  const history = useHistory();
   const onFormSubmit = e => {
     e.preventDefault();
     setInput("");
+
+    history.push(`/search/q=${input}`);
     setOpen(false);
   };
 
