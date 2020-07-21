@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { DetailsCharacter, StyledLinkButton } from "../common";
+import {
+  DetailsCharacter,
+  StyledLinkButton,
+  Spinner,
+  ContainerSpinner
+} from "../common";
 import { useStateValue } from "../../store";
 import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
 import { closeModal } from "../../actions/modal";
@@ -22,9 +27,16 @@ const SelectCharacter = () => {
     return text;
   };
 
+  let test = true;
+  console.log("character.isFetching", character.isFetching);
   return (
     <SelectContainerRef>
-      {character.results.length > 0 &&
+      {character.isFetching ? (
+        <ContainerSpinner>
+          <Spinner />
+        </ContainerSpinner>
+      ) : (
+        character.results.length > 0 &&
         character.results.map((value, index) => {
           return (
             <StyledLinkButton
@@ -43,7 +55,8 @@ const SelectCharacter = () => {
               />
             </StyledLinkButton>
           );
-        })}
+        })
+      )}
       {character.isFetching && <p> cargando </p>}
     </SelectContainerRef>
   );

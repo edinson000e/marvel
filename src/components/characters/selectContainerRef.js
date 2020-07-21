@@ -16,7 +16,19 @@ function SelectContainerRef(props) {
   }, []);
 
   useEventListener("scroll", handler);*/
-  return <div ref={scrollContainer}>{props.children}</div>;
+  return (
+    <div
+      ref={scrollContainer}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column"
+      }}
+    >
+      {props.children}
+    </div>
+  );
 }
 
 export default SelectContainerRef;

@@ -13,7 +13,7 @@ const charactersReducer = (state, action) => {
         isFetching: false
       };
 
-    case characterConstants.LOADING_LIST:
+    case characterConstants.LOADING_LIST_CHARACTER:
       return {
         ...state,
         isFetching: true

@@ -14,6 +14,10 @@ export const loadingListCharacters = data => {
   return { type: charactersConstants.LOADING_LIST, data };
 };
 
+export const selectCharacterLoading = () => {
+  return { type: characterConstants.LOADING_LIST_CHARACTER };
+};
+
 export const SelectCharacter = data => {
   return { type: characterConstants.SELECT_CHARACTER, data };
 };
@@ -66,7 +70,7 @@ export const searchCommic = (dispatch, comicId) => {
 
 export const getDetailsCharacter = async (url, title, dispatch) => {
   dispatch(openModal({ title }));
-
+  dispatch(selectCharacterLoading());
   try {
     const request = await fetchGet(url);
     const json = await request;
