@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 const Button = styled.button`
   outline: none;
   border: none;
-  color: white;
-  background-color: red;
+
+  background: white;
   pointer-events: ${p => (p.open ? "auto" : "none")};
   cursor: ${p => (p.open ? "pointer" : "none")};
 `;
@@ -15,10 +16,9 @@ const Form = styled.form`
   position: relative;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background: white;
   padding: 1rem;
-  height: 1rem;
+  height: 0.6rem;
   border-radius: 10rem;
   width: 20rem;
   @media (max-width: 768px) {
@@ -26,6 +26,15 @@ const Form = styled.form`
     padding: 1rem;
     width: ${p => (p.open ? "100%" : "2rem")};
     cursor: ${p => (p.open ? "auto" : "pointer")};
+  }
+  @media (min-width: 768px) {
+    max-width: none;
+    min-width: 15rem;
+    margin: 0rem 4rem;
+    flex-grow: 1;
+    border: 1px solid #989586;
+    border-radius: 9999px;
+    background-color: #fbfbf8;
   }
 `;
 
@@ -36,7 +45,6 @@ const Input = styled.input`
   width: 100%;
   margin-left: ${p => (p.open ? "0rem" : "0rem")};
   border: none;
-  color: red;
   transition: margin 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 
   &:focus,
@@ -44,7 +52,7 @@ const Input = styled.input`
     outline: none;
   }
   &::placeholder {
-    color: red;
+    color: #989586;
   }
 `;
 
@@ -84,10 +92,10 @@ export const Search = ({ onClick }) => {
         ref={inputFocus}
         value={input}
         open={open}
-        placeholder="Buscar..."
+        placeholder="Search by character name..."
       />
       <Button type="submit" open={open}>
-        ic
+        <FontAwesomeIcon icon={faSearch} size="lg" color="#9c9c9c" />
       </Button>
     </Form>
   );

@@ -5,10 +5,11 @@ import { Search } from "./Search";
 import LogoSrc from "../../assets/marvel.svg";
 import { StyledLinkButton } from "./Link";
 export const MarginMain = css`
-  width: 1010px;
-  @media (min-width: 768px) {
-    width: 750px;
+  align-items: center;
+  @media (max-width: 768px) {
+    margin: 1rem 1rem;
   }
+
   @media (min-width: 992px) {
     width: 970px;
   }

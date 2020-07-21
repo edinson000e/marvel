@@ -6,13 +6,17 @@ const StyledContainer = styled.div`
   background-image: url(${p => p.src});
   height: auto;
   min-height: 380px;
-  max-width: 300px;
+  /*max-width: 300px;*/
   background-size: 100% 100%;
   background-repeat: no-repeat;
   transition: transform 1s;
   display: flex;
   align-items: flex-end;
-
+  width: 100%;
+  width: -moz-available; /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
+  margin: auto;
   box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.7), 0 3px 0px 0 rgba(0, 0, 0, 0.7);
 
   opacity: 1;
