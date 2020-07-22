@@ -57,6 +57,10 @@ const Characters = props => {
               {characters.results.length > 0 &&
                 characters.results.map((value, index) => {
                   let title = value.name;
+
+                  const regex = /http/gi;
+                  let url = value.comics.collectionURI.replace(regex, "https");
+
                   return (
                     <Card
                       key={index}
@@ -66,11 +70,7 @@ const Characters = props => {
                       }
                       description={value.description}
                       onClick={() => {
-                        getDetailsCharacter(
-                          value.comics.collectionURI,
-                          title,
-                          dispatch
-                        );
+                        getDetailsCharacter(url, title, dispatch);
                       }}
                     />
                   );
