@@ -32,7 +32,6 @@ function App() {
 
   if (state) dispatch = state[1];
   const initFetch = useCallback(() => {
-    console.log("entre aca", modalRef.current);
     if (typeof dispatch === "function")
       dispatch(initRefModal(modalRef.current));
   }, [dispatch]);

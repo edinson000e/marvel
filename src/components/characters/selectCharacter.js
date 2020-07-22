@@ -2,7 +2,8 @@ import React from "react";
 import {
   DetailsCharacter,
   StyledLinkButton,
-  ContainerLoading
+  ContainerLoading,
+  Title
 } from "../common";
 import { useStateValue } from "../../store";
 import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
@@ -27,8 +28,7 @@ const SelectCharacter = () => {
     <SelectContainerRef>
       {character.isFetching ? (
         <ContainerLoading />
-      ) : (
-        character.results.length > 0 &&
+      ) : character.results.length > 0 ? (
         character.results.map((value, index) => {
           return (
             <StyledLinkButton
@@ -48,8 +48,9 @@ const SelectCharacter = () => {
             </StyledLinkButton>
           );
         })
+      ) : (
+        <h4>Sorry, there are no results for your selection.</h4>
       )}
-      {character.isFetching && <p> cargando </p>}
     </SelectContainerRef>
   );
 };
