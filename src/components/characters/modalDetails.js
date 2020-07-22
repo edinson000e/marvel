@@ -5,7 +5,7 @@ import SelectCharacter from "./selectCharacter";
 import { useStateValue } from "../../store";
 
 const ModalDetails = () => {
-  const [state, dispatch] = useStateValue();
+  const dispatch = useStateValue()[1];
 
   return (
     <Modal onClose={() => dispatch(resetSelectCharacter())}>
