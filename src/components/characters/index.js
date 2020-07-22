@@ -36,6 +36,7 @@ const Characters = props => {
   );
 
   useEffect(() => {
+    seterror(false);
     let pagNumber = props.match.params.pag;
     if (!pagNumber) {
       pagNumber = 1;
