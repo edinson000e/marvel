@@ -13,7 +13,15 @@ let options = {
   day: "numeric"
 };
 export const DetailsCharacter = props => {
-  const [{ character }, dispatch] = useStateValue();
+  const state = useStateValue();
+
+  let dispatch;
+  let character;
+  if (state) {
+    character = state[0].character;
+    dispatch = state[1];
+  }
+
   const Ref = useRef();
   const [creator, setcreator] = useState([]);
   const [error, seterror] = useState(false);

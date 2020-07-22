@@ -10,6 +10,7 @@ import DarkTheme from "./themes/dark";
 import { Cont } from "./components/common";
 import { useStateValue } from "./store";
 import { initRefModal } from "./actions/modal";
+
 const GlobalStyle = createGlobalStyle`
 	body{
 		background: ${p => p.theme.bodyBackgroundColor};
@@ -24,10 +25,16 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const modalRef = useRef();
   const [theme, setTheme] = useState(LightTheme);
-  const dispatch = useStateValue()[1];
 
+  const state = useStateValue();
+
+  let dispatch;
+
+  if (state) dispatch = state[1];
   const initFetch = useCallback(() => {
-    dispatch(initRefModal(modalRef.current));
+    console.log("entre aca", modalRef.current);
+    if (typeof dispatch === "function")
+      dispatch(initRefModal(modalRef.current));
   }, [dispatch]);
 
   useEffect(() => {

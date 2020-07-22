@@ -37,8 +37,7 @@ export const getCharacters = (dispatch, limit, offset) => {
   const request = fetchGetParam(
     apiUrl + `/v1/public/characters?limit=${limit}&offset=${offset}`
   );
-
-  dispatch(loadingListCharacters());
+  if (dispatch) dispatch(loadingListCharacters());
   request
     .then(result => {
       if (offset < Math.ceil(result.data.total / limit))

@@ -13,15 +13,24 @@ import {
 import ModalDetails from "./modalDetails";
 import { Paginator } from "../common/Paginator";
 const Characters = props => {
-  const [{ characters }, dispatch] = useStateValue();
+  //const [{ characters }, dispatch] = useStateValue();
+
   const [error, seterror] = useState(false);
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
+  const state = useStateValue();
+
+  let dispatch;
+  let characters;
+  if (state) {
+    characters = state[0].characters;
+    dispatch = state[1];
+  }
 
   const initFetch = useCallback(
     offset => {
-      getCharacters(dispatch, 20, offset);
+      if (dispatch) getCharacters(dispatch, 20, offset);
     },
     [dispatch]
   );
@@ -39,7 +48,7 @@ const Characters = props => {
   const Ref = useRef();
   return (
     <PageLayout>
-      {!error && !characters.error ? (
+      {!error && characters && !characters.error ? (
         characters.isFeching ? (
           <ContainerLoading />
         ) : (
@@ -78,7 +87,7 @@ const Characters = props => {
       ) : (
         <ContainerError
           title={
-            characters.error
+            characters && characters.error
               ? " Sorry! We couldn't find any results."
               : "There was a search error."
           }
