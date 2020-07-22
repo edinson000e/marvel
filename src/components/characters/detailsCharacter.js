@@ -46,6 +46,7 @@ export const DetailsCharacter = props => {
       }
       character.dataSelect.creators.items.map((creator, index) => {
         let resultFilter = -1;
+
         if (role.length > 0) {
           resultFilter = role.findIndex(value => {
             return value.item === creator.role;
@@ -60,6 +61,7 @@ export const DetailsCharacter = props => {
         } else {
           role[resultFilter].name.push(creator.name);
         }
+        return null;
       });
       setcreator(role);
     } else {

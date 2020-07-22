@@ -43,7 +43,7 @@ const ContainerHeader = styled.div`
     justify-content: center;
   }
 `;
-export function Header({}) {
+export function Header() {
   const [logo, setlogo] = useState(true);
   const memoizedHandleClick = useCallback(e => {
     setlogo(!e);
