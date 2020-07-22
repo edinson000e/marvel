@@ -24,5 +24,7 @@ export const fetchGetParam = url => {
     .then(data => {
       return data;
     })
-    .catch(error => {});
+    .catch(error => {
+      return error;
+    });
 };
