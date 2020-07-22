@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import { useStateValue } from "../../store";

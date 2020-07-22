@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useRef } from "react";
 //import useEventListener from "./useEvent";
 function SelectContainerRef(props) {
   const scrollContainer = useRef(null);
-
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
 
   /* const handler = useCallback(event => {
  

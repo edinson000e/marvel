@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./App.css";
 import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
@@ -24,10 +24,15 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const modalRef = useRef();
   const [theme, setTheme] = useState(LightTheme);
-  const [state, dispatch] = useStateValue();
-  useEffect(() => {
+  const dispatch = useStateValue()[1];
+
+  const initFetch = useCallback(() => {
     dispatch(initRefModal(modalRef.current));
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    initFetch();
+  }, [initFetch]);
 
   return (
     <ThemeProvider

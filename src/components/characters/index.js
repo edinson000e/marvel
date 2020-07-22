@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useStateValue } from "../../store";
 
 import { getCharacters, getDetailsCharacter } from "../../actions";
@@ -10,8 +10,6 @@ import {
   ContainerLoading,
   ContainerError
 } from "../common";
-
-import { Container } from "../common/Search";
 import ModalDetails from "./modalDetails";
 import { Paginator } from "../common/Paginator";
 const Characters = props => {
@@ -20,16 +18,24 @@ const Characters = props => {
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
-  let pagNumber = props.match.params.pag;
+
+  const initFetch = useCallback(
+    offset => {
+      getCharacters(dispatch, 20, offset);
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
+    let pagNumber = props.match.params.pag;
     if (!pagNumber) {
       pagNumber = 1;
     }
     if (is_numeric(pagNumber)) {
       let offset = parseInt(20) * (parseInt(pagNumber) - 1);
-      getCharacters(dispatch, 20, offset);
+      initFetch(offset);
     } else seterror(true);
-  }, [pagNumber]);
+  }, [initFetch, props.match.params.pag]);
   const Ref = useRef();
   return (
     <PageLayout>

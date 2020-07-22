@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Breadcrumb } from "./Breadcrumb";
 
@@ -97,12 +97,6 @@ const ContainerDescription = styled.div`
   @media (max-width: 767px) {
     width: 100%;
   }
-`;
-
-const Date = styled.div`
-  color: #ccc;
-  font-weight: 300;
-  margin: 6px 0;
 `;
 
 const Description = styled.p`

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   PageLayout,
   CommonDetailsCharacter,
@@ -20,6 +20,13 @@ export const DetailsCharacter = props => {
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
+  const initFetch = useCallback(
+    id => {
+      searchCommic(dispatch, props.match.params.id);
+    },
+    [dispatch, props.match.params.id]
+  );
+
   useEffect(() => {
     let role = [];
     window.scrollTo(0, Ref);
@@ -56,13 +63,12 @@ export const DetailsCharacter = props => {
       });
       setcreator(role);
     } else {
-      if (is_numeric(props.match.params.id))
-        searchCommic(dispatch, props.match.params.id);
+      if (is_numeric(props.match.params.id)) initFetch();
       else {
         seterror(true);
       }
     }
-  }, [character]);
+  }, [initFetch, character, props.match.params.id]);
   return (
     <PageLayout ref={Ref}>
       {!error && !character.errorSelect ? (

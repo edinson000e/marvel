@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import {
   PageLayout,
   ContainerLoading,
@@ -14,13 +14,21 @@ import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
 const Search = props => {
   const [{ search }, dispatch] = useStateValue();
+  let param = props.match.params.id;
+  const initFetch = useCallback(() => {
+    searchCharacters(dispatch, param);
+  }, [dispatch, param]);
+
+  const initResetFetch = useCallback(() => {
+    dispatch(resetSearch());
+  }, [dispatch]);
 
   useEffect(() => {
-    searchCharacters(dispatch, props.match.params.id);
+    initFetch();
     return () => {
-      dispatch(resetSearch());
+      initResetFetch();
     };
-  }, []);
+  }, [initFetch, initResetFetch]);
   let actions = [
     {
       path: "/",
