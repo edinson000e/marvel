@@ -1,8 +1,13 @@
+import md5 from "crypto-js/md5";
 export const apiUrl = process.env.REACT_APP_DOMAIN;
+export const apiKey = process.env.REACT_APP_APIKEY;
+export const apiTs = process.env.REACT_APP_TS;
+export const apiPublic = process.env.REACT_APP_PUBLIC;
 
+const hash = md5(apiTs + apiKey + apiPublic).toString();
 export const fetchGet = url => {
   return fetch(
-    `${url}?apikey=ceb26677f5c9f39593c1083fe8f2abea&ts=2&hash=43448cc8eb8598d8d39e09269d354c3e&limit=100`,
+    `${url}?apikey=${apiPublic}&ts=${apiTs}&hash=${hash}&limit=100`,
     {
       method: "GET"
     }
@@ -14,12 +19,9 @@ export const fetchGet = url => {
     .catch(error => {});
 };
 export const fetchGetParam = url => {
-  return fetch(
-    `${url}&apikey=ceb26677f5c9f39593c1083fe8f2abea&ts=2&hash=43448cc8eb8598d8d39e09269d354c3e&limit=100`,
-    {
-      method: "GET"
-    }
-  )
+  return fetch(`${url}&apikey=${apiPublic}&ts=${apiTs}&hash=${hash}`, {
+    method: "GET"
+  })
     .then(res => res.json())
     .then(data => {
       return data;
