@@ -72,41 +72,43 @@ export const DetailsCharacter = props => {
     }
   }, [initFetch, character, props.match.params.id]);
   return (
-    <PageLayout ref={Ref}>
-      {!error && !character.errorSelect ? (
-        Object.entries(character.dataSelect).length === 0 ? (
-          <ContainerLoading />
-        ) : (
-          <>
-            <CommonDetailsCharacter
-              title={character.dataSelect.title}
-              url={
-                character.dataSelect.thumbnail.path +
-                "." +
-                character.dataSelect.thumbnail.extension
-              }
-              subTitle={creator}
-              description={character.dataSelect.description}
-              actions={[
-                {
-                  path: "/",
-                  text: character.dataSelect.title
+    <PageLayout>
+      <div ref={Ref}>
+        {!error && !character.errorSelect ? (
+          Object.entries(character.dataSelect).length === 0 ? (
+            <ContainerLoading />
+          ) : (
+            <>
+              <CommonDetailsCharacter
+                title={character.dataSelect.title}
+                url={
+                  character.dataSelect.thumbnail.path +
+                  "." +
+                  character.dataSelect.thumbnail.extension
                 }
-              ]}
-            />
-          </>
-        )
-      ) : (
-        <ContainerError
-          title={
-            character.errorSelect
-              ? " Sorry! We couldn't find any results."
-              : "There was a search error."
-          }
-          subTitle="Please try again"
-          onClick={() => seterror(false)}
-        />
-      )}
+                subTitle={creator}
+                description={character.dataSelect.description}
+                actions={[
+                  {
+                    path: "/",
+                    text: character.dataSelect.title
+                  }
+                ]}
+              />
+            </>
+          )
+        ) : (
+          <ContainerError
+            title={
+              character.errorSelect
+                ? " Sorry! We couldn't find any results."
+                : "There was a search error."
+            }
+            subTitle="Please try again"
+            onClick={() => seterror(false)}
+          />
+        )}
+      </div>
     </PageLayout>
   );
 };
