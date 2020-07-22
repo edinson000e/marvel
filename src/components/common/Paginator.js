@@ -76,19 +76,26 @@ export const Paginator = ({ refElement, pag, data, all }) => {
     </StyledLinkButton>
   );
 
-  const btnSiguiente =
-    !parseInt(paginas) ||
-    (Math.ceil(listAllPaginator / 20) > parseInt(paginas) + 2 && (
-      <StyledLinkButton
-        to={`/p=${parseInt(pag) + 1}`}
-        onClick={() => {
-          window.scrollTo(0, refElement.offsetTop);
-        }}
-      >
-        <FontAwesomeIcon icon={faAngleRight} size="lg" color="#ee4327" />
-      </StyledLinkButton>
-    ));
+  const btnSiguiente = () => {
+    if (
+      !parseInt(paginas) ||
+      Math.ceil(listAllPaginator / 20) > parseInt(paginas) + 2
+    ) {
+      let valuePagActive = parseInt(pag);
+      if (!valuePagActive) valuePagActive = 1;
 
+      return (
+        <StyledLinkButton
+          to={`/p=${valuePagActive + 1}`}
+          onClick={() => {
+            window.scrollTo(0, refElement.offsetTop);
+          }}
+        >
+          <FontAwesomeIcon icon={faAngleRight} size="lg" color="#ee4327" />
+        </StyledLinkButton>
+      );
+    }
+  };
   const button_number_start_function = () => {
     const button_number = [];
     if (parseInt(paginas) > 30) {
@@ -158,7 +165,7 @@ export const Paginator = ({ refElement, pag, data, all }) => {
 
           {button_number_function()}
 
-          {btnSiguiente}
+          {btnSiguiente()}
           {button_number_end_function()}
         </>
       )}
