@@ -33,9 +33,6 @@ export const Title = styled.h2`
   color: ${p => (p.dark ? "#000" : "#fff")};
   font-weight: bold;
   text-align: center;
-  @media (max-width: 500px) {
-    font-size: 1rem;
-  }
 `;
 
 const Text = styled.div`
