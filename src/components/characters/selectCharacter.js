@@ -2,8 +2,7 @@ import React from "react";
 import {
   DetailsCharacter,
   StyledLinkButton,
-  ContainerLoading,
-  Title
+  ContainerLoading
 } from "../common";
 import { useStateValue } from "../../store";
 import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
