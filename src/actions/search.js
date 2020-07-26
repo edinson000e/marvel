@@ -14,7 +14,7 @@ export const resetSearch = () => {
 export const searchCharacters = (dispatch, search) => {
   dispatch(loadingSearch());
   const request = fetchGetParam(
-    apiUrl + `/v1/public/characters?name=${search}`
+    apiUrl + `/v1/public/characters?nameStartsWith=${search}`
   );
 
   request.then(result => {

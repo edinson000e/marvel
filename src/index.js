@@ -6,6 +6,8 @@ import * as serviceWorker from "./serviceWorker";
 import { StateProvider } from "./store";
 import { mainReducer } from "./reducers";
 import { initialState } from "./store/initialState";
+import { debugContextDevtool } from "react-context-devtool";
+
 const container = document.getElementById("root");
 
 ReactDOM.render(
@@ -16,6 +18,10 @@ ReactDOM.render(
   </React.StrictMode>,
   container
 );
+
+debugContextDevtool(container, {
+  disable: process.env.NODE_ENV === "production"
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
