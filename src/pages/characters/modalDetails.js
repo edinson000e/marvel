@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "../common";
+import { Modal } from "../../components/common";
 import { resetSelectCharacter } from "../../actions";
 import SelectCharacter from "./selectCharacter";
 import { useStateValue } from "../../store";

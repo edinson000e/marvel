@@ -9,9 +9,9 @@ import {
   Grid,
   ContainerLoading,
   ContainerError
-} from "../common";
+} from "../../components/common";
 import ModalDetails from "./modalDetails";
-import { Paginator } from "../common/Paginator";
+import { Paginator } from "../../components/common/Paginator";
 const Characters = props => {
   //const [{ characters }, dispatch] = useStateValue();
 

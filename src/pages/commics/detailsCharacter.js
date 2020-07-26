@@ -4,7 +4,7 @@ import {
   CommonDetailsCharacter,
   ContainerLoading,
   ContainerError
-} from "../common";
+} from "../../components/common";
 import { useStateValue } from "../../store";
 import { searchCommic } from "../../actions";
 let options = {

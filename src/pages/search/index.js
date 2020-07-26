@@ -6,8 +6,8 @@ import {
   TitleDescription,
   Grid,
   Card
-} from "../common";
-import { Container } from "../common/Search";
+} from "../../components/common";
+import { Container } from "../../components/common/Search";
 import { searchCharacters, resetSearch } from "../../actions/search";
 import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";

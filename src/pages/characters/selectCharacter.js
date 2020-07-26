@@ -3,7 +3,7 @@ import {
   DetailsCharacter,
   StyledLinkButton,
   ContainerLoading
-} from "../common";
+} from "../../components/common";
 import { useStateValue } from "../../store";
 import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
 import { closeModal } from "../../actions/modal";
