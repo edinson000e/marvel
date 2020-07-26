@@ -67,7 +67,7 @@ export const getDetailsCharacter = async (url, title, dispatch) => {
   dispatch(openModal({ title }));
   dispatch(selectCharacterLoading());
   try {
-    const request = await fetchGet(url);
+    const request = await fetchGetParam(`${url}?orderBy=focDate`);
     const json = await request;
     dispatch(SelectCharacter(json.data));
   } catch (e) {
