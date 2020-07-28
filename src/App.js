@@ -4,7 +4,9 @@ import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Characteres from "./pages/characters";
 import { DetailsCharacter } from "./pages/commics/detailsCharacter";
+
 import Search from "./pages/search";
+
 import LightTheme from "./themes/light";
 import DarkTheme from "./themes/dark";
 import { Cont } from "./components/common";
@@ -64,11 +66,12 @@ function App() {
               path="/commics/:id"
               render={props => <DetailsCharacter {...props} />}
             />
-            <Route
+            {/* <Route
               exact
-              path="/search/q=:id"
+              path="/search"
               render={props => <Search {...props} />}
-            />
+           />*/}
+            <Route path="/search" render={props => <Search {...props} />} />
 
             <Route
               exact

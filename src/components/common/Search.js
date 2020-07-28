@@ -1,15 +1,40 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "./Link";
+
 const Button = styled.button`
   outline: none;
   border: none;
 
   background: white;
-  pointer-events: ${p => (p.open ? "auto" : "none")};
-  cursor: ${p => (p.open ? "pointer" : "none")};
+  cursor:pointer;
+ /* pointer-events: ${p => (p.open ? "auto" : "none")};
+  cursor: ${p => (p.open ? "pointer" : "none")};*/
+
+
+`;
+
+export const StyledLinkSearch = styled(Link)`
+  background: "#fff";
+  width: 10rem;
+
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  :hover {
+    text-decoration: none;
+  }
+  :visited {
+    text-decoration: none;
+  }
+  border-bottom: ${p => (p.isActive ? "5px solid #ee4327" : " none")};
+`;
+
+export const ContainerLink = styled.div`
+  display: flex;
 `;
 
 export const Container = styled.div`
@@ -26,25 +51,27 @@ const Form = styled.form`
   justify-content: center;
   background: white;
   padding: 1rem;
-  height: 0.6rem;
-  border-radius: 10rem;
-  width: 20rem;
+  /*height: 0.6rem;*/
+  /*border-radius: 10rem;*/
+  /*width: 20rem;*/
   @media (max-width: 767px) {
-    right: 0;
+     
     padding: 1rem;
 
-    position: absolute;
-    width: ${p => (p.open ? "90%" : "2rem")};
-    cursor: ${p => (p.open ? "auto" : "pointer")};
+ 
+    /*width: ${p => (p.open ? "90%" : "2rem")};
+    cursor: ${p => (p.open ? "auto" : "pointer")};*/
   }
   @media (min-width: 768px) {
     max-width: none;
     min-width: 15rem;
-    margin: 0rem 4rem;
+    /*margin: 0rem 4rem;*/
     flex-grow: 1;
-    border: 1px solid #989586;
-    border-radius: 9999px;
-    background-color: #fbfbf8;
+    -webkit-box-shadow: 0 4px 6px -6px #222;
+     -moz-box-shadow: 0 4px 6px -6px #222;
+     box-shadow: 0 4px 6px -6px #222;
+    /*border: 1px solid #989586;*/
+    /*background-color: #fbfbf8;*/
   }
 `;
 
@@ -65,8 +92,41 @@ const Input = styled.input`
     color: #989586;
   }
 `;
+const ContainerSearchWithLink = styled.div`
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
+`;
+export const SearchIcon = () => {
+  return <FontAwesomeIcon icon={faSearch} size="lg" color="#9c9c9c" />;
+};
 
-export const Search = ({ onClick }) => {
+export const SearchWithLink = ({ match, state }) => {
+  const link = ["character", "comic"];
+
+  useEffect(() => {
+    console.log("state", state);
+  }, [state]);
+  return (
+    <ContainerSearchWithLink>
+      <Search push={state} />
+      <ContainerLink>
+        {link.map((value, index) => {
+          return (
+            <StyledLinkSearch
+              to={{
+                pathname: `${match.path}/${value}`
+              }}
+              key={index}
+            >
+              <p>{value}</p>
+            </StyledLinkSearch>
+          );
+        })}
+      </ContainerLink>
+    </ContainerSearchWithLink>
+  );
+};
+
+export const Search = ({ push }) => {
   const [open, setOpen] = useState(false);
   const formRef = useRef();
   const inputFocus = useRef();
@@ -75,8 +135,8 @@ export const Search = ({ onClick }) => {
   const onFormSubmit = e => {
     e.preventDefault();
     setInput("");
-
-    history.push(`/search/q=${input}`);
+    console.log(`esto es un console de push /search/push}=`, push);
+    history.push(`/search/${push}=${input}`);
     setOpen(false);
   };
 
@@ -86,17 +146,14 @@ export const Search = ({ onClick }) => {
       ref={formRef}
       onClick={() => {
         setOpen(true);
-        onClick(true);
         inputFocus.current.focus();
       }}
       onFocus={() => {
         setOpen(true);
-        onClick(true);
         inputFocus.current.focus();
       }}
       onBlur={() => {
         setOpen(false);
-        onClick(false);
       }}
       onSubmit={onFormSubmit}
     >
@@ -105,10 +162,10 @@ export const Search = ({ onClick }) => {
         ref={inputFocus}
         value={input}
         open={open}
-        placeholder="Search by character name..."
+        placeholder={`Search by ${push}  name...`}
       />
       <Button type="submit" open={open}>
-        <FontAwesomeIcon icon={faSearch} size="lg" color="#9c9c9c" />
+        <SearchIcon />
       </Button>
     </Form>
   );

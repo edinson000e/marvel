@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { Logo } from "./Logo";
-import { Search } from "./Search";
+import { SearchIcon } from "./Search";
 import LogoSrc from "../../assets/marvel.svg";
 import { StyledLinkButton } from "./Link";
 export const MarginMain = css`
@@ -44,10 +44,11 @@ const ContainerHeader = styled.div`
   }
 `;
 export function Header() {
-  const [logo, setlogo] = useState(true);
+  const logo = true;
+  /*const [logo, setlogo] = useState(true);
   const memoizedHandleClick = useCallback(e => {
     setlogo(!e);
-  }, []);
+  }, []);*/
 
   return (
     <HeaderWrapper>
@@ -55,7 +56,10 @@ export function Header() {
         <StyledLinkButton to="/">
           <Logo src={LogoSrc} logo={logo} />
         </StyledLinkButton>
-        <Search onClick={e => memoizedHandleClick(e)} />
+        <StyledLinkButton to="/search">
+          <SearchIcon />
+        </StyledLinkButton>
+        {/* <Search onClick={e => memoizedHandleClick(e)} />*/}
       </ContainerHeader>
     </HeaderWrapper>
   );
