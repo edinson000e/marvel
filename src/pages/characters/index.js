@@ -50,7 +50,7 @@ const Characters = props => {
   return (
     <PageLayout>
       {!error && characters && !characters.error ? (
-        characters.isFeching ? (
+        characters.isFetching ? (
           <ContainerLoading />
         ) : (
           <>

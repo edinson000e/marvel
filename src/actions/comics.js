@@ -13,6 +13,10 @@ export const loadingListComics = data => {
   return { type: comicsConstants.LOADING_LIST, data };
 };
 
+export const resetComics = () => {
+  return { type: comicsConstants.RESET };
+};
+
 export const getComics = (dispatch, limit, offset) => {
   const request = fetchGetParam(
     apiUrl + `/v1/public/Comics?limit=${limit}&offset=${offset}`
@@ -29,4 +33,15 @@ export const getComics = (dispatch, limit, offset) => {
     .catch(e => {
       dispatch(errorComics());
     });
+};
+
+export const searchComics = (dispatch, search) => {
+  dispatch(loadingListComics());
+  const request = fetchGetParam(
+    apiUrl + `/v1/public/comics?titleStartsWith=${search}`
+  );
+
+  request.then(result => {
+    dispatch(saveComics(result.data));
+  });
 };

@@ -4,6 +4,6 @@ export const initialStateComics = {
   offset: 0,
   results: [],
   total: 0,
-  isFeching: true,
+  isFetching: true,
   error: false
 };

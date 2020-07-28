@@ -35,7 +35,7 @@ export default function(state, action) {
     case modalConstants.LOADING:
       return {
         ...state,
-        isFeching: true
+        isFetching: true
       };
     case modalConstants.FAILURE:
       return {
@@ -48,7 +48,7 @@ export default function(state, action) {
       return {
         ...state,
         error: false,
-        isFeching: false,
+        isFetching: false,
         message: null
       };
     case modalConstants.SUCCESS:

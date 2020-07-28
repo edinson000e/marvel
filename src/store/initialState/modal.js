@@ -1,6 +1,6 @@
 export const initialStateModal = {
   modal: false,
-  isFeching: false,
+  isFetching: false,
   title: null,
   className: null,
   error: false, //before null,

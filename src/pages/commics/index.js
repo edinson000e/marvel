@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useStateValue } from "../../store";
 
-import { getCharacters, getDetailsCharacter } from "../../actions";
+import { getCharacters, getDetailsCharacter } from "../../actions/commic";
 
 import {
   PageLayout,
@@ -50,7 +50,7 @@ const Commics = props => {
   return (
     <PageLayout>
       {!error && characters && !characters.error ? (
-        characters.isFeching ? (
+        characters.isFetching ? (
           <ContainerLoading />
         ) : (
           <>

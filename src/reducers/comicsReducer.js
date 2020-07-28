@@ -1,25 +1,32 @@
 import { comicsConstants } from "../constants/comics.constants";
-
+import { initialStateComics } from "../store/initialState/comics";
 const comicsReducer = (state, action) => {
   switch (action.type) {
     case comicsConstants.SAVE_LIST:
-      action.data.isFeching = false;
-      const returnedTarget = Object.assign(state, action.data);
-      return returnedTarget;
-
+      return {
+        ...state,
+        count: action.data.count,
+        limit: action.data.limit,
+        offset: action.data.offset,
+        results: action.data.results,
+        total: action.data.total,
+        isFetching: false,
+        complete: true
+      };
     case comicsConstants.LOADING_LIST:
       return {
         ...state,
-        isFeching: true,
+        isFetching: true,
         error: false
       };
     case comicsConstants.ERROR_LIST:
       return {
         ...state,
-        isFeching: false,
+        isFetching: false,
         error: true
       };
-
+    case comicsConstants.RESET:
+      return initialStateComics;
     default:
       return state;
   }

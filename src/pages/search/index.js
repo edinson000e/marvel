@@ -15,6 +15,7 @@ import Modal from "../characters/modalDetails";
 import { SearchWithLink } from "../../components/common/Search";
 import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
 import SearchCharacter from "./character";
+import SearchComics from "./comics";
 const initialState = [
   {
     path: "/",
@@ -57,14 +58,14 @@ const Search = ({ match, location, history }) => {
           path="/search/comic=:id"
           render={props => {
             setstate("comic");
-            return <SearchCharacter {...props} propTypeSearch="comic" />;
+            return <SearchComics {...props} propTypeSearch="comic" />;
           }}
         />
         <Route
           path="/search/comic"
           render={props => {
             setstate("comic");
-            return <SearchCharacter {...props} propTypeSearch="comic" />;
+            return <SearchComics {...props} propTypeSearch="comic" />;
           }}
         />
       </Container>
