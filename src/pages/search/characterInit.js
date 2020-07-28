@@ -6,7 +6,7 @@ import {
   TitleDescription
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
-import { resetSearch, seatchGetCharacter } from "../../actions/search";
+import { seatchGetCharacter } from "../../actions/search";
 import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
@@ -14,22 +14,30 @@ import { useLocalStorage } from "../../customHook/useLocalStorage";
 const Search = () => {
   const [{ search }, dispatch] = useStateValue();
 
-  const [randomCharacter, setRandomCharacter] = useLocalStorage();
+  const [randomCharacter, setRandomCharacter] = useLocalStorage(
+    "randomCharacter"
+  );
   const [result, setresult] = useState(randomCharacter);
 
   const initFetch = useCallback(
-    async ofset => {
-      return await seatchGetCharacter(dispatch, 1, ofset).then(result => {
-        if (result) setRandomCharacter(result);
-      });
+    async (ofset, signal) => {
+      return await seatchGetCharacter(dispatch, 1, ofset, signal).then(
+        result => {
+          if (result) setRandomCharacter(result);
+          return result;
+        }
+      );
     },
     [dispatch]
   );
 
   useEffect(() => {
     console.log("entre en useefect", randomCharacter);
+    const abortController = new AbortController();
+    const { signal } = abortController;
+
     if (!randomCharacter) {
-      initFetch(0).then(result => {
+      initFetch(0, signal).then(result => {
         setresult(result);
       });
     } else {
@@ -37,8 +45,12 @@ const Search = () => {
       let max = Math.floor(randomCharacter.total);
       let result = Math.floor(Math.random() * (max - min + 1)) + min;
 
-      initFetch(result);
+      initFetch(result, signal);
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, [initFetch]);
 
   return (
@@ -50,25 +62,27 @@ const Search = () => {
           <TitleDescription dark center>
             Recommended for you
           </TitleDescription>{" "}
-          <Grid>
-            {result && result.results[0] && (
-              <Card
-                title={result.results[0].name}
-                photo={
-                  result.results[0].thumbnail.path +
-                  "." +
-                  result.results[0].thumbnail.extension
-                }
-                description={result.results[0].description}
-                onClick={() => {
-                  getDetailsCharacter(
-                    result.results[0].comics.collectionURI,
-                    result.results[0].name,
-                    dispatch
-                  );
-                }}
-              />
-            )}
+          <Grid total={result.results.length}>
+            <div>
+              {result && result.results[0] && (
+                <Card
+                  title={result.results[0].name}
+                  photo={
+                    result.results[0].thumbnail.path +
+                    "." +
+                    result.results[0].thumbnail.extension
+                  }
+                  description={result.results[0].description}
+                  onClick={() => {
+                    getDetailsCharacter(
+                      result.results[0].comics.collectionURI,
+                      result.results[0].name,
+                      dispatch
+                    );
+                  }}
+                />
+              )}
+            </div>
           </Grid>
           <Modal />
         </>

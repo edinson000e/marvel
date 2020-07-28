@@ -20,7 +20,14 @@ const GlobalStyle = createGlobalStyle`
 		margin: 0;
 		color: ${p => p.theme.bodyFontColor};
 		font-family: 'Open Sans';
-    
+    @media  (max-width: 320px){
+       
+    width: 100%;
+    overflow-x: overlay;
+    min-width: 320px;
+    display: flex;
+   
+    overflow-x: auto;}
 	}
 `;
 
