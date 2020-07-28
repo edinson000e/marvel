@@ -1,8 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import {
-  PageLayout,
   ContainerLoading,
-  Breadcrumb,
   TitleDescription,
   Grid,
   Card
@@ -12,7 +10,6 @@ import { searchCharacters, resetSearch } from "../../actions/search";
 import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
-import { SearchWithLink } from "../../components/common/Search";
 const Search = props => {
   const [{ search }, dispatch] = useStateValue();
   let param = props.match.params.id;

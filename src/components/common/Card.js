@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
 const StyledContainer = styled.div`
   border-radius: 8px;
   background-image: url(${p => p.src});
@@ -48,12 +47,14 @@ const Text = styled.div`
   padding: 10vh 20px 1vh 20px;
 `;
 
-const Card = ({ title, photo, description, onClick }) => (
-  <StyledContainer src={photo} onClick={onClick}>
-    <Text>
-      <Title>{title}</Title>
-    </Text>
-  </StyledContainer>
-);
+const Card = ({ title, photo, onClick }) => {
+  return (
+    <StyledContainer src={photo} onClick={onClick}>
+      <Text>
+        <Title>{title}</Title>
+      </Text>
+    </StyledContainer>
+  );
+};
 
 export { Card };

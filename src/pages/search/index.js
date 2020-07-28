@@ -8,19 +8,11 @@ import {
   Card
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
-import { searchCharacters, resetSearch } from "../../actions/search";
-import { getDetailsCharacter } from "../../actions";
-import { useStateValue } from "../../store";
-import Modal from "../characters/modalDetails";
+
 import { SearchWithLink } from "../../components/common/Search";
-import {
-  Switch,
-  Route,
-  Redirect,
-  BrowserRouter,
-  useLocation
-} from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import SearchCharacter from "./character";
+import SearchCharacterInit from "./characterInit";
 import SearchComics from "./comics";
 const initialState = [
   {
@@ -28,7 +20,7 @@ const initialState = [
     text: "search"
   }
 ];
-const Search = ({ match, location, history }) => {
+const Search = ({ match }) => {
   const [state, setstate] = useState();
 
   const [actionBreadcrumb, setactionBreadcrumb] = useState(initialState);
@@ -42,9 +34,10 @@ const Search = ({ match, location, history }) => {
         <Route
           path="/search/character"
           render={props => {
-            console.log("entre aca en propd");
             setstate("character");
-            return <SearchCharacter {...props} propTypeSearch="character" />;
+            return (
+              <SearchCharacterInit {...props} propTypeSearch="character" />
+            );
           }}
         />
         <Route

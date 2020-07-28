@@ -65,6 +65,8 @@ const Title = styled.h4`
 export const TitleDescription = styled.h1`
   color: ${p => (p.dark ? "#000" : "#fff")};
   font-weight: bold;
+
+  text-align: ${p => (p.center ? "center" : "left")};
 `;
 
 const ContainerImage = styled.div`
