@@ -61,7 +61,7 @@ const Characters = props => {
 
                   console.log("value.comics", value);
                   const regex = /http/gi;
-                  let url = value.comics.collectionURI;
+                  let url;
                   if (
                     value.comics &&
                     value.comics.collectionURI &&
