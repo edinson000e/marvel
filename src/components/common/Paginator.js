@@ -136,7 +136,11 @@ export const Paginator = ({ refElement, pag, data, all }) => {
   };
 
   const button_number_end_function = () => {
-    if (parseInt(pag) + 15 < Math.ceil(listAllPaginator / 20)) {
+    let valuePagActive = parseInt(pag);
+
+    if (!valuePagActive) valuePagActive = 1;
+
+    if (valuePagActive + 15 < Math.ceil(listAllPaginator / 20)) {
       return (
         <StyledLinkButton
           to={`/p=${Math.ceil(listAllPaginator / 20)}`}

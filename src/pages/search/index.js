@@ -1,24 +1,18 @@
-import React, { useEffect, useCallback, useState } from "react";
-import {
-  PageLayout,
-  ContainerLoading,
-  Breadcrumb,
-  TitleDescription,
-  Grid,
-  Card
-} from "../../components/common";
+import React, { useState } from "react";
+import { PageLayout, Breadcrumb } from "../../components/common";
 import { Container } from "../../components/common/Search";
 
 import { SearchWithLink } from "../../components/common/Search";
-import { Route, Redirect, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import SearchCharacter from "./character";
 import SearchCharacterInit from "./characterInit";
 import SearchComics from "./comics";
 import SearchComicInit from "./comicInit";
 
-const Search = ({ match }) => {
+const Search = props => {
   const [state, setstate] = useState();
 
+  const match = props.match;
   const actionBreadcrumb = [
     {
       path: "/",

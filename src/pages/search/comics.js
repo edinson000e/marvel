@@ -13,9 +13,13 @@ import { searchComics, resetComics } from "../../actions/comics";
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
 import { useHistory } from "react-router-dom";
-
+import { useLocalStorage } from "../../customHook/useLocalStorage";
 const SearchComics = props => {
   const [{ comics }, dispatch] = useStateValue();
+  const [searchComicsLocal, setSearchComicsLocal] = useLocalStorage(
+    "searchComicsLocal",
+    []
+  );
   const history = useHistory();
   let param = props.match.params.id;
   const initFetch = useCallback(() => {

@@ -44,6 +44,8 @@ export const searchComics = (dispatch, search) => {
   request.then(result => {
     dispatch(saveComics(result.data));
   });
+
+  return request;
 };
 
 export const seatchGetComic = (dispatch, limit, offset, signal, random) => {

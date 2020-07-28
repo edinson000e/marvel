@@ -27,13 +27,7 @@ const Search = props => {
       initResetFetch();
     };
   }, [initFetch, initResetFetch]);
-  let actions = [
-    {
-      path: "/",
-      text: "search"
-    }
-  ];
-  console.log("hola", props);
+
   return (
     <Container>
       {search.isFetching ? (

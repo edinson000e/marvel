@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "./Link";
@@ -124,9 +124,7 @@ export const SearchWithLink = ({ match, state }) => {
     { name: "comic", pathname: "/search/comic" }
   ];
   const { pathname } = useLocation();
-  useEffect(() => {
-    console.log("state", pathname);
-  }, [state]);
+
   return (
     <ContainerSearchWithLink>
       <Search push={state} />
@@ -137,7 +135,7 @@ export const SearchWithLink = ({ match, state }) => {
               to={{
                 pathname: `${match.path}/${value.name}`
               }}
-              isActive={pathname === value.pathname}
+              isActive={pathname.includes(value.pathname)}
               key={index}
             >
               <p>{value.name}</p>
@@ -155,13 +153,23 @@ export const Search = ({ push }) => {
   const inputFocus = useRef();
   const [input, setInput] = useState("");
   const history = useHistory();
+  const match = useRouteMatch(`/search/${push}:id`);
+
   const onFormSubmit = e => {
     e.preventDefault();
     setInput("");
-    console.log(`esto es un console de push /search/push}=`, push);
+
     history.push(`/search/${push}=${input}`);
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (match && match.params && match.params.id) {
+      setInput(match.params.id.slice(1, match.params.id.length));
+    } else {
+      setInput("");
+    }
+  }, [!match]);
 
   return (
     <Form
