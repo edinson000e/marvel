@@ -9,12 +9,14 @@ import {
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
 import { searchComics, resetComics } from "../../actions/comics";
-import { getDetailsCharacter } from "../../actions";
+
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
+import { useHistory } from "react-router-dom";
 
 const SearchComics = props => {
   const [{ comics }, dispatch] = useStateValue();
+  const history = useHistory();
   let param = props.match.params.id;
   const initFetch = useCallback(() => {
     searchComics(dispatch, param);
@@ -49,21 +51,17 @@ const SearchComics = props => {
           <Grid>
             {comics.results.length > 0 &&
               comics.results.map((value, index) => {
-                let title = value.name;
+                let title = value.title;
                 return (
                   <Card
                     key={index}
-                    title={value.name}
+                    title={title}
                     photo={
                       value.thumbnail.path + "." + value.thumbnail.extension
                     }
                     description={value.description}
                     onClick={() => {
-                      getDetailsCharacter(
-                        value.comics.collectionURI,
-                        title,
-                        dispatch
-                      );
+                      history.push(`/comic/${value.id}`);
                     }}
                   />
                 );

@@ -32,7 +32,6 @@ const Search = () => {
   );
 
   useEffect(() => {
-    console.log("entre en useefect", randomCharacter);
     const abortController = new AbortController();
     const { signal } = abortController;
 

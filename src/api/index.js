@@ -30,3 +30,17 @@ export const fetchGetParam = url => {
       return error;
     });
 };
+
+export const fetchGetParamWithAsync = (url, signal) => {
+  return fetch(`${url}&apikey=${apiPublic}&ts=${apiTs}&hash=${hash}`, {
+    method: "GET",
+    signal: signal
+  })
+    .then(res => res.json())
+    .then(data => {
+      return data;
+    })
+    .catch(error => {
+      return error;
+    });
+};

@@ -7,6 +7,7 @@ import {
 } from "../../components/common";
 import { useStateValue } from "../../store";
 import { searchCommic } from "../../actions";
+import { resetSelectCharacter } from "../../actions";
 let options = {
   year: "numeric",
   month: "long",
@@ -78,7 +79,11 @@ export const DetailsCharacter = props => {
         seterror(true);
       }
     }
-  }, [initFetch, character, props.match.params.id]);
+
+    return () => {
+      dispatch(resetSelectCharacter());
+    };
+  }, [props.match.params.id]);
   return (
     <PageLayout>
       <div ref={Ref}>

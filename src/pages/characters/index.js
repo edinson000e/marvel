@@ -59,8 +59,15 @@ const Characters = props => {
                 characters.results.map((value, index) => {
                   let title = value.name;
 
+                  console.log("value.comics", value);
                   const regex = /http/gi;
-                  let url = value.comics.collectionURI.replace(regex, "https");
+                  let url = value.comics.collectionURI;
+                  if (
+                    value.comics &&
+                    value.comics.collectionURI &&
+                    value.comics.collectionURI.length > 0
+                  )
+                    url = value.comics.collectionURI.replace(regex, "https");
 
                   return (
                     <Card

@@ -69,8 +69,7 @@ function App() {
             />
 
             <Route
-              exact
-              path="/commics/:id"
+              path="/comic/:id"
               render={props => <DetailsCharacter {...props} />}
             />
             {/* <Route

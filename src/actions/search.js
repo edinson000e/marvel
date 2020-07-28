@@ -1,5 +1,5 @@
 import { searchConstants } from "../constants/search.constants";
-import { fetchGetParam, apiUrl } from "../api";
+import { fetchGetParam, apiUrl, fetchGetParamWithAsync } from "../api";
 export const saveSearch = data => {
   return { type: searchConstants.RESULT, data };
 };
@@ -22,9 +22,10 @@ export const searchCharacters = (dispatch, search) => {
   });
 };
 
-export const seatchGetCharacter = (dispatch, limit, offset) => {
-  const request = fetchGetParam(
-    apiUrl + `/v1/public/characters?limit=${limit}&offset=${offset}`
+export const seatchGetCharacter = (dispatch, limit, offset, signal) => {
+  const request = fetchGetParamWithAsync(
+    apiUrl + `/v1/public/characters?limit=${limit}&offset=${offset}`,
+    signal
   );
 
   if (dispatch) dispatch(loadingSearch());

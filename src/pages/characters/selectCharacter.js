@@ -32,7 +32,7 @@ const SelectCharacter = () => {
           return (
             <StyledLinkButton
               key={index}
-              to={`/commics/${value.id}`}
+              to={`/comic/${value.id}`}
               onClick={() => {
                 dispatch(resetSelectCharacter());
                 dispatch(closeModal());
