@@ -13,7 +13,13 @@ import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
 import { SearchWithLink } from "../../components/common/Search";
-import { Switch, Route, Redirect, BrowserRouter } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter,
+  useLocation
+} from "react-router-dom";
 import SearchCharacter from "./character";
 import SearchComics from "./comics";
 const initialState = [
@@ -25,10 +31,6 @@ const initialState = [
 const Search = ({ match, location, history }) => {
   const [state, setstate] = useState();
 
-  useEffect(() => {
-    console.log("searacg", state);
-    console.log("location.pathname", location.pathname);
-  }, [state]);
   const [actionBreadcrumb, setactionBreadcrumb] = useState(initialState);
 
   return (
@@ -36,9 +38,8 @@ const Search = ({ match, location, history }) => {
       <Container>
         <Breadcrumb actions={actionBreadcrumb} />
         <SearchWithLink match={match} state={state} />
-
+        <Redirect exact from="/" to="/search/character" />
         <Route
-          exact
           path="/search/character"
           render={props => {
             console.log("entre aca en propd");
@@ -47,7 +48,6 @@ const Search = ({ match, location, history }) => {
           }}
         />
         <Route
-          exact
           path="/search/character=:id"
           render={props => {
             setstate("character");

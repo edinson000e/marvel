@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { useHistory, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "./Link";
@@ -17,20 +17,39 @@ const Button = styled.button`
 
 `;
 
+const hoverStyles = ({ isActive }) => {
+  if (!isActive) {
+    return css`
+      :hover {
+        background: #eee;
+        text-decoration: none;
+        font-weight: "bolder";
+        border-bottom: 5px solid;
+      }
+    `;
+  } else {
+    return css`
+      :hover {
+        pointer-events: none;
+        cursor: default;
+      }
+    `;
+  }
+};
 export const StyledLinkSearch = styled(Link)`
   background: "#fff";
   width: 10rem;
-
+  text-transform: capitalize;
   text-align: center;
   text-decoration: none;
   color: black;
-  :hover {
-    text-decoration: none;
-  }
   :visited {
     text-decoration: none;
   }
   border-bottom: ${p => (p.isActive ? "5px solid #ee4327" : " none")};
+  font-weight: ${p => (p.isActive ? "bolder" : "300")};
+
+  ${hoverStyles}
 `;
 
 export const ContainerLink = styled.div`
@@ -100,10 +119,13 @@ export const SearchIcon = () => {
 };
 
 export const SearchWithLink = ({ match, state }) => {
-  const link = ["character", "comic"];
-
+  const link = [
+    { name: "character", pathname: "/search/character" },
+    { name: "comic", pathname: "/search/comic" }
+  ];
+  const { pathname } = useLocation();
   useEffect(() => {
-    console.log("state", state);
+    console.log("state", pathname);
   }, [state]);
   return (
     <ContainerSearchWithLink>
@@ -113,11 +135,12 @@ export const SearchWithLink = ({ match, state }) => {
           return (
             <StyledLinkSearch
               to={{
-                pathname: `${match.path}/${value}`
+                pathname: `${match.path}/${value.name}`
               }}
+              isActive={pathname === value.pathname}
               key={index}
             >
-              <p>{value}</p>
+              <p>{value.name}</p>
             </StyledLinkSearch>
           );
         })}
