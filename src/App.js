@@ -12,7 +12,6 @@ import DarkTheme from "./themes/dark";
 import { Cont } from "./components/common";
 import { useStateValue } from "./store";
 import { initRefModal } from "./actions/modal";
-
 const GlobalStyle = createGlobalStyle`
 	body{
 		background: ${p => p.theme.bodyBackgroundColor};
@@ -72,11 +71,7 @@ function App() {
               path="/comic/:id"
               render={props => <DetailsCharacter {...props} />}
             />
-            {/* <Route
-              exact
-              path="/search"
-              render={props => <Search {...props} />}
-           />*/}
+
             <Route path="/search" render={props => <Search {...props} />} />
 
             <Route

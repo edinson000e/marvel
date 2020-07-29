@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { StateProvider } from "./store";
+import { StateCacheProvider } from "./store/cache";
+
 import { mainReducer } from "./reducers";
 import { initialState } from "./store/initialState";
 import { debugContextDevtool } from "react-context-devtool";
@@ -13,7 +15,9 @@ const container = document.getElementById("root");
 ReactDOM.render(
   <React.StrictMode>
     <StateProvider initialState={initialState} reducer={mainReducer}>
-      <App />
+      <StateCacheProvider>
+        <App />
+      </StateCacheProvider>
     </StateProvider>
   </React.StrictMode>,
   container
