@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useStateValue } from "../../store";
+import React, { useEffect, useRef, useCallback } from "react";
 
-import { getCharacters, getDetailsCharacter } from "../../actions";
+import { useStatechacterValue } from "../../store/chacters";
+import { getDetailsCharacter } from "../../actions";
 
 import {
   PageLayout,
@@ -12,31 +12,23 @@ import {
 } from "../../components/common";
 import ModalDetails from "./modalDetails";
 import { Paginator } from "../../components/common/Paginator";
-const Characters = props => {
-  //const [{ characters }, dispatch] = useStateValue();
 
-  const [error, seterror] = useState(false);
+const Characters = props => {
+  const characters = useStatechacterValue();
+
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
-  const state = useStateValue();
 
-  let dispatch;
-  let characters;
-  if (state) {
-    characters = state[0].characters;
-    dispatch = state[1];
-  }
-
-  const initFetch = useCallback(
-    offset => {
-      if (dispatch) getCharacters(dispatch, 20, offset);
-    },
-    [dispatch]
-  );
+  const initFetch = useCallback(offset => {
+    let limit = 20;
+    if (characters)
+      characters.fetchApi(
+        `/v1/public/characters?limit=${limit}&offset=${offset}`
+      );
+  }, []);
 
   useEffect(() => {
-    seterror(false);
     let pagNumber = props.match.params.pag;
     if (!pagNumber) {
       pagNumber = 1;
@@ -44,64 +36,62 @@ const Characters = props => {
     if (is_numeric(pagNumber)) {
       let offset = parseInt(20) * (parseInt(pagNumber) - 1);
       initFetch(offset);
-    } else seterror(true);
+    }
   }, [initFetch, props.match.params.pag]);
   const Ref = useRef();
+
   return (
     <PageLayout>
-      {!error && characters && !characters.error ? (
-        characters.isFetching ? (
-          <ContainerLoading />
-        ) : (
-          <>
-            <Grid>
-              {characters.results.length > 0 &&
-                characters.results.map((value, index) => {
-                  let title = value.name;
-
-                  console.log("value.comics", value);
-                  const regex = /http/gi;
-                  let url;
-                  if (
-                    value.comics &&
-                    value.comics.collectionURI &&
-                    value.comics.collectionURI.length > 0
-                  )
-                    url = value.comics.collectionURI.replace(regex, "https");
-
-                  return (
-                    <Card
-                      key={index}
-                      title={value.name}
-                      photo={
-                        value.thumbnail.path + "." + value.thumbnail.extension
-                      }
-                      description={value.description}
-                      onClick={() => {
-                        getDetailsCharacter(url, title, dispatch);
-                      }}
-                    />
-                  );
-                })}
-            </Grid>
-            <ModalDetails />
-            <Paginator
-              refElement={Ref}
-              pag={props.match.params.pag}
-              all={characters.total}
-            ></Paginator>
-          </>
-        )
-      ) : (
+      {!characters || characters.isLoading ? (
+        <ContainerLoading />
+      ) : characters.data.length === 0 ||
+        (characters.data.results && characters.data.results.length === 0) ? (
         <ContainerError
           title={
             characters && characters.error
-              ? " Sorry! We couldn't find any results."
+              ? "Sorry! We couldn't find any results."
               : "There was a search error."
           }
           subTitle="Please try again"
-          onClick={() => seterror(false)}
         />
+      ) : (
+        <>
+          <Grid>
+            {characters.data.results.length > 0 &&
+              characters.data.results.map((value, index) => {
+                let title = value.name;
+
+                const regex = /http/gi;
+                let url;
+                if (
+                  value.comics &&
+                  value.comics.collectionURI &&
+                  value.comics.collectionURI.length > 0
+                )
+                  url = value.comics.collectionURI.replace(regex, "https");
+
+                return (
+                  <Card
+                    key={index}
+                    title={value.name}
+                    photo={
+                      value.thumbnail.path + "." + value.thumbnail.extension
+                    }
+                    description={value.description}
+                    onClick={() => {
+                      getDetailsCharacter(url, title);
+                    }}
+                  />
+                );
+              })}
+          </Grid>
+          <ModalDetails />
+          <Paginator
+            refElement={Ref}
+            pag={props.match.params.pag}
+            all={characters.data.total}
+          ></Paginator>
+        </>
       )}
     </PageLayout>
   );
