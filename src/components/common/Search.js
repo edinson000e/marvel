@@ -58,7 +58,7 @@ export const ContainerLink = styled.div`
 
 export const Container = styled.div`
   h2 {
-    font-family: "Open Sans" !important;
+    font-family: "Open Sans";
     font-weight: 300;
     text-align: center;
   }
