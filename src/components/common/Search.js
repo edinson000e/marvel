@@ -157,7 +157,6 @@ export const Search = ({ push }) => {
 
   const onFormSubmit = e => {
     e.preventDefault();
-    setInput("");
 
     history.push(`/search/${push}=${input}`);
     setOpen(false);

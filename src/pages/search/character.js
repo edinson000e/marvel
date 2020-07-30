@@ -7,70 +7,71 @@ import {
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
 import { searchCharacters, resetSearch } from "../../actions/search";
+import { reset } from "../../actions/global";
 import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
 import Modal from "../characters/modalDetails";
-const Search = props => {
-  const [{ search }, dispatch] = useStateValue();
-  const charactersComics = useStateChactersComicsValue();
-  let param = props.match.params.id;
-  const initFetch = useCallback(() => {
-    searchCharacters(dispatch, param);
-  }, [dispatch, param]);
+import { useLocalStorageSearch } from "../../customHook/useLocalStorage";
 
-  const initResetFetch = useCallback(() => {
-    dispatch(resetSearch());
-  }, [dispatch]);
+const Search = props => {
+  const [{ global }, dispatch] = useStateValue();
+  let url = `/v1/public/characters?nameStartsWith=${props.match.params.id}`;
+  const searchCharactersData = useLocalStorageSearch("searchCharacters", url);
+  const charactersComics = useStateChactersComicsValue();
 
   useEffect(() => {
-    initFetch();
+    console.log("searchCharactersData", searchCharactersData);
     return () => {
-      initResetFetch();
+      dispatch(reset());
     };
-  }, [initFetch, initResetFetch]);
-
+  }, [url]);
+  console.log("searchCharactersData", searchCharactersData);
   return (
     <Container>
-      {search.isFetching ? (
+      {global.isFetching ? (
         <ContainerLoading />
-      ) : search.complete && search.count === 0 ? (
-        <>
-          <TitleDescription dark>
-            Sorry! We couldn't find any results to "{props.match.params.id}"{" "}
-          </TitleDescription>{" "}
-          <h2>
-            If you're not happy with the results, please do another search
-          </h2>
-        </>
+      ) : global.success ? (
+        searchCharactersData.total === 0 ? (
+          <>
+            <TitleDescription dark>
+              Sorry! We couldn't find any results to "{props.match.params.id}"{" "}
+            </TitleDescription>{" "}
+            <h2>
+              If you're not happy with the results, please do another search
+            </h2>
+          </>
+        ) : (
+          <>
+            <Grid>
+              {searchCharactersData.results.length > 0 &&
+                searchCharactersData.results.map((value, index) => {
+                  let title = value.name;
+                  return (
+                    <Card
+                      key={index}
+                      title={value.name}
+                      photo={
+                        value.thumbnail.path + "." + value.thumbnail.extension
+                      }
+                      description={value.description}
+                      onClick={() => {
+                        getDetailsCharacter(
+                          value.comics.collectionURI,
+                          title,
+                          dispatch,
+                          charactersComics.fetchApi
+                        );
+                      }}
+                    />
+                  );
+                })}
+            </Grid>
+            <Modal />
+          </>
+        )
       ) : (
-        <>
-          <Grid>
-            {search.results.length > 0 &&
-              search.results.map((value, index) => {
-                let title = value.name;
-                return (
-                  <Card
-                    key={index}
-                    title={value.name}
-                    photo={
-                      value.thumbnail.path + "." + value.thumbnail.extension
-                    }
-                    description={value.description}
-                    onClick={() => {
-                      getDetailsCharacter(
-                        value.comics.collectionURI,
-                        title,
-                        dispatch,
-                        charactersComics.fetchApi
-                      );
-                    }}
-                  />
-                );
-              })}
-          </Grid>
-          <Modal />
-        </>
+        <h2>error</h2>
       )}
     </Container>
   );
