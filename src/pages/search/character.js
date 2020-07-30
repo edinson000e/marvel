@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import {
   ContainerLoading,
   TitleDescription,
@@ -6,7 +6,6 @@ import {
   Card
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
-import { searchCharacters, resetSearch } from "../../actions/search";
 import { reset } from "../../actions/global";
 import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
@@ -21,11 +20,14 @@ const Search = props => {
   const searchCharactersData = useLocalStorageSearch(
     "searchCharacters",
     url,
-    ParamID
+    ParamID,
+    props.match.url
   );
   const charactersComics = useStateChactersComicsValue();
 
   useEffect(() => {
+    console.log("props", props.match.url);
+
     return () => {
       dispatch(reset());
     };

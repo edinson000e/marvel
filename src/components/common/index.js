@@ -11,3 +11,4 @@ export * from "./Spinner";
 export * from "./Button";
 export * from "./Error";
 export * from "./Accordion";
+export * from "./Message";

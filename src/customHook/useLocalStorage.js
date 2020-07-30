@@ -27,7 +27,7 @@ export function useLocalStorage(key, initialValue) {
   return [storedValue, setValue];
 }
 
-export function useLocalStorageSearch(key, url, nameSearch) {
+export function useLocalStorageSearch(key, url, nameSearch, redirection) {
   const [storedValue, setStoredValue] = useState({});
   const [localStorange, setlocalStorange] = useState([]);
   const dispatchContext = useStateValue();
@@ -39,13 +39,13 @@ export function useLocalStorageSearch(key, url, nameSearch) {
   if (dispatchContext) dispatch = dispatchContext[1];
   const updateCache = (newKey, newData, nameSearch) => {
     let value = localStorange;
-    value.push({ key: newKey, data: newData, name: nameSearch });
+    value.push({ key: newKey, data: newData, name: nameSearch, redirection });
     window.localStorage.setItem(key, JSON.stringify(value));
     setStoredValue(newData);
     successDispatch();
   };
 
-  const fetchApi = useCallback((item, url, nameSearch) => {
+  const fetchApi = useCallback((item, url, nameSearch, redirection) => {
     const urlHash = hashCode(url);
 
     const indexCache =
@@ -60,7 +60,7 @@ export function useLocalStorageSearch(key, url, nameSearch) {
       })
         .then(response => response.json())
         .then(json => {
-          updateCache(urlHash, json.data, nameSearch);
+          updateCache(urlHash, json.data, nameSearch, redirection);
         })
         .catch(e => {
           dispatch(error(e));
@@ -78,7 +78,7 @@ export function useLocalStorageSearch(key, url, nameSearch) {
       setlocalStorange(value);
       item = value;
     }
-    fetchApi(item, apiUrl + url, nameSearch);
+    fetchApi(item, apiUrl + url, nameSearch, redirection);
   }, [key, url]);
 
   return storedValue;
