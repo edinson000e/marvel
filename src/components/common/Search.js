@@ -69,26 +69,28 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   background: white;
-  padding: 1rem;
-  /*height: 0.6rem;*/
-  /*border-radius: 10rem;*/
-  /*width: 20rem;*/
-  @media (max-width: 767px) {
-     
+  padding: 0.2rem;
+  > button {
     padding: 1rem;
 
- 
-    /*width: ${p => (p.open ? "90%" : "2rem")};
-    cursor: ${p => (p.open ? "auto" : "pointer")};*/
+    border-left: 2px solid #eee;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    :hover {
+      background: #eee;
+    }
   }
+
+  -webkit-box-shadow: 0 4px 6px -6px #222;
+  -moz-box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
   @media (min-width: 768px) {
     max-width: none;
     min-width: 15rem;
     /*margin: 0rem 4rem;*/
     flex-grow: 1;
-    -webkit-box-shadow: 0 4px 6px -6px #222;
-     -moz-box-shadow: 0 4px 6px -6px #222;
-     box-shadow: 0 4px 6px -6px #222;
+
     /*border: 1px solid #989586;*/
     /*background-color: #fbfbf8;*/
   }
@@ -102,7 +104,7 @@ const Input = styled.input`
   margin-left: ${p => (p.open ? "0rem" : "0rem")};
   border: none;
   transition: margin 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-
+  padding: 1rem;
   &:focus,
   &:active {
     outline: none;
@@ -158,7 +160,9 @@ export const Search = ({ push }) => {
   const onFormSubmit = e => {
     e.preventDefault();
 
-    history.push(`/search/${push}=${input}`);
+    if (input.length > 0) history.push(`/search/${push}=${input}`);
+    else if (history.location.pathname !== `/search/${push}`)
+      history.push(`/search/${push}`);
     setOpen(false);
   };
 
@@ -195,7 +199,7 @@ export const Search = ({ push }) => {
         placeholder={`Search by ${push}  name...`}
       />
       <Button type="submit" open={open}>
-        <SearchIcon />
+        Search
       </Button>
     </Form>
   );

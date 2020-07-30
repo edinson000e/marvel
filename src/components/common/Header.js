@@ -42,8 +42,12 @@ const ContainerHeader = styled.div`
   justify-content: space-between;
   ${MarginMain}
   margin: auto;
-  @media (max-width: 767px) {
-    justify-content: center;
+`;
+const ContainerLink = styled.div`
+  display: flex;
+
+  > a {
+    padding: 0px 1rem;
   }
 `;
 export function Header() {
@@ -55,12 +59,15 @@ export function Header() {
         <StyledLinkButton to="/">
           <Logo src={LogoSrc} logo={logo} />
         </StyledLinkButton>
-        <StyledLinkButton to="/search">
-          <SearchIcon />
-        </StyledLinkButton>
-        <StyledLinkButton to="/favorites">
-          <FontAwesomeIcon icon={faStar} size="lg" color="#9c9c9c" />
-        </StyledLinkButton>
+
+        <ContainerLink>
+          <StyledLinkButton to="/search">
+            <SearchIcon />
+          </StyledLinkButton>
+          <StyledLinkButton to="/favorites">
+            <FontAwesomeIcon icon={faStar} size="lg" color="#9c9c9c" />
+          </StyledLinkButton>
+        </ContainerLink>
       </ContainerHeader>
     </HeaderWrapper>
   );
