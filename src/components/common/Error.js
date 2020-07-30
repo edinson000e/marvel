@@ -12,7 +12,7 @@ export const ContainerError = ({ title, subTitle, onClick }) => {
       <Container>
         <TitleDescription dark>{title}</TitleDescription>
         <h2>{subTitle}</h2>
-        <StyledLinkButton to={"/"} onClick={() => onClick()}>
+        <StyledLinkButton to={"/"}>
           <Button type="button">Back to home page</Button>
         </StyledLinkButton>
       </Container>

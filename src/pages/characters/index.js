@@ -46,7 +46,7 @@ const Characters = props => {
     }
   }, [initFetch, props.match.params.pag]);
   const Ref = useRef();
-  console.log("characters", characters);
+
   return (
     <PageLayout>
       {characters &&

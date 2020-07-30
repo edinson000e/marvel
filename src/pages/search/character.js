@@ -9,9 +9,11 @@ import { Container } from "../../components/common/Search";
 import { searchCharacters, resetSearch } from "../../actions/search";
 import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
+import { useStateChactersComicsValue } from "../../store/chactersComics";
 import Modal from "../characters/modalDetails";
 const Search = props => {
   const [{ search }, dispatch] = useStateValue();
+  const charactersComics = useStateChactersComicsValue();
   let param = props.match.params.id;
   const initFetch = useCallback(() => {
     searchCharacters(dispatch, param);
@@ -59,7 +61,8 @@ const Search = props => {
                       getDetailsCharacter(
                         value.comics.collectionURI,
                         title,
-                        dispatch
+                        dispatch,
+                        charactersComics.fetchApi
                       );
                     }}
                   />

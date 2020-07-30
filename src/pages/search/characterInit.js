@@ -11,9 +11,11 @@ import { getDetailsCharacter } from "../../actions";
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
 import { useLocalStorage } from "../../customHook/useLocalStorage";
+import { useStateChactersComicsValue } from "../../store/chactersComics";
+
 const Search = () => {
   const [{ search }, dispatch] = useStateValue();
-
+  const charactersComics = useStateChactersComicsValue();
   const [randomCharacter, setRandomCharacter] = useLocalStorage(
     "randomCharacter"
   );
@@ -76,7 +78,8 @@ const Search = () => {
                     getDetailsCharacter(
                       result.results[0].comics.collectionURI,
                       result.results[0].name,
-                      dispatch
+                      dispatch,
+                      charactersComics.fetchApi
                     );
                   }}
                 />
