@@ -44,15 +44,14 @@ export default function(state, action) {
         message: action.message,
         option: null
       };
-    case modalConstants.RESET:
+    case modalConstants.RESETMODAL:
       return {
         ...state,
         error: false,
         isFetching: false,
         message: null
       };
-    case modalConstants.SUCCESS:
-      return initialStateModal;
+
     default:
       return state;
   }

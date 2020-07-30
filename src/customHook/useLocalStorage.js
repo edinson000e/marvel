@@ -27,7 +27,7 @@ export function useLocalStorage(key, initialValue) {
   return [storedValue, setValue];
 }
 
-export function useLocalStorageSearch(key, url) {
+export function useLocalStorageSearch(key, url, nameSearch) {
   const [storedValue, setStoredValue] = useState({});
   const [localStorange, setlocalStorange] = useState([]);
   const dispatchContext = useStateValue();
@@ -37,19 +37,19 @@ export function useLocalStorageSearch(key, url) {
   };
   let dispatch;
   if (dispatchContext) dispatch = dispatchContext[1];
-  const updateCache = (newKey, newData) => {
+  const updateCache = (newKey, newData, nameSearch) => {
     console.log("{ key: newKey, data: newData }", {
       key: newKey,
       data: newData
     });
     let value = localStorange;
-    value.push({ key: newKey, data: newData });
+    value.push({ key: newKey, data: newData, name: nameSearch });
     window.localStorage.setItem(key, JSON.stringify(value));
     setStoredValue(newData);
     successDispatch();
   };
 
-  const fetchApi = useCallback((item, url) => {
+  const fetchApi = useCallback((item, url, nameSearch) => {
     const urlHash = hashCode(url);
 
     const indexCache =
@@ -66,7 +66,7 @@ export function useLocalStorageSearch(key, url) {
       })
         .then(response => response.json())
         .then(json => {
-          updateCache(urlHash, json.data);
+          updateCache(urlHash, json.data, nameSearch);
         })
         .catch(e => {
           dispatch(error(e));
@@ -84,7 +84,7 @@ export function useLocalStorageSearch(key, url) {
       setlocalStorange(value);
       item = value;
     }
-    fetchApi(item, apiUrl + url);
+    fetchApi(item, apiUrl + url, nameSearch);
   }, [key, url]);
 
   return storedValue;

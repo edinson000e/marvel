@@ -16,23 +16,28 @@ import { useLocalStorageSearch } from "../../customHook/useLocalStorage";
 
 const Search = props => {
   const [{ global }, dispatch] = useStateValue();
-  let url = `/v1/public/characters?nameStartsWith=${props.match.params.id}`;
-  const searchCharactersData = useLocalStorageSearch("searchCharacters", url);
+  let ParamID = props.match.params.id.toLowerCase();
+  let url = `/v1/public/characters?nameStartsWith=${ParamID}`;
+  const searchCharactersData = useLocalStorageSearch(
+    "searchCharacters",
+    url,
+    ParamID
+  );
   const charactersComics = useStateChactersComicsValue();
 
   useEffect(() => {
-    console.log("searchCharactersData", searchCharactersData);
     return () => {
       dispatch(reset());
     };
   }, [url]);
-  console.log("searchCharactersData", searchCharactersData);
+
   return (
     <Container>
       {global.isFetching ? (
         <ContainerLoading />
-      ) : global.success ? (
-        searchCharactersData.total === 0 ? (
+      ) : (
+        global.success &&
+        (searchCharactersData.total === 0 ? (
           <>
             <TitleDescription dark>
               Sorry! We couldn't find any results to "{props.match.params.id}"{" "}
@@ -69,9 +74,7 @@ const Search = props => {
             </Grid>
             <Modal />
           </>
-        )
-      ) : (
-        <h2>error</h2>
+        ))
       )}
     </Container>
   );
