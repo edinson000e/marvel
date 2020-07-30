@@ -4,6 +4,9 @@ import { Logo } from "./Logo";
 import { SearchIcon } from "./Search";
 import LogoSrc from "../../assets/marvel.svg";
 import { StyledLinkButton } from "./Link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+
 export const MarginMain = css`
   align-items: center;
   @media (max-width: 768px) {
@@ -45,10 +48,6 @@ const ContainerHeader = styled.div`
 `;
 export function Header() {
   const logo = true;
-  /*const [logo, setlogo] = useState(true);
-  const memoizedHandleClick = useCallback(e => {
-    setlogo(!e);
-  }, []);*/
 
   return (
     <HeaderWrapper>
@@ -59,7 +58,9 @@ export function Header() {
         <StyledLinkButton to="/search">
           <SearchIcon />
         </StyledLinkButton>
-        {/* <Search onClick={e => memoizedHandleClick(e)} />*/}
+        <StyledLinkButton to="/favorites">
+          <FontAwesomeIcon icon={faStar} size="lg" color="#9c9c9c" />
+        </StyledLinkButton>
       </ContainerHeader>
     </HeaderWrapper>
   );

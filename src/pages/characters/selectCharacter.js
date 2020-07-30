@@ -24,10 +24,6 @@ const SelectCharacter = () => {
     return text;
   };
 
-  useEffect(() => {
-    console.log("charactersComics", charactersComics);
-  }, [charactersComics]);
-
   return (
     <SelectContainerRef>
       {charactersComics.isLoading ? (

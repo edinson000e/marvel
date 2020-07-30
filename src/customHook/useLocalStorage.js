@@ -38,10 +38,6 @@ export function useLocalStorageSearch(key, url, nameSearch) {
   let dispatch;
   if (dispatchContext) dispatch = dispatchContext[1];
   const updateCache = (newKey, newData, nameSearch) => {
-    console.log("{ key: newKey, data: newData }", {
-      key: newKey,
-      data: newData
-    });
     let value = localStorange;
     value.push({ key: newKey, data: newData, name: nameSearch });
     window.localStorage.setItem(key, JSON.stringify(value));
@@ -56,11 +52,9 @@ export function useLocalStorageSearch(key, url, nameSearch) {
       item.length > 0 ? item.findIndex(c => c.key === urlHash) : -1;
 
     if (indexCache !== -1) {
-      console.log("ya esta en cachet");
       setStoredValue(item[indexCache].data);
       successDispatch();
     } else {
-      console.log("no, no esta, buscare ya esta en cachet");
       return fetch(url + apiUrlFetch, {
         method: "GET"
       })

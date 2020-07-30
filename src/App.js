@@ -9,9 +9,10 @@ import Search from "./pages/search";
 
 import LightTheme from "./themes/light";
 import DarkTheme from "./themes/dark";
-import { Cont } from "./components/common";
+import { Cont, PageLayout } from "./components/common";
 import { useStateValue } from "./store";
 import { initRefModal } from "./actions/modal";
+import Favorites from "./pages/favorites";
 const GlobalStyle = createGlobalStyle`
 	body{
 		background: ${p => p.theme.bodyBackgroundColor};
@@ -60,28 +61,35 @@ function App() {
       <GlobalStyle />
       <Cont>
         <BrowserRouter>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => <Characteres {...props} />}
-            />
+          <PageLayout>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => <Characteres {...props} />}
+              />
 
-            <Route
-              path="/comic/:id"
-              render={props => <DetailsCharacter {...props} />}
-            />
+              <Route
+                path="/comic/:id"
+                render={props => <DetailsCharacter {...props} />}
+              />
 
-            <Route path="/search" render={props => <Search {...props} />} />
+              <Route path="/search" render={props => <Search {...props} />} />
 
-            <Route
-              exact
-              path="/p=:pag"
-              render={props => <Characteres {...props} />}
-            />
+              <Route
+                path="/favorites"
+                render={props => <Favorites {...props} />}
+              />
 
-            <Redirect from="*" to="/" />
-          </Switch>
+              <Route
+                exact
+                path="/p=:pag"
+                render={props => <Characteres {...props} />}
+              />
+
+              <Redirect from="*" to="/" />
+            </Switch>
+          </PageLayout>
         </BrowserRouter>
       </Cont>
       <div ref={modalRef} />

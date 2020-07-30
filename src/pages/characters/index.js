@@ -48,7 +48,7 @@ const Characters = props => {
   const Ref = useRef();
 
   return (
-    <PageLayout>
+    <>
       {characters &&
       (characters.isLoading ||
         (!characters.isLoading && characters.data.length === 0)) ? (
@@ -109,7 +109,7 @@ const Characters = props => {
           )}
         </>
       )}
-    </PageLayout>
+    </>
   );
 };
 

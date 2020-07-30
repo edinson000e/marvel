@@ -48,7 +48,7 @@ const Commics = props => {
   }, [initFetch, props.match.params.pag]);
   const Ref = useRef();
   return (
-    <PageLayout>
+    <>
       {!error && characters && !characters.error ? (
         characters.isFetching ? (
           <ContainerLoading />
@@ -96,7 +96,7 @@ const Commics = props => {
           onClick={() => seterror(false)}
         />
       )}
-    </PageLayout>
+    </>
   );
 };
 

@@ -33,8 +33,14 @@ export const DataSelectCharacter = data => {
 export const resetSelectCharacter = () => {
   return { type: characterConstants.RESET_SELECT_CHARACTER };
 };
-export const getCharacters = (dispatch, limit, offset) => {
-  const request = fetchGetParam(
+export const getCharacters = (dispatch, limit, offset, fetchCache) => {
+  /*fetchCache(
+    apiUrl +
+      `/v1/public/characters?limit=${limit}&offset=${offset}${apiUrlFetch}`
+  );*/
+
+  fetchCache(apiUrl + `/v1/public/characters?limit=${limit}&offset=${offset}`);
+  /*const request = fetchGetParam(
     apiUrl + `/v1/public/characters?limit=${limit}&offset=${offset}`
   );
 
@@ -48,7 +54,7 @@ export const getCharacters = (dispatch, limit, offset) => {
     })
     .catch(e => {
       dispatch(errorCharacters());
-    });
+    });*/
 };
 
 export const searchCommic = (dispatch, comicId) => {
@@ -63,14 +69,13 @@ export const searchCommic = (dispatch, comicId) => {
     });
 };
 
-export const getDetailsCharacter = async (url, title, dispatch) => {
+export const getDetailsCharacter = async (
+  url,
+  title,
+  dispatch,
+  apiUrlFetch
+) => {
   dispatch(openModal({ title }));
   dispatch(selectCharacterLoading());
-  try {
-    const request = await fetchGetParam(`${url}?orderBy=focDate`);
-    const json = await request;
-    dispatch(SelectCharacter(json.data));
-  } catch (e) {
-    console.error(e);
-  }
+  apiUrlFetch(`${url}?orderBy=focDate`);
 };

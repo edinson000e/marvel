@@ -21,52 +21,50 @@ const Search = props => {
   ];
 
   return (
-    <PageLayout>
-      <Container>
-        <Breadcrumb actions={actionBreadcrumb} />
-        <SearchWithLink match={match} state={state} />
+    <Container>
+      <Breadcrumb actions={actionBreadcrumb} />
+      <SearchWithLink match={match} state={state} />
 
-        <Switch>
-          <Route
-            exact
-            path="/search"
-            render={() => <Redirect to="/search/character" />}
-          />
-          <Route
-            exact
-            path="/search/character"
-            render={props => {
-              setstate("character");
-              return (
-                <SearchCharacterInit {...props} propTypeSearch="character" />
-              );
-            }}
-          />
-          <Route
-            path="/search/character=:id"
-            render={props => {
-              setstate("character");
-              return <SearchCharacter {...props} propTypeSearch="character" />;
-            }}
-          />
-          <Route
-            path="/search/comic=:id"
-            render={props => {
-              setstate("comic");
-              return <SearchComics {...props} propTypeSearch="comic" />;
-            }}
-          />
-          <Route
-            exact
-            path="/search/comic"
-            render={props => {
-              setstate("comic");
-              return <SearchComicInit {...props} propTypeSearch="comic" />;
-            }}
-          />
-        </Switch>
-      </Container>
-    </PageLayout>
+      <Switch>
+        <Route
+          exact
+          path="/search"
+          render={() => <Redirect to="/search/character" />}
+        />
+        <Route
+          exact
+          path="/search/character"
+          render={props => {
+            setstate("character");
+            return (
+              <SearchCharacterInit {...props} propTypeSearch="character" />
+            );
+          }}
+        />
+        <Route
+          path="/search/character=:id"
+          render={props => {
+            setstate("character");
+            return <SearchCharacter {...props} propTypeSearch="character" />;
+          }}
+        />
+        <Route
+          path="/search/comic=:id"
+          render={props => {
+            setstate("comic");
+            return <SearchComics {...props} propTypeSearch="comic" />;
+          }}
+        />
+        <Route
+          exact
+          path="/search/comic"
+          render={props => {
+            setstate("comic");
+            return <SearchComicInit {...props} propTypeSearch="comic" />;
+          }}
+        />
+      </Switch>
+    </Container>
   );
 };
 
