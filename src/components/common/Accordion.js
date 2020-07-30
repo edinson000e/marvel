@@ -52,13 +52,14 @@ const Body = styled.div`
   overflow: hidden;
   padding: ${props => (props.open ? "15px" : "0 15px")};
   transition: all 0.3s;
-
+  display: flex;
+  flex-direction: column;
   p {
     margin: 0;
   }
 `;
 
-export const Accordion = ({ itemId, children, title }) => {
+export const Accordion = ({ children, title }) => {
   const [open, setopen] = useState(false);
 
   return (

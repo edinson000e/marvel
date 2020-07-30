@@ -1,5 +1,5 @@
 import React from "react";
-import { PageLayout, Breadcrumb } from "../../components/common";
+import { Breadcrumb } from "../../components/common";
 import { Container } from "../../components/common/Search";
 import SearchCharacter from "./searchCharacters";
 import SearchComics from "./searchComics";

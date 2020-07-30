@@ -19,7 +19,12 @@ const SearchComics = props => {
   const history = useHistory();
   let ParamID = props.match.params.id.toLowerCase();
   let url = `/v1/public/comics?titleStartsWith=${ParamID}`;
-  const searchComicsData = useLocalStorageSearch("searchComics", url, ParamID);
+  const searchComicsData = useLocalStorageSearch(
+    "searchComics",
+    url,
+    ParamID,
+    props.match.url
+  );
 
   useEffect(() => {
     return () => {

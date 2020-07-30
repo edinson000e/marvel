@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "./Link";
 
-const Button = styled.button`
+export const Button = styled.button`
   outline: none;
   border: none;
 

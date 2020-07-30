@@ -1,16 +1,38 @@
 import React from "react";
-import { useLocalStorage } from "../../customHook/useLocalStorage";
-import { Accordion, Message } from "../../components/common";
+import { useLocalStorageArray } from "../../customHook/useLocalStorage";
+import {
+  Accordion,
+  Message,
+  StyledLinkFavorities,
+  CloseButton
+} from "../../components/common";
+import { HeaderModal as Header } from "../../components/common/Modal";
+
 const SearchComics = () => {
-  const [searchComics] = useLocalStorage("searchComics");
+  const [searchComics, setSearchComics] = useLocalStorageArray(
+    "searchComics",
+    []
+  );
 
   return (
-    <Accordion itemId={"idSearchComics"} title={"Search Comics"}>
+    <Accordion title={"Search Comics"}>
       {searchComics &&
       Array.isArray(searchComics) &&
       searchComics.length > 0 ? (
         searchComics.map((value, index) => {
-          return <p key={index}> {value.name}</p>;
+          return (
+            <Header key={index}>
+              <StyledLinkFavorities to={value.redirection} key={index}>
+                {value.name}
+              </StyledLinkFavorities>
+
+              <CloseButton
+                onClick={() => {
+                  setSearchComics(value.key);
+                }}
+              />
+            </Header>
+          );
         })
       ) : (
         <Message title="comics" />

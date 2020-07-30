@@ -39,7 +39,7 @@ const Dialog = styled.div`
   }
 `;
 
-const Header = styled.div`
+export const HeaderModal = styled.div`
   justify-content: space-between;
   width: inherit;
   height: fit-content;
@@ -67,7 +67,7 @@ export function Modal({ onClose, children, ...props }) {
     ? ReactDOM.createPortal(
         <Overlay>
           <Dialog {...props}>
-            <Header>
+            <HeaderModal>
               <Title dark>{modal.title}</Title>
 
               <FontAwesomeIcon
@@ -79,7 +79,7 @@ export function Modal({ onClose, children, ...props }) {
                 size="lg"
                 color="#9c9c9c"
               />
-            </Header>
+            </HeaderModal>
             <Body>{children}</Body>
           </Dialog>
         </Overlay>,

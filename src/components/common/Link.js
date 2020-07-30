@@ -25,3 +25,18 @@ export const StyledLinkButton = styled(Link)`
       color: black;
     `}
 `;
+
+export const StyledLinkFavorities = styled(Link)`
+  text-decoration: none;
+  color: black;
+  flex: auto;
+  padding: 1rem;
+
+  :hover {
+    text-decoration: none;
+    background: #eee;
+  }
+  :visited {
+    text-decoration: none;
+  }
+`;

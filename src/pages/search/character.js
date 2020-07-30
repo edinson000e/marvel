@@ -26,8 +26,6 @@ const Search = props => {
   const charactersComics = useStateChactersComicsValue();
 
   useEffect(() => {
-    console.log("props", props.match.url);
-
     return () => {
       dispatch(reset());
     };

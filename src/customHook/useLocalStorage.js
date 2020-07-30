@@ -29,7 +29,7 @@ export function useLocalStorage(key, initialValue) {
 
 export function useLocalStorageSearch(key, url, nameSearch, redirection) {
   const [storedValue, setStoredValue] = useState({});
-  const [localStorange, setlocalStorange] = useState([]);
+
   const dispatchContext = useStateValue();
 
   const successDispatch = () => {
@@ -37,8 +37,9 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
   };
   let dispatch;
   if (dispatchContext) dispatch = dispatchContext[1];
-  const updateCache = (newKey, newData, nameSearch) => {
-    let value = localStorange;
+  const updateCache = (newKey, newData, nameSearch, redirection, item) => {
+    let value = item;
+    console.log("value", value);
     value.push({ key: newKey, data: newData, name: nameSearch, redirection });
     window.localStorage.setItem(key, JSON.stringify(value));
     setStoredValue(newData);
@@ -48,9 +49,11 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
   const fetchApi = useCallback((item, url, nameSearch, redirection) => {
     const urlHash = hashCode(url);
 
+    console.log("item", item);
     const indexCache =
       item.length > 0 ? item.findIndex(c => c.key === urlHash) : -1;
 
+    console.log("indexCache", indexCache);
     if (indexCache !== -1) {
       setStoredValue(item[indexCache].data);
       successDispatch();
@@ -60,7 +63,7 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
       })
         .then(response => response.json())
         .then(json => {
-          updateCache(urlHash, json.data, nameSearch, redirection);
+          updateCache(urlHash, json.data, nameSearch, redirection, item);
         })
         .catch(e => {
           dispatch(error(e));
@@ -69,17 +72,56 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
   }, []);
 
   useEffect(() => {
-    dispatch(loading());
+    if (url) {
+      dispatch(loading());
 
-    let value = JSON.parse(window.localStorage.getItem(key));
+      let value = JSON.parse(window.localStorage.getItem(key));
 
-    let item = [];
-    if (value && Array.isArray(value)) {
-      setlocalStorange(value);
-      item = value;
+      let item = [];
+      if (value && Array.isArray(value)) {
+        console.log("no, no esta vacio");
+        item = value;
+      } else {
+        console.log("entro en q esta vacio");
+      }
+      fetchApi(item, apiUrl + url, nameSearch, redirection);
     }
-    fetchApi(item, apiUrl + url, nameSearch, redirection);
   }, [key, url]);
 
   return storedValue;
+}
+
+export function useLocalStorageArray(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() => {
+    const item = window.localStorage.getItem(key);
+
+    if (item !== undefined) {
+      try {
+        return item ? JSON.parse(item) : initialValue;
+      } catch (error) {
+        return initialValue;
+      }
+    }
+  });
+
+  const setValue = value => {
+    try {
+      const item = [...storedValue];
+
+      const indexCache =
+        item.length > 0 ? item.findIndex(c => c.key === value) : -1;
+
+      if (indexCache !== -1) {
+        item.splice(indexCache, 1);
+
+        setStoredValue(item);
+        console.log("aca hago el cambio en setStorevalue", item);
+        window.localStorage.setItem(key, JSON.stringify(item));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return [storedValue, setValue];
 }

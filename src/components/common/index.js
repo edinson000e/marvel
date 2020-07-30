@@ -12,3 +12,4 @@ export * from "./Button";
 export * from "./Error";
 export * from "./Accordion";
 export * from "./Message";
+export * from "./Close";
