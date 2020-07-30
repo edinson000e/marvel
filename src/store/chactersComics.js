@@ -1,9 +1,9 @@
 import React, { useContext, useCallback, useState } from "react";
-import { StateCharacter } from "../utils/context";
+import { StateCharactersComics } from "../utils/context";
 import { apiUrlFetch, apiUrl } from "../api";
 import { hashCode } from "../functions/hash";
 
-export const StateChactersProvider = ({ children }) => {
+export const StateChactersComicsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState([]);
@@ -16,23 +16,22 @@ export const StateChactersProvider = ({ children }) => {
 
     value.push({ key: newKey, data: newData });
     setCache(value);
+
     setData(newData);
     setIsLoading(false);
   };
 
-  const fetchApi = useCallback((url, api) => {
+  const fetchApi = useCallback(url => {
     setIsLoading(true);
     const urlHash = hashCode(url);
     const indexCache =
       cache.length > 0 ? cache.findIndex(c => c.key === urlHash) : -1;
 
-    let apiFetch = apiUrl;
-    if (api) apiFetch = api;
     if (indexCache !== -1) {
       setData(cache[indexCache].data);
       setIsLoading(false);
     } else {
-      return fetch(apiFetch + url + apiUrlFetch, {
+      return fetch(url + apiUrlFetch, {
         method: "GET"
       })
         .then(response => response.json())
@@ -46,7 +45,7 @@ export const StateChactersProvider = ({ children }) => {
   }, []);
 
   return (
-    <StateCharacter.Provider
+    <StateCharactersComics.Provider
       value={{
         isLoading,
         data,
@@ -55,8 +54,9 @@ export const StateChactersProvider = ({ children }) => {
       }}
     >
       {children}
-    </StateCharacter.Provider>
+    </StateCharactersComics.Provider>
   );
 };
 
-export const useStatechacterValue = () => useContext(StateCharacter);
+export const useStateChactersComicsValue = () =>
+  useContext(StateCharactersComics);

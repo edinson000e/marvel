@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
-
+import { useStateValue } from "../../store";
 import { useStatechacterValue } from "../../store/chacters";
+import { useStateChactersComicsValue } from "../../store/chactersComics";
 import { getDetailsCharacter } from "../../actions";
 
 import {
@@ -14,8 +15,14 @@ import ModalDetails from "./modalDetails";
 import { Paginator } from "../../components/common/Paginator";
 
 const Characters = props => {
-  const characters = useStatechacterValue();
+  const dispatchContext = useStateValue();
 
+  let dispatch;
+
+  if (dispatchContext) dispatch = dispatchContext[1];
+
+  const characters = useStatechacterValue();
+  const charactersComics = useStateChactersComicsValue();
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
@@ -39,13 +46,14 @@ const Characters = props => {
     }
   }, [initFetch, props.match.params.pag]);
   const Ref = useRef();
-
+  console.log("characters", characters);
   return (
     <PageLayout>
-      {!characters || characters.isLoading ? (
+      {characters &&
+      (characters.isLoading ||
+        (!characters.isLoading && characters.data.length === 0)) ? (
         <ContainerLoading />
-      ) : characters.data.length === 0 ||
-        (characters.data.results && characters.data.results.length === 0) ? (
+      ) : characters && characters.data.total === 0 ? (
         <ContainerError
           title={
             characters && characters.error
@@ -57,7 +65,8 @@ const Characters = props => {
       ) : (
         <>
           <Grid>
-            {characters.data.results.length > 0 &&
+            {characters &&
+              characters.data.results.length > 0 &&
               characters.data.results.map((value, index) => {
                 let title = value.name;
 
@@ -79,18 +88,25 @@ const Characters = props => {
                     }
                     description={value.description}
                     onClick={() => {
-                      getDetailsCharacter(url, title);
+                      getDetailsCharacter(
+                        url,
+                        title,
+                        dispatch,
+                        charactersComics.fetchApi
+                      );
                     }}
                   />
                 );
               })}
           </Grid>
           <ModalDetails />
-          <Paginator
-            refElement={Ref}
-            pag={props.match.params.pag}
-            all={characters.data.total}
-          ></Paginator>
+          {characters && (
+            <Paginator
+              refElement={Ref}
+              pag={props.match.params.pag}
+              all={characters.data.total}
+            ></Paginator>
+          )}
         </>
       )}
     </PageLayout>

@@ -50,16 +50,20 @@ const Body = styled.div`
   overflow-y: auto;
 `;
 export function Modal({ onClose, children, ...props }) {
-  const [{ modal }, dispatch] = useStateValue();
+  const dispatchContext = useStateValue();
+
+  let dispatch;
+  let modal;
+  if (dispatchContext) [{ modal }, dispatch] = dispatchContext;
 
   useEffect(() => {
-    if (modal.modal) document.body.style.overflow = "hidden";
+    if (modal && modal.modal) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [modal.modal]);
-  return modal.ref && modal.modal
+  }, [modal && modal.modal]);
+  return modal && modal.ref && modal.modal
     ? ReactDOM.createPortal(
         <Overlay>
           <Dialog {...props}>
