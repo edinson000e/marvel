@@ -15,7 +15,11 @@ import { useLocalStorage } from "../../customHook/useLocalStorage";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
 import { isEqual } from "lodash";
 const Search = () => {
-  const [{ search }, dispatch] = useStateValue();
+  const dispatchContext = useStateValue();
+
+  let dispatch;
+  if (dispatchContext) dispatch = dispatchContext[1];
+
   const characters = useStatechacterValue();
   const charactersComics = useStateChactersComicsValue();
   const [randomCharacter, setRandomCharacter] = useLocalStorage(
@@ -34,7 +38,7 @@ const Search = () => {
           `/v1/public/characters?limit=${limit}&offset=${offset}`
         );
     },
-    [dispatch]
+    [characters]
   );
 
   useEffect(() => {
@@ -66,20 +70,32 @@ const Search = () => {
       searchRandon &&
       !isEqual(JSON.stringify(result), JSON.stringify(characters.data))
     ) {
-      console.log("no tengo nada q hacer aca", characters);
-
-      if (Object.entries(result).length === 0) {
-        console.log("esta vacio");
-        setresult(characters.data);
-        setsearchRandon(false);
+      if (
+        !isEqual(
+          JSON.stringify(randomCharacter),
+          JSON.stringify(characters.data)
+        )
+      ) {
+        if (Object.entries(result).length === 0) {
+          console.log("esta vacio");
+          setresult(characters.data);
+          setsearchRandon(false);
+        }
+        setRandomCharacter(characters.data);
       }
-      setRandomCharacter(characters.data);
     }
 
     return () => {
       abortController.abort();
     };
-  }, [initFetch, characters, searchRandon]);
+  }, [
+    initFetch,
+    characters,
+    searchRandon,
+    randomCharacter,
+    setRandomCharacter,
+    result
+  ]);
 
   return (
     <Container>

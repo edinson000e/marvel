@@ -6,17 +6,13 @@ import {
   TitleDescription
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
-import { seatchGetComic } from "../../actions/comics";
-import { useStateComicsValue } from "../../store/comics";
 
-import { useStateValue } from "../../store";
+import { useStateComicsValue } from "../../store/comics";
 
 import { useLocalStorage } from "../../customHook/useLocalStorage";
 import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
 const Search = () => {
-  const [{ search }, dispatch] = useStateValue();
-
   const [randomComic, setRandomComic] = useLocalStorage("randomComic");
 
   const comics = useStateComicsValue();
@@ -34,7 +30,7 @@ const Search = () => {
         "&"
       );
     },
-    [dispatch]
+    [comics]
   );
 
   useEffect(() => {
@@ -42,15 +38,6 @@ const Search = () => {
     const { signal } = abortController;
 
     if (!searchRandon) {
-      console.log("result", result);
-      console.log("character", comics);
-      console.log("randomComic", randomComic);
-      console.log(
-        "isEqual(result, comics)",
-        isEqual(JSON.stringify(result), JSON.stringify(comics.data))
-      );
-
-      console.log("entre aca");
       if (!randomComic) {
         initFetchComic(0, signal);
       } else {
@@ -61,23 +48,35 @@ const Search = () => {
 
         initFetchComic(result, signal);
       }
-    } else if (!comics.isLoading) {
-      console.log("no tengo nada q hacer aca", comics);
-
-      if (Object.entries(result).length === 0) {
-        setresult(comics.data);
-        setsearchRandon(false);
+    } else if (
+      comics.data.limit === 1 &&
+      !comics.isLoading &&
+      searchRandon &&
+      !isEqual(JSON.stringify(result), JSON.stringify(comics.data))
+    ) {
+      if (!isEqual(JSON.stringify(randomComic), JSON.stringify(comics.data))) {
+        if (Object.entries(result).length === 0) {
+          setresult(comics.data);
+          setsearchRandon(false);
+        }
+        setRandomComic(comics.data);
       }
-      setRandomComic(comics.data);
     }
     return () => {
       abortController.abort();
     };
-  }, [initFetchComic, comics, searchRandon]);
+  }, [
+    initFetchComic,
+    comics,
+    searchRandon,
+    randomComic,
+    setRandomComic,
+    result
+  ]);
 
   return (
     <Container>
-      {search.isFetching && !result ? (
+      {Object.entries(result).length === 0 ? (
         <ContainerLoading />
       ) : (
         <>

@@ -6,7 +6,7 @@ import { hashCode } from "../functions/hash";
 export const StateComicsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   const [cache, setCache] = useState([]);
   const [error, setError] = useState(false);
@@ -26,6 +26,7 @@ export const StateComicsProvider = ({ children }) => {
 
   const fetchApi = useCallback(
     (url, signo) => {
+      setData({});
       setIsLoading(true);
       const urlHash = hashCode(url);
       const indexCache =
