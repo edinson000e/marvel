@@ -14,6 +14,7 @@ import Modal from "../characters/modalDetails";
 import { useLocalStorage } from "../../customHook/useLocalStorage";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
 import { isEqual } from "lodash";
+import { replaceUrl } from "../../functions/validateHttp";
 const Search = () => {
   const dispatchContext = useStateValue();
 
@@ -101,14 +102,11 @@ const Search = () => {
               {result && result.results[0] && (
                 <Card
                   title={result.results[0].name}
-                  photo={
+                  photo={replaceUrl(
                     result.results[0].thumbnail.path +
-                    "." +
-                    result.results[0].thumbnail.extension.replace(
-                      /http/gi,
-                      "https"
-                    )
-                  }
+                      "." +
+                      result.results[0].thumbnail.extension
+                  )}
                   description={result.results[0].description}
                   onClick={() => {
                     dispatch(openModal({ title: result.results[0].name }));

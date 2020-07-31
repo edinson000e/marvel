@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
 import { useLocalStorageSearch } from "../../customHook/useLocalStorage";
-
+import { replaceUrl } from "../../functions/validateHttp";
 const SearchComics = props => {
   const [{ global }, dispatch] = useStateValue();
   const history = useHistory();
@@ -53,22 +53,14 @@ const SearchComics = props => {
               {searchComicsData.results.length > 0 &&
                 searchComicsData.results.map((value, index) => {
                   let title = value.title;
-                  const regex = /http/gi;
-                  let urlImg =
-                    value.thumbnail.path + "." + value.thumbnail.extension;
-                  if (
-                    value &&
-                    value.thumbnail &&
-                    value.thumbnail.path &&
-                    value.thumbnail.path.length > 0
-                  )
-                    urlImg = urlImg.replace(regex, "https");
 
                   return (
                     <Card
                       key={index}
                       title={title}
-                      photo={urlImg}
+                      photo={replaceUrl(
+                        value.thumbnail.path + "." + value.thumbnail.extension
+                      )}
                       description={value.description}
                       onClick={() => {
                         history.push(`/comic/${value.id}`);

@@ -6,7 +6,7 @@ import {
 } from "../../components/common";
 
 import { useStateComicsValue } from "../../store/comics";
-
+import { replaceUrl } from "../../functions/validateHttp";
 let options = {
   year: "numeric",
   month: "long",
@@ -82,14 +82,11 @@ export const DetailsCharacter = props => {
           {comic.data.results && (
             <CommonDetailsCharacter
               title={comic.data.results[0].title}
-              url={
+              url={replaceUrl(
                 comic.data.results[0].thumbnail.path +
-                "." +
-                comic.data.results[0].thumbnail.extension.replace(
-                  /http/gi,
-                  "https"
-                )
-              }
+                  "." +
+                  comic.data.results[0].thumbnail.extension
+              )}
               subTitle={role()}
               description={comic.data.results[0].description}
               actions={[

@@ -12,7 +12,7 @@ import {
 } from "../../components/common";
 import ModalDetails from "./modalDetails";
 import { Paginator } from "../../components/common/Paginator";
-
+import { replaceUrl } from "../../functions/validateHttp";
 const Characters = props => {
   const dispatchContext = useStateValue();
 
@@ -77,7 +77,7 @@ const Characters = props => {
                   value.comics.collectionURI &&
                   value.comics.collectionURI.length > 0
                 )
-                  url = value.comics.collectionURI.replace(regex, "https");
+                  url = replaceUrl(value.comics.collectionURI);
                 let urlImg =
                   value.thumbnail.path + "." + value.thumbnail.extension;
                 if (
@@ -86,7 +86,7 @@ const Characters = props => {
                   value.thumbnail.path &&
                   value.thumbnail.path.length > 0
                 )
-                  urlImg = urlImg.replace(regex, "https");
+                  urlImg = replaceUrl(urlImg);
                 return (
                   <Card
                     key={index}

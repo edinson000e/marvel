@@ -12,7 +12,7 @@ import { useStateValue } from "../../store";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
 import Modal from "../characters/modalDetails";
 import { useLocalStorageSearch } from "../../customHook/useLocalStorage";
-
+import { replaceUrl } from "../../functions/validateHttp";
 const Search = props => {
   const [{ global }, dispatch] = useStateValue();
   let ParamID = props.match.params.id.toLowerCase();
@@ -57,11 +57,9 @@ const Search = props => {
                     <Card
                       key={index}
                       title={value.name}
-                      photo={
-                        value.thumbnail.path +
-                        "." +
-                        value.thumbnail.extension.replace(/http/gi, "https")
-                      }
+                      photo={replaceUrl(
+                        value.thumbnail.path + "." + value.thumbnail.extension
+                      )}
                       description={value.description}
                       onClick={() => {
                         dispatch(openModal({ title }));

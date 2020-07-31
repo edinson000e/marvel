@@ -9,7 +9,7 @@ import { useStateChactersComicsValue } from "../../store/chactersComics";
 
 import { closeModal } from "../../actions/modal";
 import SelectContainerRef from "./selectContainerRef";
-
+import { replaceUrl } from "../../functions/validateHttp";
 const SelectCharacter = () => {
   const dispatchContext = useStateValue();
 
@@ -45,7 +45,7 @@ const SelectCharacter = () => {
               value.thumbnail.path &&
               value.thumbnail.path.length > 0
             )
-              urlImg = urlImg.replace(regex, "https");
+              urlImg = replaceUrl(urlImg);
 
             return (
               <StyledLinkButton
