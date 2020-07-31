@@ -61,10 +61,6 @@ const Search = props => {
                       )}
                       description={value.description}
                       onClick={() => {
-                        console.log(
-                          "value.comics.collectionURI",
-                          replaceUrl(value.comics.collectionURI)
-                        );
                         dispatch(openModal({ title }));
 
                         charactersComics.fetchApi(
