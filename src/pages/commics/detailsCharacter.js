@@ -85,7 +85,10 @@ export const DetailsCharacter = props => {
               url={
                 comic.data.results[0].thumbnail.path +
                 "." +
-                comic.data.results[0].thumbnail.extension
+                comic.data.results[0].thumbnail.extension.replace(
+                  /http/gi,
+                  "https"
+                )
               }
               subTitle={role()}
               description={comic.data.results[0].description}

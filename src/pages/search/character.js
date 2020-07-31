@@ -58,7 +58,9 @@ const Search = props => {
                       key={index}
                       title={value.name}
                       photo={
-                        value.thumbnail.path + "." + value.thumbnail.extension
+                        value.thumbnail.path +
+                        "." +
+                        value.thumbnail.extension.replace(/http/gi, "https")
                       }
                       description={value.description}
                       onClick={() => {

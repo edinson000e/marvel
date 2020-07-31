@@ -92,7 +92,10 @@ const Search = () => {
                     photo={
                       result.results[0].thumbnail.path +
                       "." +
-                      result.results[0].thumbnail.extension
+                      result.results[0].thumbnail.extension.replace(
+                        /http/gi,
+                        "https"
+                      )
                     }
                     description={result.results[0].description}
                     onClick={() => {
