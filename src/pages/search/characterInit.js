@@ -30,7 +30,6 @@ const Search = () => {
   const [searchRandon, setsearchRandon] = useState(false);
   const initFetch = useCallback(
     async (offset, signal) => {
-      console.log("entre aca en initfetch");
       setsearchRandon(true);
       let limit = 1;
       if (characters)
@@ -46,15 +45,7 @@ const Search = () => {
     const { signal } = abortController;
 
     if (!searchRandon) {
-      console.log(
-        "isEqual(result, characters)",
-        isEqual(JSON.stringify(result), JSON.stringify(characters.data))
-      );
-
-      console.log("entre aca");
       if (!randomCharacter) {
-        console.log("esta vacio entro aca");
-        console.log("llamo a initi fe ");
         initFetch(0, signal);
       } else {
         setresult(randomCharacter);
@@ -77,7 +68,6 @@ const Search = () => {
         )
       ) {
         if (Object.entries(result).length === 0) {
-          console.log("esta vacio");
           setresult(characters.data);
           setsearchRandon(false);
         }

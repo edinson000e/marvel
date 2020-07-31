@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useStateValue } from "../../store";
 import { useStatechacterValue } from "../../store/chacters";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
@@ -19,34 +19,33 @@ const Characters = props => {
   let dispatch;
 
   if (dispatchContext) dispatch = dispatchContext[1];
-
+  const [loading, setloading] = useState(false);
   const characters = useStatechacterValue();
   const charactersComics = useStateChactersComicsValue();
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
 
-  const initFetch = useCallback(
-    offset => {
+  useEffect(() => {
+    const fetchBusinesses = offset => {
       let limit = 20;
       if (characters)
         characters.fetchApi(
           `/v1/public/characters?limit=${limit}&offset=${offset}`
         );
-    },
-    [characters]
-  );
-
-  useEffect(() => {
-    let pagNumber = props.match.params.pag;
-    if (!pagNumber) {
-      pagNumber = 1;
+    };
+    if (!loading) {
+      setloading(true);
+      let pagNumber = props.match.params.pag;
+      if (!pagNumber) {
+        pagNumber = 1;
+      }
+      if (is_numeric(pagNumber)) {
+        let offset = parseInt(20) * (parseInt(pagNumber) - 1);
+        fetchBusinesses(offset);
+      }
     }
-    if (is_numeric(pagNumber)) {
-      let offset = parseInt(20) * (parseInt(pagNumber) - 1);
-      initFetch(offset);
-    }
-  }, [initFetch, props.match.params.pag]);
+  }, [props.match.params.pag, characters, loading]);
   const Ref = useRef();
 
   return (
