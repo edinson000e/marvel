@@ -70,7 +70,6 @@ const Characters = props => {
               characters.data.results.map((value, index) => {
                 let title = value.name;
 
-                const regex = /http/gi;
                 let url;
                 if (
                   value.comics &&

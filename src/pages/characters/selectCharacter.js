@@ -37,7 +37,6 @@ const SelectCharacter = () => {
       ) : (
         <>
           {charactersComics.data.results.map((value, index) => {
-            const regex = /http/gi;
             let urlImg = value.thumbnail.path + "." + value.thumbnail.extension;
             if (
               value &&
