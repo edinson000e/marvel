@@ -120,13 +120,24 @@ export const SearchIcon = () => {
   return <FontAwesomeIcon icon={faSearch} size="lg" color="#9c9c9c" />;
 };
 
-export const SearchWithLink = ({ match, state }) => {
+export const SearchWithLink = ({ match }) => {
   const link = [
     { name: "character", pathname: "/search/character" },
     { name: "comic", pathname: "/search/comic" }
   ];
   const { pathname } = useLocation();
+  const [state, setstate] = useState("character");
 
+  useEffect(() => {
+    console.log("pathname");
+    if (pathname !== "/search/" + state) {
+      let value = link.find(value => pathname.includes(value.pathname));
+      console.log("value", value);
+      console.log("value.pathname", pathname);
+      if (!value) setstate("character");
+      else setstate(value.name);
+    }
+  }, [pathname, link]);
   return (
     <ContainerSearchWithLink>
       <Search push={state} />

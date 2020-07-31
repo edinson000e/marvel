@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Breadcrumb } from "../../components/common";
 import { Container } from "../../components/common/Search";
 
@@ -10,8 +10,6 @@ import SearchComics from "./comics";
 import SearchComicInit from "./comicInit";
 
 const Search = props => {
-  const [state, setstate] = useState();
-
   const match = props.match;
   const actionBreadcrumb = [
     {
@@ -23,7 +21,7 @@ const Search = props => {
   return (
     <Container>
       <Breadcrumb actions={actionBreadcrumb} />
-      <SearchWithLink match={match} state={state} />
+      <SearchWithLink match={match} />
 
       <Switch>
         <Route
@@ -31,11 +29,11 @@ const Search = props => {
           path="/search"
           render={() => <Redirect to="/search/character" />}
         />
+
         <Route
           exact
           path="/search/character"
           render={props => {
-            setstate("character");
             return (
               <SearchCharacterInit {...props} propTypeSearch="character" />
             );
@@ -44,14 +42,12 @@ const Search = props => {
         <Route
           path="/search/character=:id"
           render={props => {
-            setstate("character");
             return <SearchCharacter {...props} propTypeSearch="character" />;
           }}
         />
         <Route
           path="/search/comic=:id"
           render={props => {
-            setstate("comic");
             return <SearchComics {...props} propTypeSearch="comic" />;
           }}
         />
@@ -59,7 +55,6 @@ const Search = props => {
           exact
           path="/search/comic"
           render={props => {
-            setstate("comic");
             return <SearchComicInit {...props} propTypeSearch="comic" />;
           }}
         />
