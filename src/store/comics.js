@@ -11,39 +11,45 @@ export const StateComicsProvider = ({ children }) => {
   const [cache, setCache] = useState([]);
   const [error, setError] = useState(false);
 
-  const updateCache = (newKey, newData) => {
-    let value = cache;
+  const updateCache = useCallback(
+    (newKey, newData) => {
+      let value = cache;
 
-    value.push({ key: newKey, data: newData });
-    setCache(value);
+      value.push({ key: newKey, data: newData });
+      setCache(value);
 
-    setData(newData);
-    setIsLoading(false);
-  };
-
-  const fetchApi = useCallback(url => {
-    setIsLoading(true);
-    const urlHash = hashCode(url);
-    const indexCache =
-      cache.length > 0 ? cache.findIndex(c => c.key === urlHash) : -1;
-    let apiFetch = apiUrl;
-
-    if (indexCache !== -1) {
-      setData(cache[indexCache].data);
+      setData(newData);
       setIsLoading(false);
-    } else {
-      return fetch(apiFetch + url + "?" + apiUrlFetch, {
-        method: "GET"
-      })
-        .then(response => response.json())
-        .then(json => {
-          updateCache(urlHash, json.data);
+    },
+    [cache]
+  );
+
+  const fetchApi = useCallback(
+    url => {
+      setIsLoading(true);
+      const urlHash = hashCode(url);
+      const indexCache =
+        cache.length > 0 ? cache.findIndex(c => c.key === urlHash) : -1;
+      let apiFetch = apiUrl;
+
+      if (indexCache !== -1) {
+        setData(cache[indexCache].data);
+        setIsLoading(false);
+      } else {
+        return fetch(apiFetch + url + "?" + apiUrlFetch, {
+          method: "GET"
         })
-        .catch(e => {
-          setError(true);
-        });
-    }
-  }, []);
+          .then(response => response.json())
+          .then(json => {
+            updateCache(urlHash, json.data);
+          })
+          .catch(e => {
+            setError(true);
+          });
+      }
+    },
+    [cache, updateCache]
+  );
 
   return (
     <StateComics.Provider
