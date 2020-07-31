@@ -55,11 +55,9 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
     (item, url, nameSearch, redirection) => {
       const urlHash = hashCode(url);
 
-      console.log("item", item);
       const indexCache =
         item.length > 0 ? item.findIndex(c => c.key === urlHash) : -1;
 
-      console.log("indexCache", indexCache);
       if (indexCache !== -1) {
         setStoredValue(item[indexCache].data);
         successDispatch(dispatch);
@@ -87,10 +85,7 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
 
       let item = [];
       if (value && Array.isArray(value)) {
-        console.log("no, no esta vacio");
         item = value;
-      } else {
-        console.log("entro en q esta vacio");
       }
       fetchApi(item, apiUrl + url, nameSearch, redirection);
     }
@@ -123,7 +118,7 @@ export function useLocalStorageArray(key, initialValue) {
         item.splice(indexCache, 1);
 
         setStoredValue(item);
-        console.log("aca hago el cambio en setStorevalue", item);
+
         window.localStorage.setItem(key, JSON.stringify(item));
       }
     } catch (error) {

@@ -129,11 +129,9 @@ export const SearchWithLink = ({ match }) => {
   const [state, setstate] = useState("character");
 
   useEffect(() => {
-    console.log("pathname");
     if (pathname !== "/search/" + state) {
       let value = link.find(value => pathname.includes(value.pathname));
-      console.log("value", value);
-      console.log("value.pathname", pathname);
+
       if (!value) setstate("character");
       else setstate(value.name);
     }
