@@ -30,7 +30,7 @@ const SearchComics = props => {
     return () => {
       dispatch(reset());
     };
-  }, [url]);
+  }, [url, dispatch]);
 
   return (
     <Container>
