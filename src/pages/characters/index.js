@@ -20,8 +20,10 @@ const Characters = props => {
 
   if (dispatchContext) dispatch = dispatchContext[1];
   const [loading, setloading] = useState(false);
+  const [pag, setpag] = useState(1);
   const characters = useStatechacterValue();
   const charactersComics = useStateChactersComicsValue();
+
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
@@ -34,17 +36,24 @@ const Characters = props => {
           `/v1/public/characters?limit=${limit}&offset=${offset}`
         );
     };
+    let pagNumber = props.match.params.pag;
     if (!loading) {
       setloading(true);
-      let pagNumber = props.match.params.pag;
+
       if (!pagNumber) {
         pagNumber = 1;
       }
+      setpag(pagNumber);
+
       if (is_numeric(pagNumber)) {
         let offset = parseInt(20) * (parseInt(pagNumber) - 1);
         fetchBusinesses(offset);
       }
+    } else if (pag !== pagNumber) {
+      setloading(false);
     }
+
+    return () => {};
   }, [props.match.params.pag, characters, loading]);
   const Ref = useRef();
 
