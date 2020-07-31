@@ -37,6 +37,16 @@ const SelectCharacter = () => {
       ) : (
         <>
           {charactersComics.data.results.map((value, index) => {
+            const regex = /http/gi;
+            let urlImg = value.thumbnail.path + "." + value.thumbnail.extension;
+            if (
+              value &&
+              value.thumbnail &&
+              value.thumbnail.path &&
+              value.thumbnail.path.length > 0
+            )
+              urlImg = urlImg.replace(regex, "https");
+
             return (
               <StyledLinkButton
                 key={index}
@@ -47,7 +57,7 @@ const SelectCharacter = () => {
               >
                 <DetailsCharacter
                   title={value.title}
-                  url={value.thumbnail.path + "." + value.thumbnail.extension}
+                  url={urlImg}
                   description={suspensionPoints(value.description, 150)}
                 />
               </StyledLinkButton>
