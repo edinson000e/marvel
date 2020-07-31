@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -166,13 +166,17 @@ export const Search = ({ push }) => {
     setOpen(false);
   };
 
-  useEffect(() => {
+  const init = useCallback(() => {
     if (match && match.params && match.params.id) {
       setInput(match.params.id.slice(1, match.params.id.length));
     } else {
       setInput("");
     }
-  }, [!match]);
+  }, [match]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
 
   return (
     <Form
