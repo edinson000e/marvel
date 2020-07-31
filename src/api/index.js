@@ -5,7 +5,7 @@ export const apiKey = process.env.REACT_APP_APIKEY;
 export const apiTs = process.env.REACT_APP_TS;
 export const apiPublic = process.env.REACT_APP_PUBLIC;
 const hash = md5(apiTs + apiKey + apiPublic).toString();
-export const apiUrlFetch = `&apikey=${apiPublic}&ts=${apiTs}&hash=${hash}`;
+export const apiUrlFetch = `apikey=${apiPublic}&ts=${apiTs}&hash=${hash}`;
 
 export const fetchGet = url => {
   return fetch(

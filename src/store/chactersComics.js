@@ -31,7 +31,7 @@ export const StateChactersComicsProvider = ({ children }) => {
       setData(cache[indexCache].data);
       setIsLoading(false);
     } else {
-      return fetch(url + apiUrlFetch, {
+      return fetch(url + "&" + apiUrlFetch, {
         method: "GET"
       })
         .then(response => response.json())

@@ -1,124 +1,98 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import {
-  PageLayout,
   CommonDetailsCharacter,
   ContainerLoading,
   ContainerError
 } from "../../components/common";
-import { useStateValue } from "../../store";
-import { searchCommic } from "../../actions";
-import { resetSelectCharacter } from "../../actions";
+
+import { useStateComicsValue } from "../../store/comics";
+
 let options = {
   year: "numeric",
   month: "long",
   day: "numeric"
 };
 export const DetailsCharacter = props => {
-  const state = useStateValue();
-
-  let dispatch;
-  let character;
-  if (state) {
-    character = state[0].character;
-    dispatch = state[1];
-  }
-
+  const comic = useStateComicsValue();
   const Ref = useRef();
-  const [creator, setcreator] = useState([]);
-  const [error, seterror] = useState(false);
+
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
-  const initFetch = useCallback(
-    id => {
-      searchCommic(dispatch, props.match.params.id);
-    },
-    [dispatch, props.match.params.id]
-  );
+  const initFetch = useCallback(id => {
+    if (comic) comic.fetchApi(`/v1/public/comics/${id}`);
+  }, []);
 
-  useEffect(() => {
+  const role = () => {
     let role = [];
-    window.scrollTo(0, Ref);
-    if (
-      character.dataSelect &&
-      character.dataSelect.creators &&
-      character.dataSelect.creators.items &&
-      character.dataSelect.creators.items.length > 0
-    ) {
-      if (role.length === 0) {
-        var today = new Date(character.dataSelect.dates[0].date);
+    if (role.length === 0) {
+      var today = new Date(comic.data.results[0].dates[0].date);
 
-        role.push({
-          item: "Published",
-          name: today.toLocaleDateString("en-US", options)
+      role.push({
+        item: "Published",
+        name: today.toLocaleDateString("en-US", options)
+      });
+    }
+    comic.data.results[0].creators.items.map((creator, index) => {
+      let resultFilter = -1;
+
+      if (role.length > 0) {
+        resultFilter = role.findIndex(value => {
+          return value.item === creator.role;
         });
       }
-      character.dataSelect.creators.items.map((creator, index) => {
-        let resultFilter = -1;
 
-        if (role.length > 0) {
-          resultFilter = role.findIndex(value => {
-            return value.item === creator.role;
-          });
-        }
-
-        if (role.length === 0 || resultFilter === -1) {
-          role.push({
-            item: creator.role,
-            name: [creator.name]
-          });
-        } else {
-          role[resultFilter].name.push(creator.name);
-        }
-        return null;
-      });
-      setcreator(role);
-    } else {
-      if (is_numeric(props.match.params.id)) initFetch();
-      else {
-        seterror(true);
+      if (role.length === 0 || resultFilter === -1) {
+        role.push({
+          item: creator.role,
+          name: [creator.name]
+        });
+      } else {
+        role[resultFilter].name.push(creator.name);
       }
-    }
+      return null;
+    });
 
-    return () => {
-      dispatch(resetSelectCharacter());
-    };
+    return role;
+  };
+  useEffect(() => {
+    window.scrollTo(0, Ref);
+    if (is_numeric(props.match.params.id)) initFetch(props.match.params.id);
   }, [props.match.params.id]);
   return (
     <div ref={Ref}>
-      {!error && !character.errorSelect ? (
-        Object.entries(character.dataSelect).length === 0 ? (
-          <ContainerLoading />
-        ) : (
-          <>
-            <CommonDetailsCharacter
-              title={character.dataSelect.title}
-              url={
-                character.dataSelect.thumbnail.path +
-                "." +
-                character.dataSelect.thumbnail.extension
-              }
-              subTitle={creator}
-              description={character.dataSelect.description}
-              actions={[
-                {
-                  path: "/",
-                  text: character.dataSelect.title
-                }
-              ]}
-            />
-          </>
-        )
-      ) : (
+      {comic && comic.isLoading ? (
+        <ContainerLoading />
+      ) : comic.data.total === 0 ? (
         <ContainerError
           title={
-            character.errorSelect
+            comic && comic.error
               ? " Sorry! We couldn't find any results."
               : "There was a search error."
           }
           subTitle="Please try again"
-          onClick={() => seterror(false)}
         />
+      ) : (
+        <div>
+          {comic.data.results && (
+            <CommonDetailsCharacter
+              title={comic.data.results[0].title}
+              url={
+                comic.data.results[0].thumbnail.path +
+                "." +
+                comic.data.results[0].thumbnail.extension
+              }
+              subTitle={role()}
+              description={comic.data.results[0].description}
+              actions={[
+                {
+                  path: "/",
+                  text: comic.data.results[0].title
+                }
+              ]}
+            />
+          )}
+        </div>
       )}
     </div>
   );

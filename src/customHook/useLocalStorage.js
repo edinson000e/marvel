@@ -58,7 +58,7 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
       setStoredValue(item[indexCache].data);
       successDispatch();
     } else {
-      return fetch(url + apiUrlFetch, {
+      return fetch(url + "&" + apiUrlFetch, {
         method: "GET"
       })
         .then(response => response.json())
