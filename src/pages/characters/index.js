@@ -26,13 +26,16 @@ const Characters = props => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
 
-  const initFetch = useCallback(offset => {
-    let limit = 20;
-    if (characters)
-      characters.fetchApi(
-        `/v1/public/characters?limit=${limit}&offset=${offset}`
-      );
-  }, []);
+  const initFetch = useCallback(
+    offset => {
+      let limit = 20;
+      if (characters)
+        characters.fetchApi(
+          `/v1/public/characters?limit=${limit}&offset=${offset}`
+        );
+    },
+    [characters]
+  );
 
   useEffect(() => {
     let pagNumber = props.match.params.pag;
