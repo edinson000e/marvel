@@ -62,7 +62,7 @@ export function Modal({ onClose, children, ...props }) {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [modal && modal.modal]);
+  }, [modal]);
   return modal && modal.ref && modal.modal
     ? ReactDOM.createPortal(
         <Overlay>
