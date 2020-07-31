@@ -53,13 +53,22 @@ const SearchComics = props => {
               {searchComicsData.results.length > 0 &&
                 searchComicsData.results.map((value, index) => {
                   let title = value.title;
+                  const regex = /http/gi;
+                  let urlImg =
+                    value.thumbnail.path + "." + value.thumbnail.extension;
+                  if (
+                    value &&
+                    value.thumbnail &&
+                    value.thumbnail.path &&
+                    value.thumbnail.path.length > 0
+                  )
+                    urlImg = urlImg.replace(regex, "https");
+
                   return (
                     <Card
                       key={index}
                       title={title}
-                      photo={
-                        value.thumbnail.path + "." + value.thumbnail.extension
-                      }
+                      photo={urlImg}
                       description={value.description}
                       onClick={() => {
                         history.push(`/comic/${value.id}`);
