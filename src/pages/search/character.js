@@ -26,6 +26,7 @@ const Search = props => {
   const charactersComics = useStateChactersComicsValue();
 
   useEffect(() => {
+    console.log("entre en use efect");
     return () => {
       dispatch(reset());
     };

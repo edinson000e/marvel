@@ -2,7 +2,7 @@ import React from "react";
 
 import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { useLocalStorage, useLocalStorageSearch } from "./useLocalStorage";
+import { useLocalStorage } from "./useLocalStorage";
 configure({ adapter: new Adapter() });
 const HookWrappe = props => {
   const hook = props.hook ? props.hook() : undefined;
