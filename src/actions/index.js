@@ -1,6 +1,6 @@
 import { charactersConstants } from "../constants/characters.constants";
 import { characterConstants } from "../constants/character.constants";
-import { fetchGet, apiUrl, fetchGetParam } from "../api";
+import { fetchGet, apiUrl } from "../api";
 import { openModal } from "./modal";
 export const saveCharacters = data => {
   return { type: charactersConstants.SAVE_LIST, data };

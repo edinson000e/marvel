@@ -1,6 +1,6 @@
 import React, { useContext, useCallback, useState } from "react";
 import { StateCharactersComics } from "../utils/context";
-import { apiUrlFetch, apiUrl } from "../api";
+import { apiUrlFetch } from "../api";
 import { hashCode } from "../functions/hash";
 
 export const StateChactersComicsProvider = ({ children }) => {
