@@ -65,7 +65,9 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
         return fetch(url + "&" + apiUrlFetch, {
           method: "GET"
         })
-          .then(response => response.json())
+          .then(response => {
+            response.json();
+          })
           .then(json => {
             updateCache(urlHash, json.data, nameSearch, redirection, item);
           })
@@ -77,9 +79,9 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
     [successDispatch, dispatch, updateCache]
   );
 
-  useEffect(() => {
+  const init = useCallback(() => {
     if (url) {
-      dispatch(loading());
+      if (dispatch) dispatch(loading());
 
       let value = JSON.parse(window.localStorage.getItem(key));
 
@@ -89,8 +91,8 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
       }
       fetchApi(item, apiUrl + url, nameSearch, redirection);
     }
-  }, [dispatch, key, url, fetchApi, nameSearch, redirection]);
-
+  }, [url, apiUrl, nameSearch, redirection]);
+  useEffect(init, []);
   return storedValue;
 }
 
