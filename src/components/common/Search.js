@@ -159,7 +159,6 @@ export const SearchWithLink = ({ match }) => {
 };
 
 export const Search = ({ push }) => {
-  const [open, setOpen] = useState(false);
   const formRef = useRef();
   const inputFocus = useRef();
   const [input, setInput] = useState("");
@@ -173,7 +172,6 @@ export const Search = ({ push }) => {
     if (input.length > 0) history.push(`/search/${push}=${input}`);
     else if (history.location.pathname !== `/search/${push}`)
       history.push(`/search/${push}`);
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -194,32 +192,17 @@ export const Search = ({ push }) => {
   }, [match, matchValue]);
 
   return (
-    <Form
-      open={open}
-      ref={formRef}
-      onClick={() => {
-        setOpen(true);
-        inputFocus.current.focus();
-      }}
-      onFocus={() => {
-        setOpen(true);
-        inputFocus.current.focus();
-      }}
-      onBlur={() => {
-        setOpen(false);
-      }}
-      onSubmit={onFormSubmit}
-    >
+    <Form ref={formRef} onSubmit={onFormSubmit} id="FormSearch">
       <Input
-        onChange={e => setInput(e.target.value)}
+        onChange={e => {
+          setInput(e.target.value);
+        }}
+        id="FormSearchInput"
         ref={inputFocus}
         value={input}
-        open={open}
         placeholder={`Search by ${push}  name...`}
       />
-      <Button type="submit" open={open}>
-        Search
-      </Button>
+      <Button type="submit">Search</Button>
     </Form>
   );
 };
