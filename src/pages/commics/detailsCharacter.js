@@ -21,7 +21,7 @@ export const DetailsCharacter = props => {
   };
   const initFetch = useCallback(
     id => {
-      if (comic) comic.fetchApi(`/v1/public/comics/${id}`);
+      if (comic) comic.fetchApi(`/v1/public/comics/${id}`, "?");
     },
     [comic]
   );

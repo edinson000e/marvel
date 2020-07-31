@@ -61,7 +61,7 @@ export function Header() {
         </StyledLinkButton>
 
         <ContainerLink>
-          <StyledLinkButton to="/search">
+          <StyledLinkButton to="/search/character">
             <SearchIcon />
           </StyledLinkButton>
           <StyledLinkButton to="/favorites">

@@ -25,7 +25,7 @@ export const StateComicsProvider = ({ children }) => {
   );
 
   const fetchApi = useCallback(
-    url => {
+    (url, signo) => {
       setIsLoading(true);
       const urlHash = hashCode(url);
       const indexCache =
@@ -36,7 +36,7 @@ export const StateComicsProvider = ({ children }) => {
         setData(cache[indexCache].data);
         setIsLoading(false);
       } else {
-        return fetch(apiFetch + url + "?" + apiUrlFetch, {
+        return fetch(apiFetch + url + signo + apiUrlFetch, {
           method: "GET"
         })
           .then(response => response.json())
@@ -56,7 +56,7 @@ export const StateComicsProvider = ({ children }) => {
       value={{
         isLoading,
         data,
-        fetchApi: url => fetchApi(url),
+        fetchApi: (url, signo) => fetchApi(url, signo),
         error
       }}
     >

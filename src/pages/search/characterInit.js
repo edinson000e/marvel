@@ -42,9 +42,6 @@ const Search = () => {
     const { signal } = abortController;
 
     if (!searchRandon) {
-      console.log("result", result);
-      console.log("character", characters);
-      console.log("randomCharacter", randomCharacter);
       console.log(
         "isEqual(result, characters)",
         isEqual(JSON.stringify(result), JSON.stringify(characters.data))
@@ -52,6 +49,8 @@ const Search = () => {
 
       console.log("entre aca");
       if (!randomCharacter) {
+        console.log("esta vacio entro aca");
+        console.log("llamo a initi fe ");
         initFetch(0, signal);
       } else {
         setresult(randomCharacter);
@@ -61,10 +60,16 @@ const Search = () => {
 
         initFetch(result, signal);
       }
-    } else if (!characters.isLoading) {
+    } else if (
+      characters.data.limit === 1 &&
+      !characters.isLoading &&
+      searchRandon &&
+      !isEqual(JSON.stringify(result), JSON.stringify(characters.data))
+    ) {
       console.log("no tengo nada q hacer aca", characters);
 
       if (Object.entries(result).length === 0) {
+        console.log("esta vacio");
         setresult(characters.data);
         setsearchRandon(false);
       }
