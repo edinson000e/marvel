@@ -78,14 +78,20 @@ const Characters = props => {
                   value.comics.collectionURI.length > 0
                 )
                   url = value.comics.collectionURI.replace(regex, "https");
-
+                let urlImg =
+                  value.thumbnail.path + "." + value.thumbnail.extension;
+                if (
+                  value &&
+                  value.thumbnail &&
+                  value.thumbnail.path &&
+                  value.thumbnail.path.length > 0
+                )
+                  urlImg = urlImg.replace(regex, "https");
                 return (
                   <Card
                     key={index}
                     title={value.name}
-                    photo={
-                      value.thumbnail.path + "." + value.thumbnail.extension
-                    }
+                    photo={urlImg}
                     description={value.description}
                     onClick={() => {
                       dispatch(openModal({ title }));
