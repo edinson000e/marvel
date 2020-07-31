@@ -61,7 +61,7 @@ export const DetailsCharacter = props => {
   useEffect(() => {
     window.scrollTo(0, Ref);
     if (is_numeric(props.match.params.id)) initFetch(props.match.params.id);
-  }, [props.match.params.id]);
+  }, [props.match.params.id, initFetch]);
   return (
     <div ref={Ref}>
       {comic && comic.isLoading ? (

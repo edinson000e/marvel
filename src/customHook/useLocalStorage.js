@@ -32,44 +32,52 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
 
   const dispatchContext = useStateValue();
 
-  const successDispatch = () => {
-    dispatch(success());
-  };
   let dispatch;
   if (dispatchContext) dispatch = dispatchContext[1];
-  const updateCache = (newKey, newData, nameSearch, redirection, item) => {
-    let value = item;
-    console.log("value", value);
-    value.push({ key: newKey, data: newData, name: nameSearch, redirection });
-    window.localStorage.setItem(key, JSON.stringify(value));
-    setStoredValue(newData);
-    successDispatch();
-  };
 
-  const fetchApi = useCallback((item, url, nameSearch, redirection) => {
-    const urlHash = hashCode(url);
-
-    console.log("item", item);
-    const indexCache =
-      item.length > 0 ? item.findIndex(c => c.key === urlHash) : -1;
-
-    console.log("indexCache", indexCache);
-    if (indexCache !== -1) {
-      setStoredValue(item[indexCache].data);
-      successDispatch();
-    } else {
-      return fetch(url + "&" + apiUrlFetch, {
-        method: "GET"
-      })
-        .then(response => response.json())
-        .then(json => {
-          updateCache(urlHash, json.data, nameSearch, redirection, item);
-        })
-        .catch(e => {
-          dispatch(error(e));
-        });
-    }
+  const successDispatch = useCallback(dispatch => {
+    dispatch(success());
   }, []);
+
+  const updateCache = useCallback(
+    (newKey, newData, nameSearch, redirection, item) => {
+      let value = item;
+
+      value.push({ key: newKey, data: newData, name: nameSearch, redirection });
+      window.localStorage.setItem(key, JSON.stringify(value));
+      setStoredValue(newData);
+      successDispatch(dispatch);
+    },
+    [successDispatch, dispatch, key]
+  );
+
+  const fetchApi = useCallback(
+    (item, url, nameSearch, redirection) => {
+      const urlHash = hashCode(url);
+
+      console.log("item", item);
+      const indexCache =
+        item.length > 0 ? item.findIndex(c => c.key === urlHash) : -1;
+
+      console.log("indexCache", indexCache);
+      if (indexCache !== -1) {
+        setStoredValue(item[indexCache].data);
+        successDispatch(dispatch);
+      } else {
+        return fetch(url + "&" + apiUrlFetch, {
+          method: "GET"
+        })
+          .then(response => response.json())
+          .then(json => {
+            updateCache(urlHash, json.data, nameSearch, redirection, item);
+          })
+          .catch(e => {
+            dispatch(error(e));
+          });
+      }
+    },
+    [successDispatch, dispatch, updateCache]
+  );
 
   useEffect(() => {
     if (url) {
@@ -86,7 +94,7 @@ export function useLocalStorageSearch(key, url, nameSearch, redirection) {
       }
       fetchApi(item, apiUrl + url, nameSearch, redirection);
     }
-  }, [key, url]);
+  }, [dispatch, key, url, fetchApi, nameSearch, redirection]);
 
   return storedValue;
 }

@@ -5,7 +5,6 @@ import { useStateChactersComicsValue } from "../../store/chactersComics";
 import { getDetailsCharacter } from "../../actions";
 
 import {
-  PageLayout,
   Card,
   Grid,
   ContainerLoading,
