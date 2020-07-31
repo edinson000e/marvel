@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -157,26 +157,27 @@ export const Search = ({ push }) => {
   const history = useHistory();
   const match = useRouteMatch(`/search/${push}:id`);
 
+  let params = match && match.pathname;
   const onFormSubmit = e => {
     e.preventDefault();
-
+    console.log("update");
     if (input.length > 0) history.push(`/search/${push}=${input}`);
     else if (history.location.pathname !== `/search/${push}`)
       history.push(`/search/${push}`);
     setOpen(false);
   };
 
-  const init = useCallback(() => {
+  const init = match => {
     if (match && match.params && match.params.id) {
       setInput(match.params.id.slice(1, match.params.id.length));
     } else {
       setInput("");
     }
-  }, [match]);
+  };
 
   useEffect(() => {
-    init();
-  }, [init]);
+    init(params);
+  }, [params]);
 
   return (
     <Form
