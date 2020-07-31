@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PageLayout, Breadcrumb } from "../../components/common";
+import { Breadcrumb } from "../../components/common";
 import { Container } from "../../components/common/Search";
 
 import { SearchWithLink } from "../../components/common/Search";
