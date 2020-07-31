@@ -19,12 +19,6 @@ export const DetailsCharacter = props => {
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
-  const initFetch = useCallback(
-    id => {
-      if (comic) comic.fetchApi(`/v1/public/comics/${id}`, "?");
-    },
-    [comic]
-  );
 
   const role = () => {
     let role = [];
@@ -58,10 +52,18 @@ export const DetailsCharacter = props => {
 
     return role;
   };
-  useEffect(() => {
-    window.scrollTo(0, Ref);
-    if (is_numeric(props.match.params.id)) initFetch(props.match.params.id);
-  }, [props.match.params.id, initFetch]);
+
+  const initFetch = useCallback(() => {
+    let id = props.match.params.id;
+
+    if (is_numeric(props.match.params.id)) {
+      window.scrollTo(0, Ref);
+      if (comic) comic.fetchApi(`/v1/public/comics/${id}`, "?");
+    }
+  }, [props.match.params.id, comic]);
+
+  useEffect(initFetch, [props.match.params.id]);
+
   return (
     <div ref={Ref}>
       {comic && comic.isLoading ? (

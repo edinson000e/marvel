@@ -37,9 +37,10 @@ const Characters = props => {
     if (is_numeric(pagNumber)) {
       let offset = parseInt(20) * (parseInt(pagNumber) - 1);
       let limit = 20;
-      characters.fetchApi(
-        `/v1/public/characters?limit=${limit}&offset=${offset}`
-      );
+      if (characters)
+        characters.fetchApi(
+          `/v1/public/characters?limit=${limit}&offset=${offset}`
+        );
     }
   }, [props.match.params.pag, characters]);
   useEffect(init, [props.match.params.pag]);
