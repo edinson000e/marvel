@@ -109,9 +109,15 @@ const Search = () => {
                   )}
                   description={result.results[0].description}
                   onClick={() => {
+                    console.log(
+                      "replaceUrl(result.results[0].comics.collectionURI)",
+                      replaceUrl(result.results[0].comics.collectionURI)
+                    );
                     dispatch(openModal({ title: result.results[0].name }));
                     charactersComics.fetchApi(
-                      `${result.results[0].comics.collectionURI}?orderBy=focDate`
+                      `${replaceUrl(
+                        result.results[0].comics.collectionURI
+                      )}?orderBy=focDate`
                     );
                   }}
                 />

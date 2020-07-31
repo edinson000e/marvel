@@ -26,7 +26,6 @@ const Search = props => {
   const charactersComics = useStateChactersComicsValue();
 
   useEffect(() => {
-    console.log("entre en use efect");
     return () => {
       dispatch(reset());
     };
@@ -62,9 +61,16 @@ const Search = props => {
                       )}
                       description={value.description}
                       onClick={() => {
+                        console.log(
+                          "value.comics.collectionURI",
+                          replaceUrl(value.comics.collectionURI)
+                        );
                         dispatch(openModal({ title }));
+
                         charactersComics.fetchApi(
-                          `${value.comics.collectionURI}?orderBy=focDate`
+                          `${replaceUrl(
+                            value.comics.collectionURI
+                          )}?orderBy=focDate`
                         );
                       }}
                     />
