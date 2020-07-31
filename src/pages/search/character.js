@@ -29,7 +29,7 @@ const Search = props => {
     return () => {
       dispatch(reset());
     };
-  }, [url]);
+  }, [url, dispatch]);
 
   return (
     <Container>
