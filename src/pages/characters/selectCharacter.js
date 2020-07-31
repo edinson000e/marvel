@@ -6,12 +6,16 @@ import {
 } from "../../components/common";
 import { useStateValue } from "../../store";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
-import { DataSelectCharacter, resetSelectCharacter } from "../../actions";
+
 import { closeModal } from "../../actions/modal";
 import SelectContainerRef from "./selectContainerRef";
 
 const SelectCharacter = () => {
-  const [{ character }, dispatch] = useStateValue();
+  const dispatchContext = useStateValue();
+
+  let dispatch;
+  if (dispatchContext) dispatch = dispatchContext[1];
+
   const charactersComics = useStateChactersComicsValue();
   const suspensionPoints = (text, limit) => {
     let points = "...";
@@ -38,9 +42,7 @@ const SelectCharacter = () => {
                 key={index}
                 to={`/comic/${value.id}`}
                 onClick={() => {
-                  dispatch(resetSelectCharacter());
                   dispatch(closeModal());
-                  dispatch(DataSelectCharacter(value));
                 }}
               >
                 <DetailsCharacter

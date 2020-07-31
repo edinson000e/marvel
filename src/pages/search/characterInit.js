@@ -6,29 +6,33 @@ import {
   TitleDescription
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
-import { seatchGetCharacter } from "../../actions/search";
-import { getDetailsCharacter } from "../../actions";
+
+import { openModal } from "../../actions/modal";
 import { useStateValue } from "../../store";
+import { useStatechacterValue } from "../../store/chacters";
 import Modal from "../characters/modalDetails";
 import { useLocalStorage } from "../../customHook/useLocalStorage";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
-
+import { isEqual } from "lodash";
 const Search = () => {
   const [{ search }, dispatch] = useStateValue();
+  const characters = useStatechacterValue();
   const charactersComics = useStateChactersComicsValue();
   const [randomCharacter, setRandomCharacter] = useLocalStorage(
     "randomCharacter"
   );
-  const [result, setresult] = useState(randomCharacter);
+  const [result, setresult] = useState({});
 
+  const [searchRandon, setsearchRandon] = useState(false);
   const initFetch = useCallback(
-    async (ofset, signal) => {
-      return await seatchGetCharacter(dispatch, 1, ofset, signal).then(
-        result => {
-          if (result) setRandomCharacter(result);
-          return result;
-        }
-      );
+    async (offset, signal) => {
+      console.log("entre aca en initfetch");
+      setsearchRandon(true);
+      let limit = 1;
+      if (characters)
+        characters.fetchApi(
+          `/v1/public/characters?limit=${limit}&offset=${offset}`
+        );
     },
     [dispatch]
   );
@@ -37,26 +41,44 @@ const Search = () => {
     const abortController = new AbortController();
     const { signal } = abortController;
 
-    if (!randomCharacter) {
-      initFetch(0, signal).then(result => {
-        setresult(result);
-      });
-    } else {
-      let min = Math.ceil(0);
-      let max = Math.floor(randomCharacter.total);
-      let result = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (!searchRandon) {
+      console.log("result", result);
+      console.log("character", characters);
+      console.log("randomCharacter", randomCharacter);
+      console.log(
+        "isEqual(result, characters)",
+        isEqual(JSON.stringify(result), JSON.stringify(characters.data))
+      );
 
-      initFetch(result, signal);
+      console.log("entre aca");
+      if (!randomCharacter) {
+        initFetch(0, signal);
+      } else {
+        setresult(randomCharacter);
+        let min = Math.ceil(0);
+        let max = Math.floor(randomCharacter.total);
+        let result = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        initFetch(result, signal);
+      }
+    } else if (!characters.isLoading) {
+      console.log("no tengo nada q hacer aca", characters);
+
+      if (Object.entries(result).length === 0) {
+        setresult(characters.data);
+        setsearchRandon(false);
+      }
+      setRandomCharacter(characters.data);
     }
 
     return () => {
       abortController.abort();
     };
-  }, [initFetch]);
+  }, [initFetch, characters, searchRandon]);
 
   return (
     <Container>
-      {search.isFetching && !result ? (
+      {Object.entries(result).length === 0 ? (
         <ContainerLoading />
       ) : (
         <>
@@ -75,11 +97,9 @@ const Search = () => {
                   }
                   description={result.results[0].description}
                   onClick={() => {
-                    getDetailsCharacter(
-                      result.results[0].comics.collectionURI,
-                      result.results[0].name,
-                      dispatch,
-                      charactersComics.fetchApi
+                    dispatch(openModal({ title: result.results[0].name }));
+                    charactersComics.fetchApi(
+                      `${result.results[0].comics.collectionURI}?orderBy=focDate`
                     );
                   }}
                 />

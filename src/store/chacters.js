@@ -6,7 +6,7 @@ import { hashCode } from "../functions/hash";
 export const StateChactersProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   const [cache, setCache] = useState([]);
   const [error, setError] = useState(false);
@@ -25,6 +25,7 @@ export const StateChactersProvider = ({ children }) => {
 
   const fetchApi = useCallback(
     (url, api) => {
+      setData({});
       setIsLoading(true);
       const urlHash = hashCode(url);
       const indexCache =

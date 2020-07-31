@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback } from "react";
 import { useStateValue } from "../../store";
 import { useStatechacterValue } from "../../store/chacters";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
-import { getDetailsCharacter } from "../../actions";
+import { openModal } from "../../actions/modal";
 
 import {
   Card,
@@ -49,13 +49,15 @@ const Characters = props => {
   }, [initFetch, props.match.params.pag]);
   const Ref = useRef();
 
+  console.log("character", characters);
   return (
     <>
       {characters &&
       (characters.isLoading ||
-        (!characters.isLoading && characters.data.length === 0)) ? (
+        (!characters.isLoading &&
+          Object.entries(characters.data).length === 0)) ? (
         <ContainerLoading />
-      ) : characters && characters.data.total === 0 ? (
+      ) : characters && Object.entries(characters.data).length === 0 ? (
         <ContainerError
           title={
             characters && characters.error
@@ -90,12 +92,8 @@ const Characters = props => {
                     }
                     description={value.description}
                     onClick={() => {
-                      getDetailsCharacter(
-                        url,
-                        title,
-                        dispatch,
-                        charactersComics.fetchApi
-                      );
+                      dispatch(openModal({ title }));
+                      charactersComics.fetchApi(`${url}?orderBy=focDate`);
                     }}
                   />
                 );

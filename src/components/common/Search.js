@@ -135,7 +135,7 @@ export const SearchWithLink = ({ match }) => {
       if (!value) setstate("character");
       else setstate(value.name);
     }
-  }, [pathname, link]);
+  }, [pathname, link, state]);
   return (
     <ContainerSearchWithLink>
       <Search push={state} />

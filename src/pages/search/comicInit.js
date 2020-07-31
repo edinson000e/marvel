@@ -7,6 +7,7 @@ import {
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
 import { seatchGetComic } from "../../actions/comics";
+import { useStateComicsValue } from "../../store/comics";
 
 import { useStateValue } from "../../store";
 import Modal from "../characters/modalDetails";
@@ -17,6 +18,9 @@ const Search = () => {
   const [{ search }, dispatch] = useStateValue();
 
   const [randomComic, setRandomComic] = useLocalStorage("randomComic");
+
+  const comics = useStateComicsValue();
+
   const [result, setresult] = useState();
   const history = useHistory();
   const initFetchComic = useCallback(

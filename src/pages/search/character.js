@@ -7,7 +7,7 @@ import {
 } from "../../components/common";
 import { Container } from "../../components/common/Search";
 import { reset } from "../../actions/global";
-import { getDetailsCharacter } from "../../actions";
+import { openModal } from "../../actions/modal";
 import { useStateValue } from "../../store";
 import { useStateChactersComicsValue } from "../../store/chactersComics";
 import Modal from "../characters/modalDetails";
@@ -61,11 +61,9 @@ const Search = props => {
                       }
                       description={value.description}
                       onClick={() => {
-                        getDetailsCharacter(
-                          value.comics.collectionURI,
-                          title,
-                          dispatch,
-                          charactersComics.fetchApi
+                        dispatch(openModal({ title }));
+                        charactersComics.fetchApi(
+                          `${value.comics.collectionURI}?orderBy=focDate`
                         );
                       }}
                     />
