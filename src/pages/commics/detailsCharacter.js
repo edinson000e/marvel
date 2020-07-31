@@ -19,9 +19,12 @@ export const DetailsCharacter = props => {
   const is_numeric = value => {
     return !isNaN(parseFloat(value)) && isFinite(value);
   };
-  const initFetch = useCallback(id => {
-    if (comic) comic.fetchApi(`/v1/public/comics/${id}`);
-  }, []);
+  const initFetch = useCallback(
+    id => {
+      if (comic) comic.fetchApi(`/v1/public/comics/${id}`);
+    },
+    [comic]
+  );
 
   const role = () => {
     let role = [];
