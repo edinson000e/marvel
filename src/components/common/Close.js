@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./Search";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ButtonCloseC = styled(Button)`
   padding: 0px 1rem;

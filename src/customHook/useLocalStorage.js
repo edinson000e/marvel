@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { apiUrlFetch, apiUrl } from "../api";
 import { hashCode } from "../functions/hash";
 import { useStateValue } from "../store";
-import { loading, success, error, reset } from "../actions/global";
+import { loading, success, error } from "../actions/global";
 export function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
     const item = window.localStorage.getItem(key);
